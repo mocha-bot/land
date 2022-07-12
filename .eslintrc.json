@@ -1,3 +1,35 @@
 {
-  "extends": "next/core-web-vitals"
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "eslint:recommended",
+    "airbnb",
+    "airbnb-typescript",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "next/core-web-vitals",
+    "prettier"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "semi": ["error", "always"],
+    "quotes": ["error", "single"],
+    "jsx-quotes": ["error", "prefer-single"],
+    "no-undef": "error",
+    "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition": [
+      "error",
+      { "namedComponents": "arrow-function" }
+    ],
+    "arrow-body-style": "off",
+    "consistent-return": "off",
+    "import/prefer-default-export": "off",
+    "react/destructuring-assignment": "off",
+    "no-useless-return": "off",
+    "curly": ["error", "all"],
+    "react/require-default-props": "off",
+    "react/no-unused-prop-types": "off"
+  }
 }
