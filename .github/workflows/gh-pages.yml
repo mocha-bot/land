@@ -22,9 +22,9 @@ jobs:
 
       - name: Build
         run: |
-          pnpm i
-          pnpm build
-          pnpm export
+          yarn i
+          yarn build
+          yarn export
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
