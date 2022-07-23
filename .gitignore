@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 *.lock
+pnpm-lock.yaml
 
 # testing
 /coverage
