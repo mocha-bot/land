@@ -9,6 +9,8 @@ import {
   Icon,
   useColorModeValue,
   createIcon,
+  Image,
+  Flex,
 } from '@chakra-ui/react';
 
 const Arrow = createIcon({
@@ -73,7 +75,7 @@ const Home: NextPage = () => {
               }}
               _focus={{ bg: 'yellow.900' }}
             >
-              Bring mocha to me
+              Taste a Mocha
             </Button>
           </a>
           <Box display={{ base: 'none', md: 'block' }}>
@@ -89,15 +91,49 @@ const Home: NextPage = () => {
               fontSize='lg'
               fontFamily='Caveat'
               position='absolute'
-              right='-125px'
+              right='-90px'
               top='-15px'
               transform='rotate(10deg)'
             >
-              Get yourself a mocha
+              Click me
             </Text>
           </Box>
         </Stack>
       </Stack>
+      <Box
+        position='absolute'
+        bottom='10'
+        left='0'
+        right='0'
+        w='full'
+        justifyContent='center'
+      >
+        <Flex alignItems='center' justifyContent='center'>
+          <Text>Supported by</Text>
+          <Image
+            src='/img/logo.png'
+            width='30px'
+            height='30px'
+            alt='Chroma Developer Logo'
+            ml='4px'
+            mr='2px'
+          />
+          <Text
+            display='inline'
+            color='blue.400'
+            borderBottomWidth='1px'
+            borderBottomColor='blue.500'
+          >
+            <a
+              href='https://discord.chroma-gaming.xyz'
+              target='_blank'
+              rel='noreferrer'
+            >
+              Chroma Developer
+            </a>
+          </Text>
+        </Flex>
+      </Box>
     </Container>
   );
 };

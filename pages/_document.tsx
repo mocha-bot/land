@@ -11,6 +11,15 @@ const MyDocument = () => {
           href='https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap'
           rel='stylesheet'
         />
+        <meta property='og:title' content='Mocha Bot' key='meta-title' />
+        <meta
+          property='og:description'
+          content='Drink mocha with people across the universe.'
+          key='meta-description'
+        />
+        <meta property='og:image' content='/img/logo.png' />
+        <meta property='og:locale' content='en_US' key='meta-locale' />
+        <meta property='og:url' content='https://mocha.chroma-gaming.xyz/' />
       </Head>
       <body style={{ fontFamily: 'Nunito Sans, sans-serif', height: '100%' }}>
         <Main />
