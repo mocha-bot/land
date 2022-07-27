@@ -25,7 +25,7 @@ const Arrow = createIcon({
   ),
 });
 
-export default function HomeContainer() {
+export function HomeContainer() {
   return (
     <Container maxW='3xl' h='100vh'>
       <Stack

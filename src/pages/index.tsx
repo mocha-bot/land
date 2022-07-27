@@ -1,8 +1,7 @@
-import type { NextPage } from 'next';
-import HomeContainer from '../uikit/Home/HomeContainer';
+import { HomeContainer } from '../uikit/Home/HomeContainer';
 
-const Home: NextPage = () => {
+function Home() {
   return <HomeContainer />;
-};
+}
 
 export default Home;
