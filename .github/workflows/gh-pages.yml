@@ -17,7 +17,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: "lts/*"
+          node-version: 'lts/*'
 
       - name: Build
         run: |
@@ -32,3 +32,4 @@ jobs:
           publish_dir: ./out
           publish_branch: gh-pages
           force_orphan: true
+          cname: mocha.chroma-gaming.xyz
