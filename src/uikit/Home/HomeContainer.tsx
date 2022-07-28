@@ -1,4 +1,3 @@
-import type { NextPage } from 'next';
 import {
   Box,
   Heading,
@@ -26,7 +25,7 @@ const Arrow = createIcon({
   ),
 });
 
-const Home: NextPage = () => {
+export function HomeContainer() {
   return (
     <Container maxW='3xl' h='100vh'>
       <Stack
@@ -111,7 +110,7 @@ const Home: NextPage = () => {
         <Flex alignItems='center' justifyContent='center'>
           <Text>Supported by</Text>
           <Image
-            src='/img/logo.png'
+            src='img/logo.png'
             width='30px'
             height='30px'
             alt='Chroma Developer Logo'
@@ -136,6 +135,4 @@ const Home: NextPage = () => {
       </Box>
     </Container>
   );
-};
-
-export default Home;
+}
