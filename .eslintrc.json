@@ -1,6 +1,7 @@
 {
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
+  "ignorePatterns": ["next.config.js"],
   "extends": [
     "eslint:recommended",
     "airbnb",
