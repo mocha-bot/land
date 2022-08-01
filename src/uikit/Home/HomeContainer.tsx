@@ -1,15 +1,15 @@
 import {
   Box,
-  Heading,
-  Container,
-  Text,
   Button,
-  Stack,
-  Icon,
-  useColorModeValue,
+  Container,
   createIcon,
-  Image,
   Flex,
+  Heading,
+  Icon,
+  Image,
+  Stack,
+  Text,
+  useColorModeValue,
 } from '@chakra-ui/react';
 
 const Arrow = createIcon({
