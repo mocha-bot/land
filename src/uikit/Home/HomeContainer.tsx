@@ -25,7 +25,7 @@ const Arrow = createIcon({
   ),
 });
 
-export function HomeContainer() {
+export const HomeContainer = () => {
   return (
     <Container maxW='3xl' h='100vh'>
       <Stack
@@ -110,7 +110,7 @@ export function HomeContainer() {
         <Flex alignItems='center' justifyContent='center'>
           <Text>Supported by</Text>
           <Image
-            src='img/logo.png'
+            src='img/chroma-logo.png'
             width='30px'
             height='30px'
             alt='Chroma Developer Logo'
@@ -135,4 +135,4 @@ export function HomeContainer() {
       </Box>
     </Container>
   );
-}
+};
