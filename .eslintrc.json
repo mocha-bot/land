@@ -1,6 +1,7 @@
 {
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
+  "ignorePatterns": ["next.config.js"],
   "extends": [
     "eslint:recommended",
     "airbnb",
@@ -8,12 +9,17 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "next/core-web-vitals",
+    "plugin:import/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
     "prettier"
   ],
   "parserOptions": {
     "project": "./tsconfig.json"
   },
   "rules": {
+    "dot-notation": "error",
     "semi": ["error", "always"],
     "quotes": ["error", "single"],
     "jsx-quotes": ["error", "prefer-single"],
@@ -21,7 +27,10 @@
     "react/jsx-props-no-spreading": "off",
     "react/function-component-definition": [
       "error",
-      { "namedComponents": "arrow-function" }
+      {
+        "namedComponents": "function-declaration",
+        "unnamedComponents": "arrow-function"
+      }
     ],
     "arrow-body-style": "off",
     "consistent-return": "off",
@@ -30,6 +39,19 @@
     "no-useless-return": "off",
     "curly": ["error", "all"],
     "react/require-default-props": "off",
-    "react/no-unused-prop-types": "off"
+    "react/no-unused-prop-types": "off",
+    "@typescript-eslint/consistent-type-imports": "error",
+    "@typescript-eslint/no-unused-vars": "error",
+    "import/order": [
+      "error",
+      {
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "groups": ["builtin", "external", "internal", "parent"]
+      }
+    ]
   }
 }

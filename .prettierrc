@@ -12,5 +12,10 @@
   "tabWidth": 2,
   "trailingComma": "all",
   "useTabs": false,
+  "importOrderSeparation": true,
+  "importOrderBuiltinModulesToTop": true,
+  "importOrderSortSpecifiers": true,
+  "importOrderCaseInsensitive": true,
+  "importOrder": ["^@/(.*)$", "^../", "^./"],
   "endOfLine": "auto"
 }
