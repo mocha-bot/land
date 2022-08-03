@@ -17,7 +17,7 @@ function MyDocument() {
           content='Drink mocha with people across the universe.'
           key='meta-description'
         />
-        <meta property='og:image' content='/img/logo.png' />
+        <meta property='og:image' content='/img/logo-mocha.svg' />
         <meta property='og:locale' content='en_US' key='meta-locale' />
         <meta property='og:url' content='https://mocha.chroma-gaming.xyz/' />
       </Head>
