@@ -110,7 +110,7 @@ export function HomeContainer() {
         <Flex alignItems='center' justifyContent='center'>
           <Text>Supported by</Text>
           <Image
-            src='img/logo.png'
+            src='img/logo-chroma.png'
             width='30px'
             height='30px'
             alt='Chroma Developer Logo'
