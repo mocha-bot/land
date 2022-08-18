@@ -1,4 +1,4 @@
-## Getting Started
+## Mocha
 
 ### Drink mocha with people across the universe :rocket:
 
