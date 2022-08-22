@@ -50,20 +50,18 @@ jobs:
           COMMIT_HASH: ${{ steps.get-commit-hash.outputs.commit_hash_short }}
         run: |
           exit 1
-          # echo "${{ env.SHOW_VERSION }}"
-          # echo "${{ env.COMMIT_HASH }}"
-          # yarn install
-          # yarn build
-          # yarn export
+          yarn install
+          yarn build
+          yarn export
 
-      # - name: Deploy
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   with:
-      #     github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-      #     publish_dir: ./out
-      #     publish_branch: gh-pages
-      #     force_orphan: true
-      #     cname: ${{ env.DEPLOYMENT_DOMAIN }}
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_dir: ./out
+          publish_branch: gh-pages
+          force_orphan: true
+          cname: ${{ env.DEPLOYMENT_DOMAIN }}
 
       - name: Send success deployment webhook to Discord
         uses: sarisia/actions-status-discord@v1
@@ -76,6 +74,7 @@ jobs:
           description: |
             Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ steps.get-commit-hash.outputs.commit_url }})
             Click [here](https://${{ env.DEPLOYMENT_DOMAIN }}) to see the result!
+            Please wait for several seconds until Github Page deployment is success
           color: 3066993
 
       - name: Send failed deployment webhook to Discord
@@ -89,4 +88,4 @@ jobs:
           description: |
             Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ steps.get-commit-hash.outputs.commit_url }})
             Click [here](${{ steps.get-commit-hash.outputs.github_action_url }}) to see the failed deployment!
-          color: 3066993
+          color: 15158332
