@@ -3,7 +3,7 @@ name: Deploy to Github Pages
 on:
   push:
     branches:
-      - feat/add-deployment-webhook
+      - master
 
   workflow_dispatch:
 
