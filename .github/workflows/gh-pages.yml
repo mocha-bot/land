@@ -34,8 +34,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Build
+      - name: Save commit hash to env var
+        id: get-commit-hash
         run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+          echo "::set-output name=commit_hash::$(git rev-parse --short HEAD)"
+
+      - name: Build
+        env:
+          SHOW_VERSION: true
+          COMMIT_HASH: ${{ steps.get-commit-hash.outputs.commit_hash }}
+        run: |
+          echo "${{ env.SHOW_VERSION }}"
+          echo "${{ env.COMMIT_HASH }}"
           yarn install 
           yarn build
           yarn export
