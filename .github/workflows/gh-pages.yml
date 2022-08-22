@@ -49,6 +49,7 @@ jobs:
           SHOW_VERSION: true
           COMMIT_HASH: ${{ steps.get-commit-hash.outputs.commit_hash_short }}
         run: |
+          echo "${{ GITHUB_SHA }}"
           echo "${{ env.SHOW_VERSION }}"
           echo "${{ env.COMMIT_HASH }}"
           yarn install
@@ -74,7 +75,7 @@ jobs:
           title: Deployment Successful
           description: |
             Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ steps.get-commit-hash.outputs.commit_url }})
-            Click [here](https://${{ env.DEPLOYMENT_DOMAIN }}) to see the **result**!
+            Click [here](https://${{ env.DEPLOYMENT_DOMAIN }}) to see the result!
           color: 3066993
 
       - name: Send failed deployment webhook to Discord
@@ -87,5 +88,5 @@ jobs:
           title: Deployment Failed
           description: |
             Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ steps.get-commit-hash.outputs.commit_url }})
-            Click [here](${{ steps.get-commit-hash.outputs.github_action_url }}) to see the **failed github actions**!
+            Click [here](${{ steps.get-commit-hash.outputs.github_action_url }}) to see the failed deployment!
           color: 3066993
