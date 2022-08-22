@@ -7,6 +7,9 @@ on:
 
   workflow_dispatch:
 
+env:
+  DEPLOYMENT_DOMAIN: mocha.chroma-gaming.xyz
+
 jobs:
   deploy:
     runs-on: ubuntu-20.04
@@ -34,16 +37,16 @@ jobs:
       #     restore-keys: |
       #       ${{ runner.os }}-yarn-
 
-      # - name: Save commit hash to env var
-      #   id: get-commit-hash
-      #   run: |
-      #     echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-      #     echo "::set-output name=commit_hash::$(git rev-parse --short HEAD)"
+      - name: Save commit hash to env var
+        id: get-commit-hash
+        run: |
+          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+          echo "::set-output name=commit_hash_short::$(git rev-parse --short HEAD)"
 
       # - name: Build
       #   env:
       #     SHOW_VERSION: true
-      #     COMMIT_HASH: ${{ steps.get-commit-hash.outputs.commit_hash }}
+      #     COMMIT_HASH: ${{ steps.get-commit-hash.outputs.commit_hash_short }}
       #   run: |
       #     echo "${{ env.SHOW_VERSION }}"
       #     echo "${{ env.COMMIT_HASH }}"
@@ -58,12 +61,15 @@ jobs:
       #     publish_dir: ./out
       #     publish_branch: gh-pages
       #     force_orphan: true
-      #     cname: mocha.chroma-gaming.xyz
+      #     cname: ${{ env.DEPLOYMENT_DOMAIN }}
 
       - uses: sarisia/actions-status-discord@v1
         env:
           DISCORD_WEBHOOK: ${{ secrets.ACTIONS_DISCORD_WEBHOOK_DEPLOYMENT }}
         with:
           nodetail: true
-          title: 'We did it!'
-          color: 0xff91a4
+          title: Deployment Successful
+          description: |
+            Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ GITHUB_SHA }})
+            Click [here](${{ env.DEPLOYMENT_DOMAIN }}) to see the result!
+          color: 3066993
