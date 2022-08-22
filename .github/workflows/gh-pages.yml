@@ -17,45 +17,53 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
+      # - name: Setup Node
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: '14'
 
-      - name: Get yarn cache
-        id: yarn-cache
-        run: echo "::set-output name=dir::$(yarn cache dir)"
+      # - name: Get yarn cache
+      #   id: yarn-cache
+      #   run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      - name: Cache dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.yarn-cache.outputs.dir }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+      # - name: Cache dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ${{ steps.yarn-cache.outputs.dir }}
+      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-yarn-
 
-      - name: Save commit hash to env var
-        id: get-commit-hash
-        run: |
-          echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-          echo "::set-output name=commit_hash::$(git rev-parse --short HEAD)"
+      # - name: Save commit hash to env var
+      #   id: get-commit-hash
+      #   run: |
+      #     echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+      #     echo "::set-output name=commit_hash::$(git rev-parse --short HEAD)"
 
-      - name: Build
+      # - name: Build
+      #   env:
+      #     SHOW_VERSION: true
+      #     COMMIT_HASH: ${{ steps.get-commit-hash.outputs.commit_hash }}
+      #   run: |
+      #     echo "${{ env.SHOW_VERSION }}"
+      #     echo "${{ env.COMMIT_HASH }}"
+      #     yarn install
+      #     yarn build
+      #     yarn export
+
+      # - name: Deploy
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+      #     publish_dir: ./out
+      #     publish_branch: gh-pages
+      #     force_orphan: true
+      #     cname: mocha.chroma-gaming.xyz
+
+      - uses: sarisia/actions-status-discord@v1
         env:
-          SHOW_VERSION: true
-          COMMIT_HASH: ${{ steps.get-commit-hash.outputs.commit_hash }}
-        run: |
-          echo "${{ env.SHOW_VERSION }}"
-          echo "${{ env.COMMIT_HASH }}"
-          yarn install 
-          yarn build
-          yarn export
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+          DISCORD_WEBHOOK: ${{ secrets.ACTIONS_DISCORD_WEBHOOK_DEPLOYMENT }}
         with:
-          github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./out
-          publish_branch: gh-pages
-          force_orphan: true
-          cname: mocha.chroma-gaming.xyz
+          nodetail: true
+          title: 'We did it!'
+          color: 0xff91a4
