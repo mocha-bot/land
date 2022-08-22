@@ -36,7 +36,7 @@ jobs:
 
       - name: Build
         run: |
-          yarn install --frozen-lockfile
+          yarn install 
           yarn build
           yarn export
 
