@@ -11,6 +11,9 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 
 const Arrow = createIcon({
   displayName: 'Arrow',
@@ -101,7 +104,7 @@ export function HomeContainer() {
       </Stack>
       <Box
         position='absolute'
-        bottom='10'
+        bottom='8'
         left='0'
         right='0'
         w='full'
@@ -132,6 +135,11 @@ export function HomeContainer() {
             </a>
           </Text>
         </Flex>
+        {publicRuntimeConfig.showVersion && (
+          <Text fontSize='10px' textAlign='center' mt='2'>
+            version - {publicRuntimeConfig.clientVersion}
+          </Text>
+        )}
       </Box>
     </Container>
   );
