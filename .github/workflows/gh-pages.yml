@@ -20,50 +20,53 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # - name: Setup Node
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: '14'
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
 
-      # - name: Get yarn cache
-      #   id: yarn-cache
-      #   run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Get yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
-      # - name: Cache dependencies
-      #   uses: actions/cache@v2
-      #   with:
-      #     path: ${{ steps.yarn-cache.outputs.dir }}
-      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-yarn-
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
 
-      - name: Save commit hash to env var
+      - name: Save commit related data to env var
         id: get-commit-hash
         run: |
           echo "::set-output name=commit_url::${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
           echo "::set-output name=commit_hash_short::$(git rev-parse --short HEAD)"
+          echo "::set-output name=github_action_url::${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
 
-      # - name: Build
-      #   env:
-      #     SHOW_VERSION: true
-      #     COMMIT_HASH: ${{ steps.get-commit-hash.outputs.commit_hash_short }}
-      #   run: |
-      #     echo "${{ env.SHOW_VERSION }}"
-      #     echo "${{ env.COMMIT_HASH }}"
-      #     yarn install
-      #     yarn build
-      #     yarn export
+      - name: Build
+        env:
+          SHOW_VERSION: true
+          COMMIT_HASH: ${{ steps.get-commit-hash.outputs.commit_hash_short }}
+        run: |
+          echo "${{ env.SHOW_VERSION }}"
+          echo "${{ env.COMMIT_HASH }}"
+          yarn install
+          yarn build
+          yarn export
 
-      # - name: Deploy
-      #   uses: peaceiris/actions-gh-pages@v3
-      #   with:
-      #     github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-      #     publish_dir: ./out
-      #     publish_branch: gh-pages
-      #     force_orphan: true
-      #     cname: ${{ env.DEPLOYMENT_DOMAIN }}
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_dir: ./out
+          publish_branch: gh-pages
+          force_orphan: true
+          cname: ${{ env.DEPLOYMENT_DOMAIN }}
 
-      - uses: sarisia/actions-status-discord@v1
+      - name: Send success deployment webhook to Discord
+        uses: sarisia/actions-status-discord@v1
+        if: ${{ success() }}
         env:
           DISCORD_WEBHOOK: ${{ secrets.ACTIONS_DISCORD_WEBHOOK_DEPLOYMENT }}
         with:
@@ -71,5 +74,18 @@ jobs:
           title: Deployment Successful
           description: |
             Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ steps.get-commit-hash.outputs.commit_url }})
-            Click [here](https://${{ env.DEPLOYMENT_DOMAIN }}) to see the result!
+            Click [here](https://${{ env.DEPLOYMENT_DOMAIN }}) to see the **result**!
+          color: 3066993
+
+      - name: Send failed deployment webhook to Discord
+        uses: sarisia/actions-status-discord@v1
+        if: ${{ failure() }}
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.ACTIONS_DISCORD_WEBHOOK_DEPLOYMENT }}
+        with:
+          nodetail: true
+          title: Deployment Failed
+          description: |
+            Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ steps.get-commit-hash.outputs.commit_url }})
+            Click [here](${{ steps.get-commit-hash.outputs.github_action_url }}) to see the **failed github actions**!
           color: 3066993
