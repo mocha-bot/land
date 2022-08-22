@@ -40,7 +40,7 @@ jobs:
       - name: Save commit hash to env var
         id: get-commit-hash
         run: |
-          echo "::set-output name=commit_url::${{ github.ref.server_url }}/${{ github.ref.repository }}/commit/${{ github.sha }}"
+          echo "::set-output name=commit_url::${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
           echo "::set-output name=commit_hash_short::$(git rev-parse --short HEAD)"
 
       # - name: Build
@@ -71,5 +71,5 @@ jobs:
           title: Deployment Successful
           description: |
             Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ steps.get-commit-hash.outputs.commit_url }})
-            Click [here](${{ env.DEPLOYMENT_DOMAIN }}) to see the result!
+            Click [here](https://${{ env.DEPLOYMENT_DOMAIN }}) to see the result!
           color: 3066993
