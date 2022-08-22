@@ -46,10 +46,9 @@ jobs:
 
       - name: Build
         env:
-          SHOW_VERSION: true
+          SHOW_VERSION: false
           COMMIT_HASH: ${{ steps.get-commit-hash.outputs.commit_hash_short }}
         run: |
-          exit 1
           yarn install
           yarn build
           yarn export
