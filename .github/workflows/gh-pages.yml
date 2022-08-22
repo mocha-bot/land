@@ -49,21 +49,21 @@ jobs:
           SHOW_VERSION: true
           COMMIT_HASH: ${{ steps.get-commit-hash.outputs.commit_hash_short }}
         run: |
-          echo "${{ GITHUB_SHA }}"
-          echo "${{ env.SHOW_VERSION }}"
-          echo "${{ env.COMMIT_HASH }}"
-          yarn install
-          yarn build
-          yarn export
+          exit 1
+          # echo "${{ env.SHOW_VERSION }}"
+          # echo "${{ env.COMMIT_HASH }}"
+          # yarn install
+          # yarn build
+          # yarn export
 
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-          publish_dir: ./out
-          publish_branch: gh-pages
-          force_orphan: true
-          cname: ${{ env.DEPLOYMENT_DOMAIN }}
+      # - name: Deploy
+      #   uses: peaceiris/actions-gh-pages@v3
+      #   with:
+      #     github_token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+      #     publish_dir: ./out
+      #     publish_branch: gh-pages
+      #     force_orphan: true
+      #     cname: ${{ env.DEPLOYMENT_DOMAIN }}
 
       - name: Send success deployment webhook to Discord
         uses: sarisia/actions-status-discord@v1
