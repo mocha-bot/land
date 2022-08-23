@@ -104,7 +104,7 @@ export function HomeContainer() {
       </Stack>
       <Box
         position='absolute'
-        bottom='8'
+        bottom={publicRuntimeConfig.showVersion ? '8' : '10'}
         left='0'
         right='0'
         w='full'
