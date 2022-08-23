@@ -7,9 +7,6 @@ on:
 
   workflow_dispatch:
 
-env:
-  DEPLOYMENT_DOMAIN: mocha.chroma-gaming.xyz
-
 jobs:
   deploy:
     runs-on: ubuntu-20.04
@@ -60,7 +57,7 @@ jobs:
           publish_dir: ./out
           publish_branch: gh-pages
           force_orphan: true
-          cname: ${{ env.DEPLOYMENT_DOMAIN }}
+          cname: ${{ secrets.CNAME }}
 
       - name: Send success deployment webhook to Discord
         uses: sarisia/actions-status-discord@v1
@@ -72,7 +69,7 @@ jobs:
           title: Deployment Successful
           description: |
             Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ steps.get-commit-hash.outputs.commit_url }})
-            Click [here](https://${{ env.DEPLOYMENT_DOMAIN }}) to see the result!
+            Click [here](https://${{ secrets.CNAME }}) to see the result!
             Please wait for several seconds until Github Page deployment is success
           color: 3066993
 
