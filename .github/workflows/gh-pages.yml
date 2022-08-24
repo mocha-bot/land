@@ -8,20 +8,45 @@ on:
   workflow_dispatch:
 
 jobs:
-  deployment:
-    runs-on: ubuntu-latest
-
+  deploy:
+    runs-on: ubuntu-20.04
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
 
-      - name: Build
+      - name: Get yarn cache
+        id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+
+      - name: Save commit related data to env var
+        id: get-commit-hash
         run: |
-          yarn
+          echo "::set-output name=commit_url::${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}"
+          echo "::set-output name=commit_hash_short::$(git rev-parse --short HEAD)"
+          echo "::set-output name=github_action_url::${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+
+      - name: Build
+        env:
+          SHOW_VERSION: false
+          COMMIT_HASH: ${{ steps.get-commit-hash.outputs.commit_hash_short }}
+        run: |
+          yarn install
           yarn build
           yarn export
 
@@ -32,4 +57,31 @@ jobs:
           publish_dir: ./out
           publish_branch: gh-pages
           force_orphan: true
-          cname: mocha.chroma-gaming.xyz
+          cname: ${{ secrets.CNAME }}
+
+      - name: Send success deployment webhook to Discord
+        uses: sarisia/actions-status-discord@v1
+        if: ${{ success() }}
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.ACTIONS_DISCORD_WEBHOOK_DEPLOYMENT }}
+        with:
+          nodetail: true
+          title: Deployment Successful
+          description: |
+            Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ steps.get-commit-hash.outputs.commit_url }})
+            Click [here](https://${{ secrets.CNAME }}) to see the result!
+            Please wait for several seconds until Github Page deployment is success
+          color: 3066993
+
+      - name: Send failed deployment webhook to Discord
+        uses: sarisia/actions-status-discord@v1
+        if: ${{ failure() }}
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.ACTIONS_DISCORD_WEBHOOK_DEPLOYMENT }}
+        with:
+          nodetail: true
+          title: Deployment Failed
+          description: |
+            Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ steps.get-commit-hash.outputs.commit_url }})
+            Click [here](${{ steps.get-commit-hash.outputs.github_action_url }}) to see the failed deployment!
+          color: 15158332
