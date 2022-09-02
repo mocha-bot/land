@@ -37,13 +37,11 @@ export function HomeContainer() {
         spacing={{ base: 8, md: 14 }}
         py={{ base: 20, md: 36 }}
         justifyContent='center'
-        h='full'
-      >
+        h='full'>
         <Heading
           fontWeight={600}
           fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
-          lineHeight='110%'
-        >
+          lineHeight='110%'>
           Drink mocha with <br />
           <Text as='span' color='yellow.600'>
             people across the universe.
@@ -60,13 +58,11 @@ export function HomeContainer() {
           spacing={3}
           align='center'
           alignSelf='center'
-          position='relative'
-        >
+          position='relative'>
           <a
             href='https://discord.com/api/oauth2/authorize?client_id=987974524140146728&permissions=414465853504&scope=applications.commands%20bot'
             target='_blank'
-            rel='noreferrer'
-          >
+            rel='noreferrer'>
             <Button
               bg='yellow.700'
               color='white'
@@ -75,8 +71,7 @@ export function HomeContainer() {
               _hover={{
                 bg: 'yellow.800',
               }}
-              _focus={{ bg: 'yellow.900' }}
-            >
+              _focus={{ bg: 'yellow.900' }}>
               Taste a Mocha
             </Button>
           </a>
@@ -95,8 +90,7 @@ export function HomeContainer() {
               position='absolute'
               right='-90px'
               top='-15px'
-              transform='rotate(10deg)'
-            >
+              transform='rotate(10deg)'>
               Click me
             </Text>
           </Box>
@@ -108,8 +102,7 @@ export function HomeContainer() {
         left='0'
         right='0'
         w='full'
-        justifyContent='center'
-      >
+        justifyContent='center'>
         <Flex alignItems='center' justifyContent='center'>
           <Text>Supported by</Text>
           <Image
@@ -124,13 +117,11 @@ export function HomeContainer() {
             display='inline'
             color='blue.400'
             borderBottomWidth='1px'
-            borderBottomColor='blue.500'
-          >
+            borderBottomColor='blue.500'>
             <a
               href='https://discord.chroma-gaming.xyz'
               target='_blank'
-              rel='noreferrer'
-            >
+              rel='noreferrer'>
               Chroma Developer
             </a>
           </Text>
