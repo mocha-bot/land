@@ -11,6 +11,7 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
+import { useTranslation } from 'next-i18next';
 import getConfig from 'next/config';
 
 const { publicRuntimeConfig } = getConfig();
@@ -29,6 +30,8 @@ const Arrow = createIcon({
 });
 
 export function HomeContainer() {
+  const { t } = useTranslation();
+
   return (
     <Container maxW='3xl' h='100vh'>
       <Stack
@@ -42,17 +45,12 @@ export function HomeContainer() {
           fontWeight={600}
           fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
           lineHeight='110%'>
-          Drink mocha with <br />
+          {t('common:home.tag_one')} <br />
           <Text as='span' color='yellow.600'>
-            people across the universe.
+            {t('common:home.tag_two')}
           </Text>
         </Heading>
-        <Text color='gray.500'>
-          Mocha is a bot for multi-chat cross-server, This bot allows you to
-          send messages to multiple channels at once. You can create a private
-          or public channel and send messages to it. The bot also filters out
-          messages from prohibits mentions
-        </Text>
+        <Text color='gray.500'>{t('common:home.description')}</Text>
         <Stack
           direction='column'
           spacing={3}
@@ -72,7 +70,7 @@ export function HomeContainer() {
                 bg: 'yellow.800',
               }}
               _focus={{ bg: 'yellow.900' }}>
-              Taste a Mocha
+              {t('common:home.invite_button_label')}
             </Button>
           </a>
           <Box display={{ base: 'none', md: 'block' }}>
@@ -91,7 +89,7 @@ export function HomeContainer() {
               right='-90px'
               top='-15px'
               transform='rotate(10deg)'>
-              Click me
+              {t('common:home.invite_button_arrow_label')}
             </Text>
           </Box>
         </Stack>
@@ -104,7 +102,7 @@ export function HomeContainer() {
         w='full'
         justifyContent='center'>
         <Flex alignItems='center' justifyContent='center'>
-          <Text>Supported by</Text>
+          <Text>{t('common:home.supported_by')}</Text>
           <Image
             src='img/logo-chroma.png'
             width='30px'
@@ -122,13 +120,13 @@ export function HomeContainer() {
               href='https://discord.chroma-gaming.xyz'
               target='_blank'
               rel='noreferrer'>
-              Chroma Developer
+              {t('common:chroma_developer')}
             </a>
           </Text>
         </Flex>
         {publicRuntimeConfig.showVersion && (
           <Text fontSize='10px' textAlign='center' mt='2'>
-            version - {publicRuntimeConfig.clientVersion}
+            {t('common:version')} - {publicRuntimeConfig.clientVersion}
           </Text>
         )}
       </Box>
