@@ -3,9 +3,13 @@ name: Deploy to Github Pages
 on:
   push:
     branches:
-      - master
+      - feat/change-translation-library
 
   workflow_dispatch:
+
+env:
+  SHOW_VERSION: TRUE
+  LANGUAGE: 'en'
 
 jobs:
   deploy:
@@ -43,7 +47,6 @@ jobs:
 
       - name: Build
         env:
-          SHOW_VERSION: false
           COMMIT_HASH: ${{ steps.get-commit-hash.outputs.commit_hash_short }}
         run: |
           yarn install
@@ -59,29 +62,29 @@ jobs:
           force_orphan: true
           cname: ${{ secrets.CNAME }}
 
-      - name: Send success deployment webhook to Discord
-        uses: sarisia/actions-status-discord@v1
-        if: ${{ success() }}
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.ACTIONS_DISCORD_WEBHOOK_DEPLOYMENT }}
-        with:
-          nodetail: true
-          title: Deployment Successful
-          description: |
-            Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ steps.get-commit-hash.outputs.commit_url }})
-            Click [here](https://${{ secrets.CNAME }}) to see the result!
-            Please wait for several seconds until Github Page deployment is success
-          color: 3066993
+      # - name: Send success deployment webhook to Discord
+      #   uses: sarisia/actions-status-discord@v1
+      #   if: ${{ success() }}
+      #   env:
+      #     DISCORD_WEBHOOK: ${{ secrets.ACTIONS_DISCORD_WEBHOOK_DEPLOYMENT }}
+      #   with:
+      #     nodetail: true
+      #     title: Deployment Successful
+      #     description: |
+      #       Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ steps.get-commit-hash.outputs.commit_url }})
+      #       Click [here](https://${{ secrets.CNAME }}) to see the result!
+      #       Please wait for several seconds until Github Page deployment is success
+      #     color: 3066993
 
-      - name: Send failed deployment webhook to Discord
-        uses: sarisia/actions-status-discord@v1
-        if: ${{ failure() }}
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.ACTIONS_DISCORD_WEBHOOK_DEPLOYMENT }}
-        with:
-          nodetail: true
-          title: Deployment Failed
-          description: |
-            Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ steps.get-commit-hash.outputs.commit_url }})
-            Click [here](${{ steps.get-commit-hash.outputs.github_action_url }}) to see the failed deployment!
-          color: 15158332
+      # - name: Send failed deployment webhook to Discord
+      #   uses: sarisia/actions-status-discord@v1
+      #   if: ${{ failure() }}
+      #   env:
+      #     DISCORD_WEBHOOK: ${{ secrets.ACTIONS_DISCORD_WEBHOOK_DEPLOYMENT }}
+      #   with:
+      #     nodetail: true
+      #     title: Deployment Failed
+      #     description: |
+      #       Commit [${{ steps.get-commit-hash.outputs.commit_hash_short }}](${{ steps.get-commit-hash.outputs.commit_url }})
+      #       Click [here](${{ steps.get-commit-hash.outputs.github_action_url }}) to see the failed deployment!
+      #     color: 15158332
