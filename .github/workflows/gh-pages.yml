@@ -7,6 +7,10 @@ on:
 
   workflow_dispatch:
 
+env:
+  SHOW_VERSION: 'FALSE'
+  LANGUAGE: 'en'
+
 jobs:
   deploy:
     runs-on: ubuntu-20.04
@@ -43,7 +47,6 @@ jobs:
 
       - name: Build
         env:
-          SHOW_VERSION: false
           COMMIT_HASH: ${{ steps.get-commit-hash.outputs.commit_hash_short }}
         run: |
           yarn install

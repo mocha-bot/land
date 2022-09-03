@@ -11,7 +11,7 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { useTranslation } from 'next-i18next';
+import { useTranslation } from 'next-export-i18n';
 import getConfig from 'next/config';
 
 const { publicRuntimeConfig } = getConfig();
@@ -45,12 +45,12 @@ export function HomeContainer() {
           fontWeight={600}
           fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
           lineHeight='110%'>
-          {t('common:home.tag_one')} <br />
+          {t('common.home.tag_one')} <br />
           <Text as='span' color='yellow.600'>
-            {t('common:home.tag_two')}
+            {t('common.home.tag_two')}
           </Text>
         </Heading>
-        <Text color='gray.500'>{t('common:home.description')}</Text>
+        <Text color='gray.500'>{t('common.home.description')}</Text>
         <Stack
           direction='column'
           spacing={3}
@@ -70,7 +70,7 @@ export function HomeContainer() {
                 bg: 'yellow.800',
               }}
               _focus={{ bg: 'yellow.900' }}>
-              {t('common:home.invite_button_label')}
+              {t('common.home.invite_button_label')}
             </Button>
           </a>
           <Box display={{ base: 'none', md: 'block' }}>
@@ -89,7 +89,7 @@ export function HomeContainer() {
               right='-90px'
               top='-15px'
               transform='rotate(10deg)'>
-              {t('common:home.invite_button_arrow_label')}
+              {t('common.home.invite_button_arrow_label')}
             </Text>
           </Box>
         </Stack>
@@ -102,7 +102,7 @@ export function HomeContainer() {
         w='full'
         justifyContent='center'>
         <Flex alignItems='center' justifyContent='center'>
-          <Text>{t('common:home.supported_by')}</Text>
+          <Text>{t('common.home.supported_by')}</Text>
           <Image
             src='img/logo-chroma.png'
             width='30px'
@@ -120,13 +120,13 @@ export function HomeContainer() {
               href='https://discord.chroma-gaming.xyz'
               target='_blank'
               rel='noreferrer'>
-              {t('common:chroma_developer')}
+              {t('common.chroma_developer')}
             </a>
           </Text>
         </Flex>
         {publicRuntimeConfig.showVersion && (
           <Text fontSize='10px' textAlign='center' mt='2'>
-            {t('common:version')} - {publicRuntimeConfig.clientVersion}
+            {t('common.version')} - {publicRuntimeConfig.clientVersion}
           </Text>
         )}
       </Box>
