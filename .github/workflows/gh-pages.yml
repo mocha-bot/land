@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 env:
-  SHOW_VERSION: TRUE
+  SHOW_VERSION: 'TRUE'
   LANGUAGE: 'en'
 
 jobs:
