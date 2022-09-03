@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
+console.log(`----`);
+console.log(`process.env.SHOW_VERSION: ${process.env.SHOW_VERSION}`);
+console.log(`process.env.LANGUAGE: ${process.env.LANGUAGE}`);
+console.log(`----`);
 const nextConfig = {
   reactStrictMode: true,
   publicRuntimeConfig: {
