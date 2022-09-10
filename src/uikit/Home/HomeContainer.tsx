@@ -7,6 +7,7 @@ import {
   Heading,
   Icon,
   Image,
+  SimpleGrid,
   Stack,
   Text,
   useColorModeValue,
@@ -51,47 +52,64 @@ export function HomeContainer() {
           </Text>
         </Heading>
         <Text color='gray.500'>{t('common.home.description')}</Text>
-        <Stack
-          direction='column'
-          spacing={3}
-          align='center'
-          alignSelf='center'
-          position='relative'>
-          <a
-            href='https://discord.com/api/oauth2/authorize?client_id=987974524140146728&permissions=414465853504&scope=applications.commands%20bot'
-            target='_blank'
-            rel='noreferrer'>
-            <Button
-              bg='yellow.700'
-              color='white'
-              rounded='full'
-              px={6}
-              _hover={{
-                bg: 'yellow.800',
-              }}
-              _focus={{ bg: 'yellow.900' }}>
-              {t('common.home.invite_button_label')}
-            </Button>
-          </a>
-          <Box display={{ base: 'none', md: 'block' }}>
-            <Icon
-              as={Arrow}
-              color={useColorModeValue('gray.800', 'gray.300')}
-              w={71}
-              position='absolute'
-              right={-71}
-              top='10px'
-            />
-            <Text
-              fontSize='lg'
-              fontFamily='Caveat'
-              position='absolute'
-              right='-90px'
-              top='-15px'
-              transform='rotate(10deg)'>
-              {t('common.home.invite_button_arrow_label')}
-            </Text>
+        <Stack direction='column' spacing={2} alignSelf='center'>
+          <Box position='relative'>
+            <a
+              href={publicRuntimeConfig.botInvitationUrl}
+              target='_blank'
+              rel='noreferrer'>
+              <Button
+                w='100%'
+                bg='yellow.700'
+                color='white'
+                rounded='full'
+                px={6}
+                _hover={{
+                  bg: 'yellow.800',
+                }}
+                _focus={{ bg: 'yellow.900' }}>
+                {t('common.home.invite_button_label')}
+              </Button>
+            </a>
+            <Box display={{ base: 'none', md: 'block' }}>
+              <Icon
+                as={Arrow}
+                color={useColorModeValue('gray.800', 'gray.300')}
+                w={71}
+                position='absolute'
+                right={-71}
+                top='10px'
+              />
+              <Text
+                fontSize='lg'
+                fontFamily='Caveat'
+                position='absolute'
+                right='-90px'
+                top='-15px'
+                transform='rotate(10deg)'>
+                {t('common.home.invite_button_arrow_label')}
+              </Text>
+            </Box>
           </Box>
+          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={2}>
+            <a
+              href={publicRuntimeConfig.docsUrl}
+              target='_blank'
+              rel='noreferrer'
+              style={{ width: '100%' }}>
+              <Button w='100%' variant='outline' rounded='full' px={6}>
+                {t('common.home.docs_button_label')}
+              </Button>
+            </a>
+            <a
+              href={publicRuntimeConfig.discordServerUrl}
+              target='_blank'
+              rel='noreferrer'>
+              <Button w='100%' variant='outline' rounded='full' px={6}>
+                {t('common.home.discord_button_label')}
+              </Button>
+            </a>
+          </SimpleGrid>
         </Stack>
       </Stack>
       <Box

@@ -7,6 +7,8 @@
     "description": "Mocha is a bot for multi-chat cross-server, This bot allows you to send messages to multiple channels at once. You can create a private or public channel and send messages to it. The bot also filters out messages from prohibits mentions",
     "invite_button_label": "Taste a Mocha",
     "invite_button_arrow_label": "Click me",
+    "docs_button_label": "Docs",
+    "discord_button_label": "Discord",
     "supported_by": "Supported by"
   }
 }
