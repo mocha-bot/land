@@ -7,10 +7,12 @@ import {
   Heading,
   Icon,
   Image,
+  Link,
   SimpleGrid,
   Stack,
   Text,
   useColorModeValue,
+  VStack,
 } from '@chakra-ui/react';
 import { useTranslation } from 'next-export-i18n';
 import getConfig from 'next/config';
@@ -52,12 +54,12 @@ export function HomeContainer() {
           </Text>
         </Heading>
         <Text color='gray.500'>{t('common.home.description')}</Text>
-        <Stack direction='column' spacing={2} alignSelf='center'>
-          <Box position='relative'>
-            <a
+        <VStack spacing={2} alignSelf='center'>
+          <Box position='relative' w='100%'>
+            <Link
               href={publicRuntimeConfig.botInvitationUrl}
-              target='_blank'
-              rel='noreferrer'>
+              isExternal
+              _hover={{ textDecoration: 'none' }}>
               <Button
                 w='100%'
                 bg='yellow.700'
@@ -70,7 +72,7 @@ export function HomeContainer() {
                 _focus={{ bg: 'yellow.900' }}>
                 {t('common.home.invite_button_label')}
               </Button>
-            </a>
+            </Link>
             <Box display={{ base: 'none', md: 'block' }}>
               <Icon
                 as={Arrow}
@@ -92,25 +94,24 @@ export function HomeContainer() {
             </Box>
           </Box>
           <SimpleGrid columns={{ base: 1, md: 2 }} spacing={2}>
-            <a
+            <Link
               href={publicRuntimeConfig.docsUrl}
-              target='_blank'
-              rel='noreferrer'
-              style={{ width: '100%' }}>
+              isExternal
+              _hover={{ textDecoration: 'none' }}>
               <Button w='100%' variant='outline' rounded='full' px={6}>
                 {t('common.home.docs_button_label')}
               </Button>
-            </a>
-            <a
+            </Link>
+            <Link
               href={publicRuntimeConfig.discordServerUrl}
-              target='_blank'
-              rel='noreferrer'>
+              isExternal
+              _hover={{ textDecoration: 'none' }}>
               <Button w='100%' variant='outline' rounded='full' px={6}>
                 {t('common.home.discord_button_label')}
               </Button>
-            </a>
+            </Link>
           </SimpleGrid>
-        </Stack>
+        </VStack>
       </Stack>
       <Box
         position='absolute'
@@ -134,12 +135,12 @@ export function HomeContainer() {
             color='blue.400'
             borderBottomWidth='1px'
             borderBottomColor='blue.500'>
-            <a
+            <Link
               href='https://discord.chroma-gaming.xyz'
-              target='_blank'
-              rel='noreferrer'>
+              isExternal
+              _hover={{ textDecoration: 'none' }}>
               {t('common.chroma_developer')}
-            </a>
+            </Link>
           </Text>
         </Flex>
         {publicRuntimeConfig.showVersion && (
