@@ -10,6 +10,7 @@ on:
 env:
   SHOW_VERSION: 'FALSE'
   LANGUAGE: 'en'
+  NEXT_PUBLIC_GA_TRACKING_ID: ${{ secrets.ACTIONS_GA_TRACKING_ID }}
 
 jobs:
   deploy:

@@ -19,6 +19,7 @@
     "framer-motion": "6",
     "next": "12.1.6",
     "next-export-i18n": "2.0.3",
+    "nextjs-google-analytics": "^2.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
