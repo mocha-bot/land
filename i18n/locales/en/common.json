@@ -4,7 +4,7 @@
   "home": {
     "tag_one": "Drink mocha with",
     "tag_two": "people across the universe.",
-    "description": "Mocha is a bot for multi-chat cross-server, This bot allows you to send messages to multiple channels at once. You can create a private or public channel and send messages to it. The bot also filters out messages from prohibits mentions",
+    "description": "Mocha is a Discord bot for multi-chat cross-server, This bot allows you to send messages to multiple channels at once. You can create a private or public channel and send messages to it. The bot also filters out messages from prohibits mentions",
     "invite_button_label": "Taste a Mocha",
     "invite_button_arrow_label": "Click me",
     "docs_button_label": "Docs",
