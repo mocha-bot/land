@@ -8,9 +8,9 @@ const nextConfig = {
     botInvitationUrl:
       process.env.BOT_INVITATION_URL ||
       'https://discord.com/api/oauth2/authorize?client_id=987974524140146728&permissions=414465853504&scope=applications.commands%20bot',
-    docsUrl: process.env.DOCS_URL || 'https://mocha-docs.chroma-gaming.xyz/',
+    docsUrl: process.env.DOCS_URL || 'https://docs.mocha-bot.xyz/',
     discordServerUrl:
-      process.env.DISCORD_SERVER_URL || 'https://discord.gg/PQnkPABkbd',
+      process.env.DISCORD_SERVER_URL || 'https://discord.mocha-bot.xyz/',
   },
 };
 
