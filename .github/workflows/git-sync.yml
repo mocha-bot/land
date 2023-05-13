@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - feat/add-git-sync-workflow
+      - master
 
 jobs:
   git-sync:
@@ -10,8 +10,8 @@ jobs:
       - name: git-sync
         uses: wei/git-sync@v3
         with:
-          source_repo: 'git@github.com:mocha-bot/land.git'
+          source_repo: ${{ vars.GIT_SYNC_SOURCE_REPO }}
           source_branch: 'master'
-          destination_repo: 'git@github.com:Fakhri1999/test-gh-sync.git'
+          destination_repo: ${{ vars.GIT_SYNC_DESTINATION_REPO }}
           destination_branch: 'master'
           ssh_private_key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
