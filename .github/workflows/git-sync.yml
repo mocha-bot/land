@@ -11,7 +11,7 @@ jobs:
         uses: wei/git-sync@v3
         with:
           source_repo: ${{ vars.GIT_SYNC_SOURCE_REPO }}
-          source_branch: 'master'
+          source_branch: ${{ vars.GIT_SYNC_SOURCE_BRANCH }}
           destination_repo: ${{ vars.GIT_SYNC_DESTINATION_REPO }}
-          destination_branch: 'master'
+          destination_branch: ${{ vars.GIT_SYNC_DESTINATION_BRANCH }}
           ssh_private_key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
