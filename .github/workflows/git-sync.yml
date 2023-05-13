@@ -1,0 +1,16 @@
+on:
+  push:
+    branches:
+      - feat/add-git-sync-workflow
+
+jobs:
+  git-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: git-sync
+        uses: wei/git-sync@v3
+        with:
+          source_repo: 'git@github.com:mocha-bot/land.git'
+          source_branch: 'master'
+          destination_repo: 'git@github.com:Fakhri1999/test-gh-sync.git'
+          destination_branch: 'master'
