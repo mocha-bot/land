@@ -14,3 +14,4 @@ jobs:
           source_branch: 'master'
           destination_repo: 'git@github.com:Fakhri1999/test-gh-sync.git'
           destination_branch: 'master'
+          ssh_private_key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
