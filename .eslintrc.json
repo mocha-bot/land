@@ -41,17 +41,6 @@
     "react/require-default-props": "off",
     "react/no-unused-prop-types": "off",
     "@typescript-eslint/consistent-type-imports": "error",
-    "@typescript-eslint/no-unused-vars": "error",
-    "import/order": [
-      "error",
-      {
-        "newlines-between": "always",
-        "alphabetize": {
-          "order": "asc",
-          "caseInsensitive": true
-        },
-        "groups": ["builtin", "external", "internal", "parent"]
-      }
-    ]
+    "@typescript-eslint/no-unused-vars": "error"
   }
 }
