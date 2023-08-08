@@ -4,6 +4,8 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { GoogleAnalytics } from 'nextjs-google-analytics';
 
+import { theme } from '../theme';
+
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID || '';
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -13,7 +15,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <title>Mocha Bot</title>
       </Head>
       <GoogleAnalytics trackPageViews gaMeasurementId={GA_TRACKING_ID} />
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <Component {...pageProps} />
       </ChakraProvider>
     </>
