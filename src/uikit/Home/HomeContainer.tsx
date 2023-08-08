@@ -123,10 +123,10 @@ export function HomeContainer() {
         <Flex alignItems='center' justifyContent='center'>
           <Text>{t('common:home.supported_by')}</Text>
           <Image
-            src='img/logo-chroma.png'
+            src='img/logo-mocha.svg'
             width='30px'
             height='30px'
-            alt='Chroma Developer Logo'
+            alt='Mocha Logo'
             ml='4px'
             mr='2px'
           />
@@ -136,10 +136,10 @@ export function HomeContainer() {
             borderBottomWidth='1px'
             borderBottomColor='blue.500'>
             <Link
-              href='https://discord.chroma-gaming.xyz'
+              href='https://discord.com/invite/PQnkPABkbd'
               isExternal
               _hover={{ textDecoration: 'none' }}>
-              {t('common:chroma_developer')}
+              {t('common:mocha_developer')}
             </Link>
           </Text>
         </Flex>
