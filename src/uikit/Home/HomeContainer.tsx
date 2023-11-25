@@ -17,6 +17,8 @@ import {
 import { useTranslation } from 'next-i18next';
 import getConfig from 'next/config';
 
+import { Navigation } from '@/components/Navigation/Navigation';
+
 const { publicRuntimeConfig } = getConfig();
 
 const Arrow = createIcon({
@@ -36,119 +38,122 @@ export function HomeContainer() {
   const { t } = useTranslation();
 
   return (
-    <Container maxW='3xl' h='100vh'>
-      <Stack
-        as={Box}
-        textAlign='center'
-        spacing={{ base: 8, md: 14 }}
-        py={{ base: 20, md: 36 }}
-        justifyContent='center'
-        h='full'>
-        <Heading
-          fontWeight={600}
-          fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
-          lineHeight='110%'>
-          {t('common:home.tag_one')} <br />
-          <Text as='span' color='yellow.600'>
-            {t('common:home.tag_two')}
-          </Text>
-        </Heading>
-        <Text color='gray.500'>{t('common:home.description')}</Text>
-        <VStack spacing={2} alignSelf='center'>
-          <Box position='relative' w='100%'>
-            <Link
-              href={publicRuntimeConfig.botInvitationUrl}
-              isExternal
-              _hover={{ textDecoration: 'none' }}>
-              <Button
-                w='100%'
-                bg='yellow.700'
-                color='white'
-                rounded='full'
-                px={6}
-                _hover={{
-                  bg: 'yellow.800',
-                }}
-                _focus={{ bg: 'yellow.900' }}>
-                {t('common:home.invite_button_label')}
-              </Button>
-            </Link>
-            <Box display={{ base: 'none', md: 'block' }}>
-              <Icon
-                as={Arrow}
-                color={useColorModeValue('gray.800', 'gray.300')}
-                w={71}
-                position='absolute'
-                right={-71}
-                top='10px'
-              />
-              <Text
-                fontSize='lg'
-                fontFamily='Caveat'
-                position='absolute'
-                right='-90px'
-                top='-15px'
-                transform='rotate(10deg)'>
-                {t('common:home.invite_button_arrow_label')}
-              </Text>
+    <Box>
+      <Navigation />
+      <Container maxW='3xl' h='100vh'>
+        <Stack
+          as={Box}
+          textAlign='center'
+          spacing={{ base: 8, md: 14 }}
+          py={{ base: 20, md: 36 }}
+          justifyContent='center'
+          h='full'>
+          <Heading
+            fontWeight={600}
+            fontSize={{ base: '3xl', sm: '4xl', md: '6xl' }}
+            lineHeight='110%'>
+            {t('common:home.tag_one')} <br />
+            <Text as='span' color='yellow.600'>
+              {t('common:home.tag_two')}
+            </Text>
+          </Heading>
+          <Text color='gray.500'>{t('common:home.description')}</Text>
+          <VStack spacing={2} alignSelf='center'>
+            <Box position='relative' w='100%'>
+              <Link
+                href={publicRuntimeConfig.botInvitationUrl}
+                isExternal
+                _hover={{ textDecoration: 'none' }}>
+                <Button
+                  w='100%'
+                  bg='yellow.700'
+                  color='white'
+                  rounded='full'
+                  px={6}
+                  _hover={{
+                    bg: 'yellow.800',
+                  }}
+                  _focus={{ bg: 'yellow.900' }}>
+                  {t('common:home.invite_button_label')}
+                </Button>
+              </Link>
+              <Box display={{ base: 'none', md: 'block' }}>
+                <Icon
+                  as={Arrow}
+                  color={useColorModeValue('gray.800', 'gray.300')}
+                  w={71}
+                  position='absolute'
+                  right={-71}
+                  top='10px'
+                />
+                <Text
+                  fontSize='lg'
+                  fontFamily='Caveat'
+                  position='absolute'
+                  right='-90px'
+                  top='-15px'
+                  transform='rotate(10deg)'>
+                  {t('common:home.invite_button_arrow_label')}
+                </Text>
+              </Box>
             </Box>
-          </Box>
-          <SimpleGrid columns={{ base: 1, md: 2 }} spacing={2}>
-            <Link
-              href={publicRuntimeConfig.docsUrl}
-              isExternal
-              _hover={{ textDecoration: 'none' }}>
-              <Button w='100%' variant='outline' rounded='full' px={6}>
-                {t('common:home.docs_button_label')}
-              </Button>
-            </Link>
-            <Link
-              href={publicRuntimeConfig.discordServerUrl}
-              isExternal
-              _hover={{ textDecoration: 'none' }}>
-              <Button w='100%' variant='outline' rounded='full' px={6}>
-                {t('common:home.discord_button_label')}
-              </Button>
-            </Link>
-          </SimpleGrid>
-        </VStack>
-      </Stack>
-      <Box
-        position='absolute'
-        bottom={publicRuntimeConfig.showVersion ? '8' : '10'}
-        left='0'
-        right='0'
-        w='full'
-        justifyContent='center'>
-        <Flex alignItems='center' justifyContent='center'>
-          <Text>{t('common:home.supported_by')}</Text>
-          <Image
-            src='img/logo-mocha.svg'
-            width='30px'
-            height='30px'
-            alt='Mocha Logo'
-            ml='4px'
-            mr='2px'
-          />
-          <Text
-            display='inline'
-            color='blue.400'
-            borderBottomWidth='1px'
-            borderBottomColor='blue.500'>
-            <Link
-              href='https://discord.com/invite/PQnkPABkbd'
-              isExternal
-              _hover={{ textDecoration: 'none' }}>
-              {t('common:mocha_developer')}
-            </Link>
-          </Text>
-        </Flex>
-        {publicRuntimeConfig.showVersion && (
-          <Text fontSize='10px' textAlign='center' mt='2'>
-            {t('common:version')} - {publicRuntimeConfig.clientVersion}
-          </Text>
-        )}
-      </Box>
-    </Container>
+            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={2}>
+              <Link
+                href={publicRuntimeConfig.docsUrl}
+                isExternal
+                _hover={{ textDecoration: 'none' }}>
+                <Button w='100%' variant='outline' rounded='full' px={6}>
+                  {t('common:home.docs_button_label')}
+                </Button>
+              </Link>
+              <Link
+                href={publicRuntimeConfig.discordServerUrl}
+                isExternal
+                _hover={{ textDecoration: 'none' }}>
+                <Button w='100%' variant='outline' rounded='full' px={6}>
+                  {t('common:home.discord_button_label')}
+                </Button>
+              </Link>
+            </SimpleGrid>
+          </VStack>
+        </Stack>
+        <Box
+          position='absolute'
+          bottom={publicRuntimeConfig.showVersion ? '8' : '10'}
+          left='0'
+          right='0'
+          w='full'
+          justifyContent='center'>
+          <Flex alignItems='center' justifyContent='center'>
+            <Text>{t('common:home.supported_by')}</Text>
+            <Image
+              src='img/logo-mocha.svg'
+              width='30px'
+              height='30px'
+              alt='Mocha Logo'
+              ml='4px'
+              mr='2px'
+            />
+            <Text
+              display='inline'
+              color='blue.400'
+              borderBottomWidth='1px'
+              borderBottomColor='blue.500'>
+              <Link
+                href='https://discord.com/invite/PQnkPABkbd'
+                isExternal
+                _hover={{ textDecoration: 'none' }}>
+                {t('common:mocha_developer')}
+              </Link>
+            </Text>
+          </Flex>
+          {publicRuntimeConfig.showVersion && (
+            <Text fontSize='10px' textAlign='center' mt='2'>
+              {t('common:version')} - {publicRuntimeConfig.clientVersion}
+            </Text>
+          )}
+        </Box>
+      </Container>
+    </Box>
   );
 }
