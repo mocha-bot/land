@@ -9,7 +9,7 @@ const primary = defineStyle({
   backdropFilter: 'blur(5px)',
   px: '8',
   _disabled: {
-    fontcolor: 'font.primary.base.disabled',
+    color: 'font.primary.base.disabled',
     borderColor: 'radii.primary.base.disabled',
   },
   _hover: {
