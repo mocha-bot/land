@@ -18,7 +18,7 @@
     "@emotion/styled": "11",
     "framer-motion": "6",
     "i18next": "22.4.15",
-    "next": "12.1.6",
+    "next": "13.5.0",
     "next-i18next": "13.2.2",
     "nextjs-google-analytics": "2.1.0",
     "react": "18.2.0",
