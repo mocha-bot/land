@@ -6,17 +6,9 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
-import type { ReactNode } from 'react';
-
-function ListHeader({ children }: { children: ReactNode }) {
-  return (
-    <Text fontWeight={500} fontSize='lg' mb={2}>
-      {children}
-    </Text>
-  );
-}
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
   return (
     <Box color='white'>
       <Container as={Stack} maxW='6xl' py={10}>
@@ -35,10 +27,14 @@ export default function Footer() {
             <Text fontSize='sm'>
               Your trusted bot for connecting multi-chat cross-server
             </Text>
-            <Text fontSize='sm'>Copyright © 2020 - 2023 Mocha dev</Text>
+            <Text fontSize='sm'>
+              Copyright © 2020 - {currentYear} Mocha dev
+            </Text>
           </Stack>
           <Stack align='flex-start'>
-            <ListHeader>P L U G I N</ListHeader>
+            <Text fontWeight={500} fontSize='lg' mb={2}>
+              P L U G I N
+            </Text>
             <Box as='a' href='#'>
               See Documentations
             </Box>
@@ -47,7 +43,9 @@ export default function Footer() {
             </Box>
           </Stack>
           <Stack align='flex-start'>
-            <ListHeader>S O C I A L</ListHeader>
+            <Text fontWeight={500} fontSize='lg' mb={2}>
+              S O C I A L
+            </Text>
             <Box as='a' href='#'>
               Mocha Discord Server
             </Box>
