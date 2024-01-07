@@ -15,7 +15,7 @@ function Layout({ children }: LayoutProps) {
       backgroundRepeat='no-repeat'
       backgroundSize='cover'>
       <Header />
-      <Box as='main' pt='8' h='100vh'>
+      <Box as='main' pt='8' h='100vh' zIndex={999}>
         {children}
       </Box>
       <Footer />

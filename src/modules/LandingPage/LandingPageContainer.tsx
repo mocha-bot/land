@@ -1,11 +1,11 @@
-import { Box } from '@chakra-ui/react';
-
 import Layout from '@/uikit/Layout';
+
+import { Hero } from './Hero';
 
 export function LandingPageContainer() {
   return (
     <Layout>
-      <Box />
+      <Hero />
     </Layout>
   );
 }
