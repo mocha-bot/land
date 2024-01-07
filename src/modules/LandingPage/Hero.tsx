@@ -9,12 +9,21 @@ import {
 
 export function Hero() {
   return (
-    <VStack w='100%' px={88} mt={178} alignItems='flex-start' spacing={12}>
-      <VStack maxW='60%' alignItems='flex-start'>
-        <Text color='white' fontSize={64} lineHeight='64px' fontWeight='bold'>
+    <VStack
+      w='100%'
+      px={{ base: 4, md: 8, lg: '6rem' }}
+      mt={{ base: 8, md: 12, lg: '11rem' }}
+      alignItems='flex-start'
+      spacing='3rem'>
+      <VStack maxW='60%' alignItems='flex-start' spacing={12}>
+        <Text
+          color='white'
+          fontSize={{ base: '2xl', md: '4xl', lg: '6xl' }}
+          lineHeight='normal'
+          fontWeight='bold'>
           Drink mocha with people accross the universe
         </Text>
-        <Text color='white' fontSize={20} lineHeight='25px' fontWeight={400}>
+        <Text color='white' fontSize={20} lineHeight='normal' fontWeight={400}>
           Mocha is a Discord bot for multi-chat cross-server, that allows you to
           send messages to multiple channels at once.{' '}
         </Text>
@@ -74,13 +83,13 @@ export function Hero() {
             isRound
             backgroundColor='rgba(255, 255, 255, 0.20)'
             p='6px'
-            aria-label='ph mocha'
+            aria-label='product hunt mocha'
             icon={
               <Image
-                src='assets/icons/ph-fill.svg'
+                src='assets/icons/product-hunt-fill.svg'
                 width={8}
                 height={8}
-                alt='ph Icon'
+                alt='Product Hunt Icon'
               />
             }
           />
