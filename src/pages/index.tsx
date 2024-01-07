@@ -3,7 +3,7 @@ import { i18n } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import getConfig from 'next/config';
 
-import { HomeContainer } from '@/uikit/Home/HomeContainer';
+import { HomeContainer } from '@/modules/Home/HomeContainer';
 
 const { publicRuntimeConfig } = getConfig();
 
