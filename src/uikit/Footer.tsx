@@ -18,7 +18,7 @@ export default function Footer() {
           <Stack spacing={6}>
             <Box>
               <Image
-                src='img/mocha.png'
+                src='assets/images/mocha.png'
                 width='119px'
                 height='48px'
                 alt='Mocha Logo'

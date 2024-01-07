@@ -123,7 +123,7 @@ export function HomeContainer() {
         <Flex alignItems='center' justifyContent='center'>
           <Text>{t('common:home.supported_by')}</Text>
           <Image
-            src='img/logo-mocha.svg'
+            src='assets/images/logo-mocha.svg'
             width='30px'
             height='30px'
             alt='Mocha Logo'

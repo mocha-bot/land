@@ -10,7 +10,10 @@ type LayoutProps = {
 
 function Layout({ children }: LayoutProps) {
   return (
-    <Box backgroundImage='img/desktop-background-image.png'>
+    <Box
+      backgroundImage='assets/images/desktop-background-image.png'
+      backgroundRepeat='no-repeat'
+      backgroundSize='cover'>
       <Header />
       <Box as='main' pt='8' h='100vh'>
         {children}

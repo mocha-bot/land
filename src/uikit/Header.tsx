@@ -59,7 +59,7 @@ export default function Header() {
       <Flex minH='60px' py={{ base: 2 }} px={{ base: 4 }} align='center'>
         <Flex flex={1} justifyContent='space-between' alignItems='center'>
           <Image
-            src='img/mocha.png'
+            src='assets/images/mocha.png'
             width='119px'
             height='48px'
             alt='Mocha Logo'
