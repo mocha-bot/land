@@ -2,7 +2,7 @@
 ├── docs
 │ ├── FOLDER_STRUCTURE.md
 │ src
-│ ├── modules - section of each pages
+│ ├── modules - sections for each page
 │ │ ├── component - base component of section
 │ │ ├── repository - hooks, query, post data code
 │ ├── screen - pages
