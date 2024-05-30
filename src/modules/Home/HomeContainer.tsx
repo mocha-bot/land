@@ -1,4 +1,3 @@
-import { CopyIcon } from '@chakra-ui/icons';
 import {
   Box,
   Button,
@@ -7,29 +6,20 @@ import {
   Flex,
   Heading,
   Icon,
-  IconButton,
   Image,
-  Kbd,
   Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
   SimpleGrid,
   Stack,
   Text,
-  useClipboard,
   useColorModeValue,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
 import { useTranslation } from 'next-i18next';
 import getConfig from 'next/config';
-import { FaCheck } from 'react-icons/fa';
 import { GiTwoCoins } from 'react-icons/gi';
+
+import DonationModal from '@/components/DonationModal/DonationModal';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -49,7 +39,6 @@ const Arrow = createIcon({
 export function HomeContainer() {
   const { t } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { onCopy, hasCopied } = useClipboard(publicRuntimeConfig.walletAddress);
 
   const subDirection: {
     href: string;
@@ -210,34 +199,10 @@ export function HomeContainer() {
           )}
         </Box>
       </Container>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{t('common:home.donate.title')}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Flex gap='16px' flexDirection='column'>
-              {t('common:home.donate.modal', {
-                returnObjects: true,
-              }).map((item) => (
-                <Text key={`donate-modal-${item}`}>{item}</Text>
-              ))}
-              <Flex gap='8px' flexDirection='row'>
-                <Kbd px='4px' alignContent='center' w='100%'>
-                  eth: {publicRuntimeConfig.walletAddress}
-                </Kbd>
-                <IconButton
-                  aria-label='Copy Address'
-                  icon={hasCopied ? <FaCheck /> : <CopyIcon />}
-                  onClick={onCopy}
-                />
-              </Flex>
-            </Flex>
-          </ModalBody>
-
-          <ModalFooter />
-        </ModalContent>
-      </Modal>
+      <DonationModal
+        walletAddress={publicRuntimeConfig.walletAddress}
+        modal={{ isOpen, onClose }}
+      />
     </>
   );
 }
