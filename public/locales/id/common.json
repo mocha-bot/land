@@ -9,6 +9,14 @@
     "invite_button_arrow_label": "Klik aku",
     "docs_button_label": "Dokumentasi",
     "discord_button_label": "Discord",
-    "supported_by": "Didukung oleh"
+    "supported_by": "Didukung oleh",
+    "donate": {
+      "title": "Donasi",
+      "description": "Bantu kami menjaga keberlanjutan bot ini, sehingga kami dapat menambahkan lebih banyak fitur."
+      "modal": [
+        "Mocha dibangun oleh tim kecil dan kami akan selalu menambahkan fitur dan pembaruan lebih lanjut. Jika Anda ingin berdonasi, sumbangan Anda akan membantu kami meningkatkan layanan kami.",
+        "Terima kasih banyak dan selamat bersenang-senang, semoga Anda menyukainya!"
+      ]
+    }
   }
 }
