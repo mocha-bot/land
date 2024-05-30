@@ -12,7 +12,7 @@
     "supported_by": "Supported by",
     "donate": {
       "title": "Donate",
-      "description": "Help us to keep the bot alive and we will be able to add more features to it.",
+      "description": "Help us keep the bot alive, enabling us to add more features.",
       "modal": [
         "Mocha is built by a small team and we will always add more features and updates. If you want to donate, your donation will help us to improve our services.",
         "Thank you very much and have fun, hope you like it!"
