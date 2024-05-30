@@ -14,6 +14,7 @@ const nextConfig = {
     docsUrl: process.env.DOCS_URL || 'https://docs.mocha-bot.xyz/',
     discordServerUrl:
       process.env.DISCORD_SERVER_URL || 'https://discord.mocha-bot.xyz/',
+    walletAddress: process.env.WALLET_ADDRESS || '0x0',
   },
 };
 

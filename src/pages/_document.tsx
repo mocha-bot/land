@@ -21,7 +21,12 @@ function MyDocument() {
         <meta property='og:locale' content='en_US' key='meta-locale' />
         <meta property='og:url' content='https://mocha.chroma-gaming.xyz/' />
       </Head>
-      <body style={{ fontFamily: 'Nunito Sans, sans-serif', height: '100%' }}>
+      <body
+        style={{
+          fontFamily: 'Nunito Sans, sans-serif',
+          height: '100%',
+          background: '#f6eee3',
+        }}>
         <Main />
         <NextScript />
       </body>
