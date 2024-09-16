@@ -15,6 +15,7 @@ const nextConfig = {
     discordServerUrl:
       process.env.DISCORD_SERVER_URL || 'https://discord.mocha-bot.xyz/',
     walletAddress: process.env.WALLET_ADDRESS || '0x0',
+    apiBaseUrl: process.env.API_BASE_URL || 'https://srv.mocha-bot.xyz/api',
   },
 };
 

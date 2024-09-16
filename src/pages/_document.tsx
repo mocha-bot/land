@@ -25,7 +25,6 @@ function MyDocument() {
         style={{
           fontFamily: 'Nunito Sans, sans-serif',
           height: '100%',
-          background: '#f6eee3',
         }}>
         <Main />
         <NextScript />

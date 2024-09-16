@@ -56,7 +56,7 @@ export function HomeContainer() {
 
   return (
     <>
-      <Container maxW='3xl' h='100vh'>
+      <Container maxW='3xl' h='100vh' background='#f6eee3'>
         <Stack
           as={Box}
           textAlign='center'
