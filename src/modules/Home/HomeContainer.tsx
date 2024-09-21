@@ -55,8 +55,8 @@ export function HomeContainer() {
   ];
 
   return (
-    <>
-      <Container maxW='3xl' h='100vh' background='#f6eee3'>
+    <Flex background='#f6eee3'>
+      <Container maxW='3xl' h='100vh'>
         <Stack
           as={Box}
           textAlign='center'
@@ -203,6 +203,6 @@ export function HomeContainer() {
         walletAddress={publicRuntimeConfig.walletAddress}
         modal={{ isOpen, onClose }}
       />
-    </>
+    </Flex>
   );
 }
