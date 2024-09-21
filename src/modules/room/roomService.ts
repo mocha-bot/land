@@ -18,7 +18,7 @@ export const searchRoom = async ({
   page = 1,
   query,
 }: SearchRoomRequest): Promise<Room[]> => {
-  const url = new URL(`${publicRuntimeConfig.apiBaseUrl}/search`);
+  const url = new URL(`${publicRuntimeConfig.apiBaseUrl}/api/v1/room/search`);
   url.searchParams.append('page', page.toString());
   url.searchParams.append('limit', limit.toString());
 

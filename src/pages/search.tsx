@@ -15,14 +15,9 @@ import { debounce } from '@/shared/debounce';
 
 function Search() {
   const [query, setQuery] = useState('');
-  const searchRoomQuery = useSearchRoomQuery(
-    {
-      query,
-    },
-    {
-      enabled: !!query,
-    },
-  );
+  const searchRoomQuery = useSearchRoomQuery({
+    query,
+  });
 
   return (
     <Flex w='100%' h='100vh'>
