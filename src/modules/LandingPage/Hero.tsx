@@ -4,42 +4,50 @@ import {
   HStack,
   IconButton,
   Image,
+  Link,
   Text,
   useBreakpointValue,
   VStack,
 } from '@chakra-ui/react';
+import getConfig from 'next/config';
 
-const socials = [
-  {
-    name: 'discord',
-    icon: '/assets/icons/discord-fill.svg',
-  },
-  {
-    name: 'github',
-    icon: '/assets/icons/github-fill.svg',
-  },
-  {
-    name: 'product hunt',
-    icon: '/assets/icons/product-hunt-fill.svg',
-  },
-];
-
-const buttons = [
-  {
-    label: 'Discover More',
-    variant: 'outline',
-    backgroundColor: 'rgba(1, 1, 1, 0.40)',
-    href: '#',
-  },
-  {
-    label: 'See Documentation',
-    variant: 'ghost',
-    href: 'https://docs.mocha-bot.xyz',
-  },
-];
+const { publicRuntimeConfig } = getConfig();
 
 export function Hero() {
   const isMobile = useBreakpointValue({ base: true, md: false });
+
+  const socials = [
+    {
+      name: 'discord',
+      icon: '/assets/icons/discord-fill.svg',
+      href: publicRuntimeConfig.discordServerUrl,
+    },
+    {
+      name: 'github',
+      icon: '/assets/icons/github-fill.svg',
+      href: publicRuntimeConfig.githubUrl,
+    },
+    {
+      name: 'product hunt',
+      icon: '/assets/icons/product-hunt-fill.svg',
+      href: publicRuntimeConfig.productHuntUrl,
+    },
+  ];
+
+  const buttons = [
+    {
+      label: 'Discover More',
+      variant: 'outline',
+      backgroundColor: 'rgba(1, 1, 1, 0.40)',
+      href: '#',
+    },
+    {
+      label: 'See Documentation',
+      variant: 'ghost',
+      href: publicRuntimeConfig.docsUrl,
+    },
+  ];
+
   return (
     <Flex
       w='full'
@@ -85,20 +93,22 @@ export function Hero() {
         {!isMobile && (
           <HStack gap={8}>
             {socials.map((social) => (
-              <IconButton
-                key={social.name}
-                isRound
-                backgroundColor='rgba(255, 255, 255, 0.20)'
-                aria-label={`${social.name} mocha`}
-                icon={
-                  <Image
-                    src={social.icon}
-                    width={8}
-                    height={8}
-                    alt={`${social.name} Icon`}
-                  />
-                }
-              />
+              <Link key={`social-${social.name}`} href={social.href}>
+                <IconButton
+                  key={social.name}
+                  isRound
+                  backgroundColor='rgba(255, 255, 255, 0.20)'
+                  aria-label={`${social.name} mocha`}
+                  icon={
+                    <Image
+                      src={social.icon}
+                      width={8}
+                      height={8}
+                      alt={`${social.name} Icon`}
+                    />
+                  }
+                />
+              </Link>
             ))}
           </HStack>
         )}
