@@ -27,7 +27,7 @@ interface NavItem {
 }
 
 const menuList: Array<NavItem> = [
-  { label: 'about us', href: '/#about-us' },
+  { label: 'about us', href: '/#' },
   { label: 'features', href: '/#features' },
   { label: 'status', href: '/#status' },
   { label: 'discover room', href: '/#' },
