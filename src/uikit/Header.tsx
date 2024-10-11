@@ -109,19 +109,13 @@ export default function Header() {
 
   return (
     <Container as={Stack} maxW={{ base: 'xl', md: '6xl' }}>
-      <Flex
-        minH='60px'
-        py={{ base: 2 }}
-        px={{ base: 0, md: 4 }}
-        alignItems='center'>
+      <Flex py={{ base: 2 }} px={{ base: 0, md: 4 }} alignItems='center'>
         <Flex flex={1} justifyContent='space-between' alignItems='center'>
           <Image
             src='assets/images/mocha.png'
-            width='119px'
-            height='48px'
+            width='logo.width.md'
+            height='logo.height.md'
             alt='Mocha Logo'
-            ml='4px'
-            mr='2px'
           />
 
           {/* Mobile Hamburger Menu */}
@@ -159,11 +153,9 @@ export default function Header() {
                   alignItems='center'>
                   <Image
                     src='assets/images/mocha.png'
-                    width='119px'
-                    height='48px'
+                    width='logo.width.md'
+                    height='logo.height.md'
                     alt='Mocha Logo'
-                    ml='4px'
-                    mr='2px'
                   />
 
                   <MobileMenuButton isOpen={isOpen} onToggle={onToggle} />
@@ -171,7 +163,7 @@ export default function Header() {
 
                 <Flex
                   direction='column'
-                  h='100%'
+                  h='full'
                   justifyContent='center'
                   alignItems='center'>
                   <Flex direction='column' alignItems='center'>

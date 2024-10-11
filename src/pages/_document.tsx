@@ -24,7 +24,7 @@ function MyDocument() {
       <body
         style={{
           fontFamily: 'Nunito Sans, sans-serif',
-          height: '100%',
+          height: 'full',
         }}>
         <Main />
         <NextScript />

@@ -47,11 +47,11 @@ export default function Page404() {
           <Text
             as='h1'
             fontWeight='bold'
-            fontSize={{ base: '128px', lg: '192px' }}>
+            fontSize={{ base: '9xl', lg: '10xl' }}>
             404
           </Text>
           <Box
-            fontSize={{ base: '16px', md: '24px', lg: '32px' }}
+            fontSize={{ base: 'lg', md: '2xl', lg: '3xl' }}
             textAlign={{ base: 'center' }}>
             {isMobile ? <descriptions.mobile /> : <descriptions.desktop />}
           </Box>
@@ -73,7 +73,7 @@ export default function Page404() {
             <Image
               src='/assets/images/planet_2.svg'
               alt='planet'
-              w={{ base: '100%', md: '70%' }}
+              w={{ base: 'full', md: '70%' }}
               position='absolute'
               right={{ base: 'none', md: '-125' }}
               top={{ base: 'none', md: '-105' }}
@@ -122,7 +122,7 @@ export default function Page404() {
             <Image
               src='/assets/images/planet_4.svg'
               alt='planet'
-              w={{ base: '100%', md: '70%' }}
+              w={{ base: 'full', md: '70%' }}
               position='absolute'
               right={{ base: '-25', md: 'none' }}
               top={{ base: '-10', md: 'none' }}

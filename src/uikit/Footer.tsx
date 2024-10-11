@@ -43,7 +43,7 @@ function SubTitle({ title }: SubTitleProps) {
       color='white'
       fontWeight='medium'
       fontSize='sm'
-      letterSpacing='10px'
+      letterSpacing={2.5}
       textTransform='uppercase'>
       {title}
     </Text>
@@ -59,12 +59,12 @@ export default function Footer() {
         <SimpleGrid
           templateColumns={{ sm: '1fr 1fr', md: '4fr 2fr 2fr' }}
           spacing={8}>
-          <Stack h='150px' gap='0' justifyContent='space-between'>
+          <Stack h='5xs' gap='0' justifyContent='space-between'>
             <Stack gap='2'>
               <Image
                 src='assets/images/mocha.png'
-                width='119px'
-                height='48px'
+                width='logo.width.md'
+                height='logo.height.md'
                 alt='Mocha Logo'
               />
               <Box color='#ADADAD'>

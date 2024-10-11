@@ -38,14 +38,14 @@ function DonationModal(props: DonationModalProps) {
         <ModalHeader>{t('common:home.donate.title')}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Flex gap='16px' flexDirection='column'>
+          <Flex gap={4} flexDirection='column'>
             {t('common:home.donate.modal', { returnObjects: true }).map(
               (item) => (
                 <Text key={`donate-modal-${item}`}>{item}</Text>
               ),
             )}
-            <Flex gap='8px' flexDirection='row'>
-              <Kbd px='4px' alignContent='center' w='100%'>
+            <Flex gap={2} flexDirection='row'>
+              <Kbd px={1} alignContent='center' w='full'>
                 eth: {walletAddress}
               </Kbd>
               <IconButton
