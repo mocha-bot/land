@@ -1,5 +1,5 @@
 import { Box, Flex } from '@chakra-ui/react';
-import { type ReactNode, useEffect, useState } from 'react';
+import { type ReactNode } from 'react';
 
 import Footer from './Footer';
 import Header from './Header';
@@ -9,21 +9,6 @@ type LayoutProps = {
 };
 
 function Layout({ children }: LayoutProps) {
-  const [isHeaderOnScroll, setIsHeaderOnScroll] = useState(false);
-
-  useEffect(() => {
-    function handleScroll() {
-      if (window.scrollY > 1) {
-        setIsHeaderOnScroll(true);
-      } else {
-        setIsHeaderOnScroll(false);
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <Box
       backgroundImage='/assets/images/background_desktop.svg'
@@ -32,7 +17,7 @@ function Layout({ children }: LayoutProps) {
       overflow='hidden'>
       <Box
         w='full'
-        position={isHeaderOnScroll ? 'fixed' : 'relative'}
+        position='fixed'
         top={0}
         left={0}
         right={0}
@@ -50,7 +35,9 @@ function Layout({ children }: LayoutProps) {
         alignItems='center'
         flexDirection='column'
         px={8}
-        gap={8}>
+        gap={8}
+        pt={16} // make sure the content is not hidden behind the header after scrolling
+      >
         {children}
       </Flex>
       <Footer />
