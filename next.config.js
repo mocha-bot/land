@@ -16,6 +16,9 @@ const nextConfig = {
       process.env.DISCORD_SERVER_URL || 'https://discord.mocha-bot.xyz/',
     walletAddress: process.env.WALLET_ADDRESS || '0x0',
     apiBaseUrl: process.env.API_BASE_URL || 'https://api.mocha-bot.xyz',
+    supportUrl:
+      process.env.SUPPORT_URL || 'https://top.gg/bot/987974524140146728/vote',
+    githubUrl: process.env.GITHUB_URL || 'https://github.com/mocha-bot',
   },
 };
 
