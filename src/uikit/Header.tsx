@@ -12,9 +12,9 @@ import {
   Image,
   Stack,
   Text,
+  useBreakpointValue,
   useColorModeValue,
   useDisclosure,
-  useMediaQuery,
 } from '@chakra-ui/react';
 import getConfig from 'next/config';
 
@@ -101,11 +101,9 @@ function MobileMenuButton({ isOpen, onToggle }: MobileMenuButtonProps) {
 export default function Header() {
   const { isOpen, onToggle, onClose } = useDisclosure();
 
-  const [isMobile] = useMediaQuery('(max-width: 425px)');
-  const [isTablet] = useMediaQuery(
-    '(min-width: 425px) and (max-width: 1023px)',
-  );
-  const [isDesktop] = useMediaQuery('(min-width: 1024px)');
+  const isMobile = useBreakpointValue({ base: true, md: false, lg: false });
+  const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
+  const isDesktop = useBreakpointValue({ base: false, md: false, lg: true });
 
   return (
     <Container as={Stack} maxW={{ base: 'xl', md: '6xl' }}>
