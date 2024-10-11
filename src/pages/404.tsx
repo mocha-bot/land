@@ -67,6 +67,7 @@ export default function Page404() {
               bottom={{ base: 'none', md: '-125' }}
               overflow='hidden'
               zIndex={3}
+              loading='lazy'
             />
             {/* planet right */}
             <Image
@@ -78,6 +79,7 @@ export default function Page404() {
               top={{ base: 'none', md: '-105' }}
               overflow='hidden'
               zIndex={3}
+              loading='lazy'
             />
             {/* Flare top */}
             <Image
@@ -88,6 +90,7 @@ export default function Page404() {
               position='absolute'
               top={{ base: 'none', md: '-305', lg: '-105' }}
               zIndex={3}
+              loading='lazy'
             />
             {/* Flare bottom */}
             <Image
@@ -97,6 +100,7 @@ export default function Page404() {
               position='absolute'
               bottom={{ base: 'none', md: '-305' }}
               zIndex={3}
+              loading='lazy'
             />
           </>
         )}
@@ -112,6 +116,7 @@ export default function Page404() {
               bottom={{ base: '-10', md: 'none' }}
               overflow='hidden'
               zIndex={3}
+              loading='lazy'
             />
             {/* planet right */}
             <Image
@@ -123,6 +128,7 @@ export default function Page404() {
               top={{ base: '-10', md: 'none' }}
               overflow='hidden'
               zIndex={3}
+              loading='lazy'
             />
             {/* Flare top */}
             <Image
@@ -133,6 +139,7 @@ export default function Page404() {
               position='absolute'
               top={{ base: '-205', md: 'none' }}
               zIndex={3}
+              loading='lazy'
             />
             {/* Flare bottom */}
             <Image
@@ -142,6 +149,7 @@ export default function Page404() {
               position='absolute'
               bottom={{ base: '-90', md: 'none' }}
               zIndex={3}
+              loading='lazy'
             />
           </>
         )}
