@@ -67,12 +67,12 @@ export default function Footer() {
                 height='logo.height.md'
                 alt='Mocha Logo'
               />
-              <Box color='#ADADAD'>
+              <Box color='subtitle'>
                 <Text fontSize='sm'>Your trusted bot for connecting</Text>
                 <Text fontSize='sm'>multi-chat cross-server</Text>
               </Box>
             </Stack>
-            <Text fontSize='sm' color='#ADADAD'>
+            <Text fontSize='sm' color='subtitle'>
               Copyright © 2020 - {currentYear} Mocha
             </Text>
           </Stack>
@@ -83,7 +83,7 @@ export default function Footer() {
                 href={plugin.href}
                 _hover={{ textDecoration: 'none' }}
                 key={`plugin-${plugin.title}`}>
-                <Text fontWeight='hairline' fontSize='sm' color='#ADADAD'>
+                <Text fontWeight='hairline' fontSize='sm' color='subtitle'>
                   {plugin.title}
                 </Text>
               </Link>
@@ -96,7 +96,7 @@ export default function Footer() {
                 href={social.href}
                 _hover={{ textDecoration: 'none' }}
                 key={`social-${social.title}`}>
-                <Text fontWeight='hairline' fontSize='sm' color='#ADADAD'>
+                <Text fontWeight='hairline' fontSize='sm' color='subtitle'>
                   {social.title}
                 </Text>
               </Link>

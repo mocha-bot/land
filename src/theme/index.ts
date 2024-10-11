@@ -19,6 +19,15 @@ const theme = extendTheme({
     '5xs': '10rem',
     '4xs': '12rem',
   },
+  colors: {
+    subtitle: '#ADADAD',
+    icon: {
+      coin: '#FFD700',
+    },
+    background: {
+      coffee: '#f6eee3',
+    },
+  },
 });
 
 export { theme };

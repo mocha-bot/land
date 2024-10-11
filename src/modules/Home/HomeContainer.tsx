@@ -55,7 +55,7 @@ export function HomeContainer() {
   ];
 
   return (
-    <Flex background='#f6eee3'>
+    <Flex background='background.coffee'>
       <Container maxW='3xl' h='100vh'>
         <Stack
           as={Box}
@@ -156,7 +156,7 @@ export function HomeContainer() {
                   borderColor: 'white',
                 }}
                 onClick={onOpen}>
-                <GiTwoCoins color='#FFD700' />
+                <GiTwoCoins color='icon.coin' />
                 {t('common:home.donate.title')}
               </Button>
             </Box>
