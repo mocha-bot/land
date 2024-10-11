@@ -142,7 +142,7 @@ export default function Header() {
           placement='bottom'
           onClose={onClose}
           size='full'>
-          <DrawerOverlay backdropFilter='blur(10px)'>
+          <DrawerOverlay backdropFilter='blur(10px)' transition='all 0.7s'>
             <DrawerContent bg='rgba(0, 0, 0, 0.75)'>
               <DrawerBody w='full' overflow='hidden' zIndex={10}>
                 <Flex
@@ -173,6 +173,7 @@ export default function Header() {
                           fontSize='lg'
                           fontWeight='hairline'
                           color='white'
+                          onClick={onClose}
                           _hover={{
                             textDecoration: 'none',
                             color: 'white',
