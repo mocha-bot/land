@@ -146,7 +146,7 @@ export default function Page404() {
           </>
         )}
       </Flex>
-      {!isMobile && <Footer />}
+      <Footer />
     </Flex>
   );
 }
