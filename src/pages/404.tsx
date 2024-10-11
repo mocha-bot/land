@@ -3,29 +3,26 @@ import { Box, Flex, Image, Text, useMediaQuery } from '@chakra-ui/react';
 import Footer from '@/uikit/Footer';
 import Header from '@/uikit/Header';
 
-function DescriptionMobile() {
-  return (
+const descriptions = {
+  mobile: () => (
     <Text as='h3' fontWeight='light'>
       Whoops, you’ve wandered far, even Pluto is in your rearview! Seems like
       the page you’re looking for has drifted off-course
     </Text>
-  );
-}
-
-function DescriptionDesktop() {
-  return (
+  ),
+  desktop: () => (
     <>
       <Text as='h3' fontWeight='light'>
         Whoops, you’ve wandered far, even Pluto is in your rearview!
       </Text>
       <Text>Seems like the page you’re looking for has drifted off-course</Text>
     </>
-  );
-}
+  ),
+};
 
 export default function Page404() {
-  const isMobile = useMediaQuery('(max-width: 768px)')[0];
-  const isDesktop = useMediaQuery('(min-width: 1024px)')[0];
+  const [isMobile] = useMediaQuery('(max-width: 768px)');
+  const [isDesktop] = useMediaQuery('(min-width: 1024px)');
 
   return (
     <Flex flexDirection='column'>
@@ -56,8 +53,7 @@ export default function Page404() {
           <Box
             fontSize={{ base: '16px', md: '24px', lg: '32px' }}
             textAlign={{ base: 'center' }}>
-            {isMobile && <DescriptionMobile />}
-            {isDesktop && <DescriptionDesktop />}
+            {isMobile ? <descriptions.mobile /> : <descriptions.desktop />}
           </Box>
         </Flex>
         {isDesktop && (

@@ -7,8 +7,9 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
+import getConfig from 'next/config';
 
-import { publicRuntimeConfig } from '../../next.config';
+const { publicRuntimeConfig } = getConfig();
 
 const plugins = [
   {

@@ -16,8 +16,9 @@ import {
   useDisclosure,
   useMediaQuery,
 } from '@chakra-ui/react';
+import getConfig from 'next/config';
 
-import { publicRuntimeConfig } from '../../next.config';
+const { publicRuntimeConfig } = getConfig();
 
 interface NavItem {
   label: string;
@@ -78,12 +79,33 @@ function InviteButton() {
   );
 }
 
+type MobileMenuButtonProps = {
+  isOpen: boolean;
+  onToggle: () => void;
+};
+
+function MobileMenuButton({ isOpen, onToggle }: MobileMenuButtonProps) {
+  return (
+    <Flex display={{ base: 'flex', lg: 'none' }}>
+      <IconButton
+        onClick={onToggle}
+        icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+        variant='ghost'
+        aria-label='Toggle Navigation'
+        color='white'
+      />
+    </Flex>
+  );
+}
+
 export default function Header() {
   const { isOpen, onToggle, onClose } = useDisclosure();
 
-  const isMobile = useMediaQuery('(max-width: 425px)')[0];
-  const isTablet = useMediaQuery('(max-width: 768px)')[0];
-  const isDesktop = useMediaQuery('(min-width: 1024px)')[0];
+  const [isMobile] = useMediaQuery('(max-width: 425px)');
+  const [isTablet] = useMediaQuery(
+    '(min-width: 425px) and (max-width: 1023px)',
+  );
+  const [isDesktop] = useMediaQuery('(min-width: 1024px)');
 
   return (
     <Container as={Stack} maxW={{ base: 'xl', md: '6xl' }}>
@@ -104,15 +126,7 @@ export default function Header() {
 
           {/* Mobile Hamburger Menu */}
           {(isMobile || isTablet) && (
-            <Flex display={{ base: 'flex', lg: 'none' }}>
-              <IconButton
-                onClick={onToggle}
-                icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-                variant='ghost'
-                aria-label='Toggle Navigation'
-                color='white'
-              />
-            </Flex>
+            <MobileMenuButton isOpen={isOpen} onToggle={onToggle} />
           )}
 
           {/* Menu for larger screens */}
@@ -152,17 +166,7 @@ export default function Header() {
                     mr='2px'
                   />
 
-                  {(isMobile || isTablet) && (
-                    <Flex display={{ base: 'flex', lg: 'none' }}>
-                      <IconButton
-                        onClick={onToggle}
-                        icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-                        variant='ghost'
-                        aria-label='Toggle Navigation'
-                        color='white'
-                      />
-                    </Flex>
-                  )}
+                  <MobileMenuButton isOpen={isOpen} onToggle={onToggle} />
                 </Flex>
 
                 <Flex
