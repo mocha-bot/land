@@ -128,7 +128,7 @@ function NotFoundDescription({
   if (isMobile) {
     return (
       <Text as='h3' fontWeight='light'>
-        {descriptions}
+        {descriptions.join(' ')}
       </Text>
     );
   }

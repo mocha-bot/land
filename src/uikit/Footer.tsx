@@ -43,7 +43,7 @@ function SubTitle({ title }: SubTitleProps) {
       color='white'
       fontWeight='medium'
       fontSize='sm'
-      letterSpacing={2.5}
+      letterSpacing='widest'
       textTransform='uppercase'>
       {title}
     </Text>

@@ -28,6 +28,9 @@ const theme = extendTheme({
       coffee: '#f6eee3',
     },
   },
+  letterSpacings: {
+    widest: '0.625em',
+  },
 });
 
 export { theme };
