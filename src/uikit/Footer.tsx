@@ -6,6 +6,7 @@ import {
   SimpleGrid,
   Stack,
   Text,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import getConfig from 'next/config';
 
@@ -52,17 +53,21 @@ function SubTitle({ title }: SubTitleProps) {
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   return (
     <Box background='black'>
-      <Container as={Stack} maxW='6xl' py='16' px='10'>
+      <Container as={Stack} maxW='6xl' py={16} px={10}>
         <SimpleGrid
           templateColumns={{ sm: '1fr 1fr', md: '4fr 2fr 2fr' }}
           spacing={8}>
-          <Stack h='5xs' gap='0' justifyContent='space-between'>
-            <Stack gap='2'>
+          <Stack
+            h={{ base: 'full', md: '5xs' }}
+            gap={0}
+            justifyContent='space-between'>
+            <Stack gap={2}>
               <Image
-                src='assets/images/mocha.png'
+                src='/assets/images/mocha.png'
                 width='logo.width.md'
                 height='logo.height.md'
                 alt='Mocha Logo'
@@ -72,11 +77,13 @@ export default function Footer() {
                 <Text fontSize='sm'>multi-chat cross-server</Text>
               </Box>
             </Stack>
-            <Text fontSize='sm' color='subtitle'>
-              Copyright © 2020 - {currentYear} Mocha
-            </Text>
+            {!isMobile && (
+              <Text fontSize='sm' color='subtitle'>
+                Copyright © 2020 - {currentYear} Mocha
+              </Text>
+            )}
           </Stack>
-          <Stack align='flex-start' gap='4'>
+          <Stack align='flex-start' gap={4}>
             <SubTitle title='plugin' />
             {plugins.map((plugin) => (
               <Link
@@ -89,7 +96,7 @@ export default function Footer() {
               </Link>
             ))}
           </Stack>
-          <Stack align='flex-start' gap='4'>
+          <Stack align='flex-start' gap={4}>
             <SubTitle title='support' />
             {socials.map((social) => (
               <Link
@@ -104,6 +111,13 @@ export default function Footer() {
           </Stack>
         </SimpleGrid>
       </Container>
+      {isMobile && (
+        <Box w='full' px={10} py={4} textAlign='center'>
+          <Text fontSize='sm' color='subtitle'>
+            Copyright © 2020 - {currentYear} Mocha
+          </Text>
+        </Box>
+      )}
     </Box>
   );
 }

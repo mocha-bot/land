@@ -3,12 +3,12 @@ import { i18n } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import getConfig from 'next/config';
 
-import { HomeContainer } from '@/modules/Home/HomeContainer';
+import { LandingPageContainer } from '@/modules/LandingPage/LandingPageContainer';
 
 const { publicRuntimeConfig } = getConfig();
 
 function Home() {
-  return <HomeContainer />;
+  return <LandingPageContainer />;
 }
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {

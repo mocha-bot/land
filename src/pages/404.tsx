@@ -167,7 +167,7 @@ export default function Page404() {
           color='white'
           alignItems='center'
           flexDirection='column'
-          px='10'>
+          px={10}>
           <Text
             as='h1'
             fontWeight='bold'

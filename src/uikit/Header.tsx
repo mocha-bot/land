@@ -27,10 +27,10 @@ interface NavItem {
 }
 
 const menuList: Array<NavItem> = [
-  { label: 'about us' },
-  { label: 'features' },
-  { label: 'status' },
-  { label: 'discover room' },
+  { label: 'about us', href: '/#about-us' },
+  { label: 'features', href: '/#features' },
+  { label: 'status', href: '/#status' },
+  { label: 'discover room', href: '/#' },
 ];
 
 function Menu({ isOpen }: { isOpen: boolean }) {
@@ -110,7 +110,7 @@ export default function Header() {
       <Flex py={{ base: 2 }} px={{ base: 0, md: 4 }} alignItems='center'>
         <Flex flex={1} justifyContent='space-between' alignItems='center'>
           <Image
-            src='assets/images/mocha.png'
+            src='/assets/images/mocha.png'
             width='logo.width.md'
             height='logo.height.md'
             alt='Mocha Logo'
@@ -150,7 +150,7 @@ export default function Header() {
                   justifyContent='space-between'
                   alignItems='center'>
                   <Image
-                    src='assets/images/mocha.png'
+                    src='/assets/images/mocha.png'
                     width='logo.width.md'
                     height='logo.height.md'
                     alt='Mocha Logo'
@@ -187,7 +187,7 @@ export default function Header() {
               </DrawerBody>
               {/* Flare bottom */}
               <Image
-                src='assets/images/flare_3.svg'
+                src='/assets/images/flare_3.svg'
                 alt='flare'
                 w='full'
                 position='absolute'

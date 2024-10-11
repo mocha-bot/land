@@ -1,0 +1,26 @@
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom Scroll */
+/* Works on Firefox */
+* {
+  scrollbar-width: none;
+  scrollbar-color: #0b3447 #15151f;
+}
+
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  /* width: 10px; */
+  width: none;
+}
+
+*::-webkit-scrollbar-track {
+  background: #15151f;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #0b3447;
+  border-radius: 16px;
+  border: 2px solid #15151f;
+}

@@ -3,7 +3,7 @@ import { Container, Heading, Text, VStack } from '@chakra-ui/react';
 function PrivacyPolicy() {
   return (
     <Container maxW='3xl'>
-      <VStack spacing='2' alignItems='flex-start'>
+      <VStack spacing={2} alignItems='flex-start'>
         <Heading>Privacy Policy for Mocha</Heading>
         <Text>
           At Mocha, accessible from https://mocha-bot.xyz/, one of our main

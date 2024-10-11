@@ -1,97 +1,108 @@
 import {
   Button,
+  Flex,
   HStack,
   IconButton,
   Image,
   Text,
+  useBreakpointValue,
   VStack,
 } from '@chakra-ui/react';
 
+const socials = [
+  {
+    name: 'discord',
+    icon: '/assets/icons/discord-fill.svg',
+  },
+  {
+    name: 'github',
+    icon: '/assets/icons/github-fill.svg',
+  },
+  {
+    name: 'product hunt',
+    icon: '/assets/icons/product-hunt-fill.svg',
+  },
+];
+
+const buttons = [
+  {
+    label: 'Discover More',
+    variant: 'outline',
+    backgroundColor: 'rgba(1, 1, 1, 0.40)',
+    href: '#',
+  },
+  {
+    label: 'See Documentation',
+    variant: 'ghost',
+    href: 'https://docs.mocha-bot.xyz',
+  },
+];
+
 export function Hero() {
+  const isMobile = useBreakpointValue({ base: true, md: false });
   return (
-    <VStack
+    <Flex
       w='full'
-      px={{ base: 4, md: 8, lg: 24 }}
-      mt={{ base: 8, md: 12, lg: 44 }}
+      maxW={{ base: 'full', md: '5xl' }}
+      pt={{ base: 8, md: 12, lg: 44 }}
       alignItems='flex-start'
-      spacing={12}>
-      <VStack maxW='60%' alignItems='flex-start' spacing={12}>
+      flexDirection='column'
+      gap={32}
+      id='about-us'>
+      <VStack
+        alignItems='flex-start'
+        spacing={12}
+        maxW={{ base: 'full', md: 'xl' }}>
         <Text
           color='white'
-          fontSize={{ base: '2xl', md: '4xl', lg: '6xl' }}
-          lineHeight='normal'
-          fontWeight='bold'>
+          fontSize={{ base: '5xl', lg: '6xl' }}
+          lineHeight='none'>
           Drink mocha with people accross the universe
         </Text>
-        <Text color='white' fontSize={20} lineHeight='normal' fontWeight={400}>
+        <Text color='white' fontSize={20} lineHeight='none' fontWeight='light'>
           Mocha is a Discord bot for multi-chat cross-server, that allows you to
           send messages to multiple channels at once.{' '}
         </Text>
       </VStack>
-      <HStack w='full' justifyContent='space-between'>
+      <HStack w='full' justifyContent={{ base: 'center', md: 'space-between' }}>
         <HStack>
-          <Button
-            size='lg'
-            color='white'
-            rounded='full'
-            backgroundColor='rgba(1, 1, 1, 0.40)'
-            fontSize='sm'
-            fontWeight={500}
-            variant='outline'>
-            Discover More
-          </Button>
-          <Button
-            size='lg'
-            color='white'
-            rounded='full'
-            fontSize='sm'
-            fontWeight={500}
-            variant='ghost'>
-            See Documentation
-          </Button>
+          {buttons.map((button) => (
+            <Button
+              as='a'
+              key={button.label}
+              size='lg'
+              color='white'
+              rounded='full'
+              backgroundColor={button.backgroundColor}
+              fontSize='sm'
+              fontWeight={500}
+              variant={button.variant}
+              href={button.href}>
+              {button.label}
+            </Button>
+          ))}
         </HStack>
-        <HStack spacing={8}>
-          <IconButton
-            isRound
-            backgroundColor='rgba(255, 255, 255, 0.20)'
-            aria-label='discord mocha'
-            icon={
-              <Image
-                src='assets/icons/discord-fill.svg'
-                width={8}
-                height={8}
-                alt='Discord Icon'
+        {!isMobile && (
+          <HStack gap={8}>
+            {socials.map((social) => (
+              <IconButton
+                key={social.name}
+                isRound
+                backgroundColor='rgba(255, 255, 255, 0.20)'
+                aria-label={`${social.name} mocha`}
+                icon={
+                  <Image
+                    src={social.icon}
+                    width={8}
+                    height={8}
+                    alt={`${social.name} Icon`}
+                  />
+                }
               />
-            }
-          />
-          <IconButton
-            isRound
-            backgroundColor='rgba(255, 255, 255, 0.20)'
-            aria-label='github mocha'
-            icon={
-              <Image
-                src='assets/icons/github-fill.svg'
-                width={8}
-                height={8}
-                alt='Github Icon'
-              />
-            }
-          />
-          <IconButton
-            isRound
-            backgroundColor='rgba(255, 255, 255, 0.20)'
-            aria-label='product hunt mocha'
-            icon={
-              <Image
-                src='assets/icons/product-hunt-fill.svg'
-                width={8}
-                height={8}
-                alt='Product Hunt Icon'
-              />
-            }
-          />
-        </HStack>
+            ))}
+          </HStack>
+        )}
       </HStack>
-    </VStack>
+    </Flex>
   );
 }
