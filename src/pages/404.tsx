@@ -26,7 +26,7 @@ export default function Page404() {
 
   return (
     <Flex flexDirection='column'>
-      <Box w='full' position='absolute' zIndex={15}>
+      <Box w='full' position='fixed' top={0} left={0} right={0} zIndex={15}>
         <Header />
       </Box>
       <Flex
