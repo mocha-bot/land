@@ -19,7 +19,7 @@ function MyDocument() {
         />
         <meta property='og:image' content='/assets/images/logo-mocha.png' />
         <meta property='og:locale' content='en_US' key='meta-locale' />
-        <meta property='og:url' content='https://mocha.chroma-gaming.xyz/' />
+        <meta property='og:url' content='https://mocha-bot.xyz/' />
       </Head>
       <body
         style={{
