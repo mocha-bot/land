@@ -20,7 +20,7 @@ function Search() {
   });
 
   return (
-    <Flex w='100%' h='100vh'>
+    <Flex w='full' h='100vh'>
       <Flex flexDir='column' justifyContent='center' mx='auto' my='auto'>
         <FormControl>
           <FormLabel htmlFor='roomName' fontWeight='normal' textAlign='center'>

@@ -55,7 +55,7 @@ export function HomeContainer() {
   ];
 
   return (
-    <Flex background='#f6eee3'>
+    <Flex background='background.coffee'>
       <Container maxW='3xl' h='100vh'>
         <Stack
           as={Box}
@@ -76,19 +76,19 @@ export function HomeContainer() {
           <Flex
             justifyContent='space-between'
             flexDirection='column'
-            gap='8px'
-            h='100%'>
+            gap={2}
+            h='full'>
             <VStack
               spacing={2}
               alignSelf='center'
-              w={{ base: '100%', md: 'auto' }}>
-              <Box position='relative' w='100%'>
+              w={{ base: 'full', md: 'auto' }}>
+              <Box position='relative' w='full'>
                 <Link
                   href={publicRuntimeConfig.botInvitationUrl}
                   isExternal
                   _hover={{ textDecoration: 'none' }}>
                   <Button
-                    w='100%'
+                    w='full'
                     bg='yellow.700'
                     color='white'
                     rounded='full'
@@ -107,20 +107,20 @@ export function HomeContainer() {
                     w={71}
                     position='absolute'
                     right={-71}
-                    top='10px'
+                    top={2.5}
                   />
                   <Text
                     fontSize='lg'
                     fontFamily='Caveat'
                     position='absolute'
-                    right='-90px'
-                    top='-15px'
+                    right={-20}
+                    top={-4}
                     transform='rotate(10deg)'>
                     {t('common:home.invite_button_arrow_label')}
                   </Text>
                 </Box>
               </Box>
-              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={2} w='100%'>
+              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={2} w='full'>
                 {subDirection.map((item) => (
                   <Link
                     key={item.name}
@@ -128,7 +128,7 @@ export function HomeContainer() {
                     isExternal
                     _hover={{ textDecoration: 'none' }}>
                     <Button
-                      w='100%'
+                      w='full'
                       variant='outline'
                       rounded='full'
                       px={6}
@@ -144,11 +144,11 @@ export function HomeContainer() {
             </VStack>
             <Box>
               <Button
-                w={{ base: '100%', md: 'auto' }}
+                w={{ base: 'full', md: 'auto' }}
                 variant='outline'
                 rounded='full'
                 px={6}
-                gap='8px'
+                gap={2}
                 bg='yellow.700'
                 borderColor='yellow.700'
                 textColor='white'
@@ -156,7 +156,7 @@ export function HomeContainer() {
                   borderColor: 'white',
                 }}
                 onClick={onOpen}>
-                <GiTwoCoins color='#FFD700' />
+                <GiTwoCoins color='icon.coin' />
                 {t('common:home.donate.title')}
               </Button>
             </Box>
@@ -173,16 +173,14 @@ export function HomeContainer() {
             <Text>{t('common:home.supported_by')}</Text>
             <Image
               src='assets/images/logo-mocha.svg'
-              width='20px'
-              height='20px'
+              width='logo.width.base'
+              height='logo.height.base'
               alt='Mocha Logo'
-              ml='4px'
-              mr='2px'
             />
             <Text
               display='inline'
               color='blue.400'
-              borderBottomWidth='1px'
+              borderBottomWidth='px'
               borderBottomColor='blue.500'>
               <Link
                 href='https://discord.com/invite/PQnkPABkbd'
@@ -193,7 +191,7 @@ export function HomeContainer() {
             </Text>
           </Flex>
           {publicRuntimeConfig.showVersion && (
-            <Text fontSize='10px' textAlign='center' mt='2'>
+            <Text fontSize={2.5} textAlign='center' mt='2'>
               {t('common:version')} - {publicRuntimeConfig.clientVersion}
             </Text>
           )}

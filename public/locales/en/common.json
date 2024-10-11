@@ -18,5 +18,12 @@
         "Thank you very much and have fun, hope you like it!"
       ]
     }
+  },
+  "not_found": {
+    "title": "404",
+    "descriptions": [
+      "Whoops, you’ve wandered far, even Pluto is in your rearview!",
+      "Seems like the page you’re looking for has drifted off-course."
+    ]
   }
 }

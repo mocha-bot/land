@@ -10,11 +10,11 @@ import {
 export function Hero() {
   return (
     <VStack
-      w='100%'
-      px={{ base: 4, md: 8, lg: '6rem' }}
-      mt={{ base: 8, md: 12, lg: '11rem' }}
+      w='full'
+      px={{ base: 4, md: 8, lg: 24 }}
+      mt={{ base: 8, md: 12, lg: 44 }}
       alignItems='flex-start'
-      spacing='3rem'>
+      spacing={12}>
       <VStack maxW='60%' alignItems='flex-start' spacing={12}>
         <Text
           color='white'
@@ -28,7 +28,7 @@ export function Hero() {
           send messages to multiple channels at once.{' '}
         </Text>
       </VStack>
-      <HStack w='100%' justifyContent='space-between'>
+      <HStack w='full' justifyContent='space-between'>
         <HStack>
           <Button
             size='lg'
@@ -54,7 +54,6 @@ export function Hero() {
           <IconButton
             isRound
             backgroundColor='rgba(255, 255, 255, 0.20)'
-            p='6px'
             aria-label='discord mocha'
             icon={
               <Image
@@ -68,7 +67,6 @@ export function Hero() {
           <IconButton
             isRound
             backgroundColor='rgba(255, 255, 255, 0.20)'
-            p='6px'
             aria-label='github mocha'
             icon={
               <Image
@@ -82,7 +80,6 @@ export function Hero() {
           <IconButton
             isRound
             backgroundColor='rgba(255, 255, 255, 0.20)'
-            p='6px'
             aria-label='product hunt mocha'
             icon={
               <Image
