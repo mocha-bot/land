@@ -144,7 +144,7 @@ function NotFoundDescription({
   );
 }
 
-export default function Page404() {
+function Page404() {
   const { t } = useTranslation();
   const isMobile = useBreakpointValue({ base: true, lg: false });
 
@@ -204,3 +204,5 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
     },
   };
 }
+
+export default Page404;

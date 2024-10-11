@@ -7,7 +7,7 @@ import { LandingPageContainer } from '@/modules/LandingPage/LandingPageContainer
 
 const { publicRuntimeConfig } = getConfig();
 
-function Home() {
+function Index() {
   return <LandingPageContainer />;
 }
 
@@ -23,4 +23,4 @@ export async function getStaticProps({ locale }: GetStaticPropsContext) {
   };
 }
 
-export default Home;
+export default Index;
