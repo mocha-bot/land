@@ -65,7 +65,7 @@ export function Hero() {
           color='white'
           fontSize={{ base: '5xl', lg: '6xl' }}
           lineHeight='none'>
-          Drink mocha with people accross the universe
+          Drink mocha with people across the universe
         </Text>
         <Text color='white' fontSize={20} lineHeight='none' fontWeight='light'>
           Mocha is a Discord bot for multi-chat cross-server, that allows you to
@@ -73,16 +73,15 @@ export function Hero() {
         </Text>
       </VStack>
       <HStack w='full' justifyContent={{ base: 'center', md: 'space-between' }}>
-        <HStack>
+        <HStack w='full'>
           {buttons.map((button) => (
             <Button
               as='a'
               key={button.label}
-              size='lg'
+              size={{ base: 'md', md: 'lg' }}
               color='white'
               rounded='full'
               backgroundColor={button.backgroundColor}
-              fontSize='sm'
               fontWeight={500}
               variant={button.variant}
               href={button.href}>

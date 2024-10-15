@@ -42,6 +42,10 @@ const theme = extendTheme({
     smaller: 0.75,
     small: 0.875,
   },
+  fonts: {
+    heading: 'var(--font-plus-jakarta-sans)',
+    body: 'var(--font-plus-jakarta-sans)',
+  },
 });
 
 export { theme };
