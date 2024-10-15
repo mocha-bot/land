@@ -27,10 +27,10 @@ interface NavItem {
 }
 
 const menuList: Array<NavItem> = [
-  { label: 'about us' },
-  { label: 'features' },
-  { label: 'status' },
-  { label: 'discover room' },
+  { label: 'about us', href: '/#' },
+  { label: 'features', href: '/#features' },
+  { label: 'status', href: '/#status' },
+  { label: 'discover room', href: '/#' },
 ];
 
 function Menu({ isOpen }: { isOpen: boolean }) {
@@ -110,7 +110,7 @@ export default function Header() {
       <Flex py={{ base: 2 }} px={{ base: 0, md: 4 }} alignItems='center'>
         <Flex flex={1} justifyContent='space-between' alignItems='center'>
           <Image
-            src='assets/images/mocha.png'
+            src='/assets/images/mocha.png'
             width='logo.width.md'
             height='logo.height.md'
             alt='Mocha Logo'
@@ -142,7 +142,7 @@ export default function Header() {
           placement='bottom'
           onClose={onClose}
           size='full'>
-          <DrawerOverlay backdropFilter='blur(10px)'>
+          <DrawerOverlay backdropFilter='blur(10px)' transition='all 0.7s'>
             <DrawerContent bg='rgba(0, 0, 0, 0.75)'>
               <DrawerBody w='full' overflow='hidden' zIndex={10}>
                 <Flex
@@ -150,7 +150,7 @@ export default function Header() {
                   justifyContent='space-between'
                   alignItems='center'>
                   <Image
-                    src='assets/images/mocha.png'
+                    src='/assets/images/mocha.png'
                     width='logo.width.md'
                     height='logo.height.md'
                     alt='Mocha Logo'
@@ -173,6 +173,7 @@ export default function Header() {
                           fontSize='lg'
                           fontWeight='hairline'
                           color='white'
+                          onClick={onClose}
                           _hover={{
                             textDecoration: 'none',
                             color: 'white',
@@ -187,7 +188,7 @@ export default function Header() {
               </DrawerBody>
               {/* Flare bottom */}
               <Image
-                src='assets/images/flare_3.svg'
+                src='/assets/images/flare_3.svg'
                 alt='flare'
                 w='full'
                 position='absolute'

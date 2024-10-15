@@ -19,6 +19,9 @@ const nextConfig = {
     supportUrl:
       process.env.SUPPORT_URL || 'https://top.gg/bot/987974524140146728/vote',
     githubUrl: process.env.GITHUB_URL || 'https://github.com/mocha-bot',
+    productHuntUrl:
+      process.env.PRODUCT_HUNT_URL ||
+      'https://www.producthunt.com/products/mocha-2',
   },
 };
 

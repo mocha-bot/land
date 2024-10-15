@@ -164,15 +164,15 @@ export function HomeContainer() {
         </Stack>
         <Box
           position='absolute'
-          bottom={publicRuntimeConfig.showVersion ? '8' : '10'}
-          left='0'
-          right='0'
+          bottom={publicRuntimeConfig.showVersion ? 8 : 10}
+          left={0}
+          right={0}
           w='full'
           justifyContent='center'>
           <Flex alignItems='center' justifyContent='center'>
             <Text>{t('common:home.supported_by')}</Text>
             <Image
-              src='assets/images/logo-mocha.svg'
+              src='/assets/images/logo-mocha.svg'
               width='logo.width.base'
               height='logo.height.base'
               alt='Mocha Logo'
@@ -191,7 +191,7 @@ export function HomeContainer() {
             </Text>
           </Flex>
           {publicRuntimeConfig.showVersion && (
-            <Text fontSize={2.5} textAlign='center' mt='2'>
+            <Text fontSize={2.5} textAlign='center' mt={2}>
               {t('common:version')} - {publicRuntimeConfig.clientVersion}
             </Text>
           )}
