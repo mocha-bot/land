@@ -13,8 +13,7 @@ function Layout({ children }: LayoutProps) {
     <Box
       backgroundImage='/assets/images/background_desktop.svg'
       backgroundRepeat='no-repeat'
-      backgroundSize='cover'
-      overflow='hidden'>
+      backgroundSize='cover'>
       <Box
         w='full'
         position='fixed'
@@ -22,7 +21,7 @@ function Layout({ children }: LayoutProps) {
         left={0}
         right={0}
         zIndex={15}
-        backgroundColor='rgba(0, 0, 0, 0.4)'
+        backgroundColor='rgba(0, 0, 0, 0.7)'
         backdropFilter='blur(10px)'
         transition='position 0.1s ease, top 0.1s ease'>
         <Header />
@@ -30,7 +29,7 @@ function Layout({ children }: LayoutProps) {
       <Flex
         as='main'
         h='auto'
-        zIndex={999}
+        zIndex={11}
         justifyContent='center'
         alignItems='center'
         flexDirection='column'

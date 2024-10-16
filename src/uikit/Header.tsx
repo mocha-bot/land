@@ -13,7 +13,6 @@ import {
   Stack,
   Text,
   useBreakpointValue,
-  useColorModeValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import getConfig from 'next/config';
@@ -26,39 +25,64 @@ interface NavItem {
   href?: string;
 }
 
-const menuList: Array<NavItem> = [
+const menu: Array<NavItem> = [
   { label: 'about us', href: '/#' },
   { label: 'features', href: '/#features' },
   { label: 'status', href: '/#status' },
   { label: 'discover room', href: '/#' },
 ];
 
-function Menu({ isOpen }: { isOpen: boolean }) {
-  const linkHoverColor = useColorModeValue('gray.800', 'white');
+interface MenuProps {
+  menuList: Array<NavItem>;
+  isOpen: boolean;
+}
 
+function MenuItem({ label, href }: NavItem) {
+  return (
+    <Flex
+      key={label}
+      role='group'
+      position='relative'
+      h='full'
+      alignItems='center'>
+      <Box
+        as='a'
+        href={href ?? '#'}
+        fontSize='sm'
+        fontWeight={500}
+        color='white'
+        opacity={0.6}
+        h='full'
+        w='full'
+        display='flex'
+        alignItems='center'
+        px={4}
+        position='relative'
+        zIndex={11}
+        _hover={{
+          textDecoration: 'none',
+          color: 'white',
+          opacity: 1,
+          bg: 'radial-gradient(circle at bottom, rgba(255, 255, 255, 0.2), transparent 60%)',
+          transition: 'all 0.3s ease-in-out',
+        }}>
+        {label}
+      </Box>
+    </Flex>
+  );
+}
+
+function Menu({ menuList, isOpen }: MenuProps) {
   return (
     <Stack
+      h='full'
       direction={{ base: 'column', md: 'row' }}
-      spacing={4}
-      alignItems={{ base: 'center', md: 'center' }}
-      display={{ base: isOpen ? 'block' : 'none', md: 'flex' }}>
+      spacing={0}
+      alignItems='stretch'
+      display={{ base: isOpen ? 'flex' : 'none', md: 'flex' }}
+      zIndex={10}>
       {menuList.map((nav) => (
-        <Box key={nav.label}>
-          <Box
-            as='a'
-            p={2}
-            href={nav.href ?? '#'}
-            fontSize='sm'
-            fontWeight={500}
-            color='white'
-            opacity={0.6}
-            _hover={{
-              textDecoration: 'none',
-              color: linkHoverColor,
-            }}>
-            {nav.label}
-          </Box>
-        </Box>
+        <MenuItem key={nav.label} label={nav.label} href={nav.href} />
       ))}
     </Stack>
   );
@@ -72,8 +96,7 @@ function InviteButton() {
       rounded='full'
       fontSize='sm'
       variant='outline'
-      href={publicRuntimeConfig.botInvitationUrl}
-      display='inline-flex'>
+      href={publicRuntimeConfig.botInvitationUrl}>
       Invite to Server
     </Button>
   );
@@ -106,9 +129,13 @@ export default function Header() {
   const isDesktop = useBreakpointValue({ base: false, md: false, lg: true });
 
   return (
-    <Container as={Stack} maxW={{ base: 'xl', md: '6xl' }}>
+    <Container as={Stack} maxW={{ base: 'xl', md: '6xl' }} h='full'>
       <Flex py={{ base: 2 }} px={{ base: 0, md: 4 }} alignItems='center'>
-        <Flex flex={1} justifyContent='space-between' alignItems='center'>
+        <Flex
+          flex={1}
+          justifyContent='space-between'
+          alignItems='center'
+          h={12}>
           <Image
             src='/assets/images/mocha.png'
             width='logo.width.md'
@@ -124,12 +151,12 @@ export default function Header() {
           {/* Menu for larger screens */}
           {isDesktop && (
             <Flex
+              h='full'
               flex={{ base: 1, md: 'auto' }}
               justify={{ base: 'center', md: 'center' }}
-              alignItems='center'
-              ml={{ base: 0, md: 4 }}
+              alignItems='stretch'
               display={{ base: 'none', md: 'flex' }}>
-              <Menu isOpen={isOpen} />
+              <Menu menuList={menu} isOpen={isOpen} />
             </Flex>
           )}
         </Flex>
@@ -165,7 +192,7 @@ export default function Header() {
                   justifyContent='center'
                   alignItems='center'>
                   <Flex direction='column' alignItems='center'>
-                    {menuList.map((nav) => (
+                    {menu.map((nav) => (
                       <Box key={nav.label} mb={6}>
                         <Text
                           as='a'
