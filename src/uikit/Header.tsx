@@ -66,8 +66,7 @@ function Menu({ isOpen }: { isOpen: boolean }) {
               textDecoration: 'none',
               color: 'white',
               opacity: 1,
-              bg: 'radial-gradient(circle at bottom, rgba(255, 255, 255, 0.2), transparent 85%)',
-              backdropFilter: 'blur(38px)',
+              bg: 'radial-gradient(circle at bottom, rgba(255, 255, 255, 0.2), transparent 60%)',
             }}>
             {nav.label}
           </Box>
