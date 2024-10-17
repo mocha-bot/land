@@ -5,7 +5,7 @@ import type {
 } from '@chakra-ui/react';
 import { Button as BaseButton, useStyleConfig } from '@chakra-ui/react';
 import type { ReactNode } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const maxDegree = 90;
 
@@ -24,44 +24,47 @@ function Button({ children, isAnimated, ...rest }: ButtonProps) {
     _hover: CSSWithMultiValues;
   };
 
-  const handleMouseMove = (e: MouseEvent) => {
-    if (buttonRef.current === null || !isAnimated) {
-      return;
-    }
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (buttonRef.current === null || !isAnimated) {
+        return;
+      }
 
-    const rect = buttonRef.current.getBoundingClientRect();
-    const buttonCenterX = rect.left + rect.width / 2;
-    const buttonCenterY = rect.top + rect.height / 2;
+      const rect = buttonRef.current.getBoundingClientRect();
+      const buttonCenterX = rect.left + rect.width / 2;
+      const buttonCenterY = rect.top + rect.height / 2;
 
-    const x = e.clientX - buttonCenterX;
-    const y = e.clientY - buttonCenterY;
+      const x = e.clientX - buttonCenterX;
+      const y = e.clientY - buttonCenterY;
 
-    // this math calc is to reduce the calculation
-    // since we know that mouse can be outside the button (object)
-    const isOutside = Math.sqrt(x * x + y * y) > rect.width / 2;
+      // this math calc is to reduce the calculation
+      // since we know that mouse can be outside the button (object)
+      const isOutside = Math.sqrt(x * x + y * y) > rect.width / 2;
 
-    if (isOutside) {
-      return;
-    }
+      if (isOutside) {
+        return;
+      }
 
-    const newDeg = Math.atan2(y, x) * (180 / Math.PI) * -1 + 90;
+      const newDeg = Math.atan2(y, x) * (180 / Math.PI) * -1 + 90;
 
-    if (newDeg <= -maxDegree || newDeg >= maxDegree) {
-      return;
-    }
+      if (newDeg <= -maxDegree || newDeg >= maxDegree) {
+        return;
+      }
 
-    setDegree((prev) => prev + (newDeg - prev) * 0.1);
-  };
+      setDegree((prev) => prev + (newDeg - prev) * 0.1);
+    },
+    [isAnimated],
+  );
 
   useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    const buttonEl = buttonRef.current;
+    if (!buttonEl) {
+      return;
+    }
 
-  if (isAnimated) {
-    const deg = degree * -1;
-    styles._hover.bgGradient = `linear(${deg}deg, rgba(253, 184, 51, 1), rgba(2, 173, 255, 1), rgba(1, 1, 1, 0.25))`;
-  }
+    buttonEl.addEventListener('mousemove', handleMouseMove);
+    return () => buttonEl.removeEventListener('mousemove', handleMouseMove);
+  }, [handleMouseMove, buttonRef]);
 
   return (
     <BaseButton
@@ -71,6 +74,15 @@ function Button({ children, isAnimated, ...rest }: ButtonProps) {
         alignItems: 'center',
         justifyContent: 'center',
         ...styles,
+      }}
+      sx={{
+        ...(isAnimated && {
+          _hover: {
+            bgGradient: `linear(${
+              degree * -1
+            }deg, rgba(253, 184, 51, 1), rgba(2, 173, 255, 1), rgba(1, 1, 1, 0.25))`,
+          },
+        }),
       }}
       {...rest}>
       {children}
