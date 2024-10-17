@@ -81,7 +81,7 @@ export function Hero() {
               px={10}
               key={button.label}
               variant={button.variant}
-              href={publicRuntimeConfig.botInvitationUrl}>
+              href={button.href}>
               {button.label}
             </Button>
           ))}
