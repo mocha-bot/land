@@ -1,6 +1,6 @@
 {
   "name": "land",
-  "version": "1.22.22",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
