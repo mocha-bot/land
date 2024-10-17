@@ -1,6 +1,8 @@
 import { Box, Flex } from '@chakra-ui/react';
 import { type ReactNode } from 'react';
 
+import { informations } from '@/config/config';
+
 import Footer from './Footer';
 import Header from './Header';
 
@@ -39,7 +41,7 @@ function Layout({ children }: LayoutProps) {
       >
         {children}
       </Flex>
-      <Footer />
+      <Footer informations={informations} />
     </Box>
   );
 }
