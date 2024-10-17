@@ -4,11 +4,13 @@ import { Box, Flex, Image, Text, useBreakpointValue } from '@chakra-ui/react';
 import type { GetStaticPropsContext } from 'next';
 import { i18n, useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import getConfig from 'next/config';
 
+import { informations } from '@/config/config';
 import Footer from '@/uikit/Footer';
 import Header from '@/uikit/Header';
 
-import { publicRuntimeConfig } from '../../next.config';
+const { publicRuntimeConfig } = getConfig();
 
 type PlanetBackgroundProps = {
   isMobile?: boolean;
@@ -188,7 +190,7 @@ function Page404() {
 
         <PlanetBackground isMobile={isMobile} />
       </Flex>
-      <Footer />
+      <Footer informations={informations} />
     </Flex>
   );
 }

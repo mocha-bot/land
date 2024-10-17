@@ -1,5 +1,4 @@
 import {
-  Button,
   Flex,
   HStack,
   Image,
@@ -11,6 +10,7 @@ import {
 import { CiServer } from 'react-icons/ci';
 
 import { HorizontalScroll } from '@/components/HorizontalScroll/HorizontalScroll';
+import Button from '@/uikit/Button';
 
 type ItemProps = {
   roomName: string;
@@ -64,14 +64,12 @@ function Item({
       </Text>
       <Button
         as='a'
-        color='white'
-        rounded='full'
-        fontSize='sm'
-        variant='outline'
-        href={`/room/${roomSerial}`}
-        display='inline-flex'
-        p={2}
-        w='full'>
+        w='full'
+        variant='glass'
+        py={5}
+        px={6}
+        isAnimated
+        href={`/room/${roomSerial}`}>
         Room Detail
       </Button>
     </Flex>
