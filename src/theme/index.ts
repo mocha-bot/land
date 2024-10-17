@@ -1,5 +1,7 @@
 import { extendTheme } from '@chakra-ui/react';
 
+import { Button } from './button';
+
 const theme = extendTheme({
   fontSizes: {
     '10xl': '10rem',
@@ -45,6 +47,9 @@ const theme = extendTheme({
   fonts: {
     heading: 'var(--font-plus-jakarta-sans)',
     body: 'var(--font-plus-jakarta-sans)',
+  },
+  components: {
+    Button,
   },
 });
 

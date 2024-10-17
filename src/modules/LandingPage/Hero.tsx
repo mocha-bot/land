@@ -1,5 +1,4 @@
 import {
-  Button,
   Flex,
   HStack,
   IconButton,
@@ -11,42 +10,43 @@ import {
 } from '@chakra-ui/react';
 import getConfig from 'next/config';
 
+import Button from '@/uikit/Button';
+
 const { publicRuntimeConfig } = getConfig();
+
+const socials = [
+  {
+    name: 'discord',
+    icon: '/assets/icons/discord-fill.svg',
+    href: publicRuntimeConfig.discordServerUrl,
+  },
+  {
+    name: 'github',
+    icon: '/assets/icons/github-fill.svg',
+    href: publicRuntimeConfig.githubUrl,
+  },
+  {
+    name: 'product hunt',
+    icon: '/assets/icons/product-hunt-fill.svg',
+    href: publicRuntimeConfig.productHuntUrl,
+  },
+];
+
+const buttons = [
+  {
+    label: 'Discover More',
+    variant: 'glass',
+    href: '#',
+  },
+  {
+    label: 'See Documentation',
+    variant: 'glass-ghost',
+    href: publicRuntimeConfig.docsUrl,
+  },
+];
 
 export function Hero() {
   const isMobile = useBreakpointValue({ base: true, md: false });
-
-  const socials = [
-    {
-      name: 'discord',
-      icon: '/assets/icons/discord-fill.svg',
-      href: publicRuntimeConfig.discordServerUrl,
-    },
-    {
-      name: 'github',
-      icon: '/assets/icons/github-fill.svg',
-      href: publicRuntimeConfig.githubUrl,
-    },
-    {
-      name: 'product hunt',
-      icon: '/assets/icons/product-hunt-fill.svg',
-      href: publicRuntimeConfig.productHuntUrl,
-    },
-  ];
-
-  const buttons = [
-    {
-      label: 'Discover More',
-      variant: 'outline',
-      backgroundColor: 'rgba(1, 1, 1, 0.40)',
-      href: '#',
-    },
-    {
-      label: 'See Documentation',
-      variant: 'ghost',
-      href: publicRuntimeConfig.docsUrl,
-    },
-  ];
 
   return (
     <Flex
@@ -77,14 +77,11 @@ export function Hero() {
           {buttons.map((button) => (
             <Button
               as='a'
+              py={6}
+              px={10}
               key={button.label}
-              size={{ base: 'md', md: 'lg' }}
-              color='white'
-              rounded='full'
-              backgroundColor={button.backgroundColor}
-              fontWeight={500}
               variant={button.variant}
-              href={button.href}>
+              href={publicRuntimeConfig.botInvitationUrl}>
               {button.label}
             </Button>
           ))}
