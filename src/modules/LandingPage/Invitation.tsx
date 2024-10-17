@@ -1,12 +1,7 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Image,
-  Text,
-  useBreakpointValue,
-} from '@chakra-ui/react';
+import { Box, Flex, Image, Text, useBreakpointValue } from '@chakra-ui/react';
 import getConfig from 'next/config';
+
+import Button from '@/uikit/Button';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -38,14 +33,13 @@ function Invitation() {
         </Box>
         <Button
           as='a'
-          w='auto'
-          color='white'
-          rounded='full'
-          fontSize='sm'
-          variant='outline'
-          marginRight='auto'
+          w='fit-content'
+          variant='glass'
+          py={5}
+          px={6}
+          isAnimated
           href={publicRuntimeConfig.botInvitationUrl}>
-          Invite to Server
+          Invite to server
         </Button>
       </Flex>
       {!isMobile && (

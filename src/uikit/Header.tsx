@@ -1,7 +1,6 @@
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
   Box,
-  Button,
   Container,
   Drawer,
   DrawerBody,
@@ -16,6 +15,8 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import getConfig from 'next/config';
+
+import Button from './Button';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -88,20 +89,6 @@ function Menu({ menuList, isOpen }: MenuProps) {
   );
 }
 
-function InviteButton() {
-  return (
-    <Button
-      as='a'
-      color='white'
-      rounded='full'
-      fontSize='sm'
-      variant='outline'
-      href={publicRuntimeConfig.botInvitationUrl}>
-      Invite to Server
-    </Button>
-  );
-}
-
 type MobileMenuButtonProps = {
   isOpen: boolean;
   onToggle: () => void;
@@ -161,7 +148,17 @@ export default function Header() {
           )}
         </Flex>
 
-        {isDesktop && <InviteButton />}
+        {isDesktop && (
+          <Button
+            as='a'
+            variant='glass'
+            py={5}
+            px={6}
+            isAnimated
+            href={publicRuntimeConfig.botInvitationUrl}>
+            Invite to server
+          </Button>
+        )}
 
         {/* Mobile Drawer */}
         <Drawer
@@ -210,7 +207,15 @@ export default function Header() {
                       </Box>
                     ))}
                   </Flex>
-                  <InviteButton />
+                  <Button
+                    as='a'
+                    variant='glass'
+                    py={4}
+                    px={6}
+                    isAnimated
+                    href={publicRuntimeConfig.botInvitationUrl}>
+                    Invite to server
+                  </Button>
                 </Flex>
               </DrawerBody>
               {/* Flare bottom */}
