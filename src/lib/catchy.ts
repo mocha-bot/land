@@ -14,11 +14,7 @@ async function catchy<T, E extends new (message?: string) => Error>(
     /* eslint-disable no-console */
     if (verbose) console.error(err);
 
-    if (errsToCatch === undefined) {
-      return [err as InstanceType<E>];
-    }
-
-    if (errsToCatch.some((errType) => err instanceof errType)) {
+    if (!errsToCatch || errsToCatch.some((errType) => err instanceof errType)) {
       return [err as InstanceType<E>];
     }
 
