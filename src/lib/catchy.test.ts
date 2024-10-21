@@ -1,4 +1,4 @@
-import { describe, expect, test } from '@jest/globals';
+import { describe, expect, jest, test } from '@jest/globals';
 
 import { catchy } from './catchy';
 
@@ -49,5 +49,33 @@ describe('Catchy Module - Multiple Functions', () => {
     const [errMetadata, metadata] = await catchy(getMetadata());
     expect(errMetadata).toBeUndefined();
     expect(metadata).toBe('metadata found!');
+  });
+});
+
+describe('Catchy Module - Verbose Mode', () => {
+  test('Given a promise that throws an error, when calling catchy with verbose mode, then it should return the error and log it', async () => {
+    const consoleError = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+    const [err, user] = await catchy(getUser(), undefined, true);
+
+    expect(err).toBeInstanceOf(Error);
+    expect(user).toBeUndefined();
+    expect(consoleError).toHaveBeenCalled();
+
+    consoleError.mockRestore();
+  });
+
+  test('Given a promise that resolves, when calling catchy with verbose mode, then it should return the value', async () => {
+    const consoleError = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+
+    const [err, metadata] = await catchy(getMetadata(), undefined, true);
+    expect(err).toBeUndefined();
+    expect(metadata).toBe('metadata found!');
+    expect(consoleError).not.toHaveBeenCalled();
+
+    consoleError.mockRestore();
   });
 });
