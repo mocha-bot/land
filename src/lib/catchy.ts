@@ -18,7 +18,7 @@ async function catchy<T, E extends new (message?: string) => Error>(
       return [err as InstanceType<E>];
     }
 
-    if (errsToCatch.some((e) => err instanceof e)) {
+    if (errsToCatch.some((errType) => err instanceof errType)) {
       return [err as InstanceType<E>];
     }
 
