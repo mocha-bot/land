@@ -31,7 +31,7 @@ describe('Catchy Module - Single Function', () => {
 });
 
 describe('Catchy Module - Multiple Functions', () => {
-  test('Given a multiple function calls, when some of them throw an error, then it should return the first error', async () => {
+  test('Given a multiple function calls, when some of them throw an error at the end, then it should return the error', async () => {
     const [errMetadata, metadata] = await catchy(getMetadata());
     expect(errMetadata).toBeUndefined();
     expect(metadata).toBe('metadata found!');
@@ -41,7 +41,7 @@ describe('Catchy Module - Multiple Functions', () => {
     expect(user).toBeUndefined();
   });
 
-  test('Given a multiple function calls, when some of them throw an error, then it should return the first error', async () => {
+  test('Given a multiple function calls, when some of them throw an error at the beginning, then it should return the error', async () => {
     const [errUser, user] = await catchy(getUser());
     expect(errUser).toBeInstanceOf(Error);
     expect(user).toBeUndefined();
