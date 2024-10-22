@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import { appWithTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -26,6 +27,7 @@ function App({ Component, pageProps }: AppProps) {
       <GoogleAnalytics trackPageViews gaMeasurementId={GA_TRACKING_ID} />
       <AppProvider>
         <Component {...pageProps} />
+        <Analytics />
       </AppProvider>
     </>
   );
