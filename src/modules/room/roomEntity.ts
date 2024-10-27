@@ -10,7 +10,7 @@ export const ApiRoomSchema = z.object({
       description: z.string().default(''),
     }),
   ),
-  metadata: ApiMetadataSchema,
+  metadata: ApiMetadataSchema.optional(),
 });
 
 export type ApiRoom = z.infer<typeof ApiRoomSchema>;

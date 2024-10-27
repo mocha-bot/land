@@ -32,7 +32,7 @@ interface FooterProps {
   informations?: FooterInformation[];
 }
 
-export default function Footer({ informations }: FooterProps) {
+export function Footer({ informations }: FooterProps) {
   const currentYear = new Date().getFullYear();
   const isMobile = useBreakpointValue({ base: true, md: false });
 

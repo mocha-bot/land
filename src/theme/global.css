@@ -2,6 +2,10 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  /* TODO: remove this hardcoded bgColor if we want to activate dark mode */
+  background-color: black !important;
+}
 /* Custom Scroll */
 /* Works on Firefox */
 * {
