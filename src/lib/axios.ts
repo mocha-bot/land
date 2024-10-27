@@ -33,7 +33,7 @@ export const axios: Axios = (config, schema) => {
         if (err instanceof ZodError) {
           reject({
             _type: 'DECODE_ERROR',
-            message: err.message,
+            message: JSON.parse(JSON.stringify(err.errors)),
           });
         }
         if (err instanceof AxiosError) {

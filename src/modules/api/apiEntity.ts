@@ -2,13 +2,13 @@ import { z } from 'zod';
 
 export const ApiMetadataSchema = z.object({
   pagination: z.object({
-    Limit: z.number(),
-    Page: z.number(),
-    Total: z.number(),
-    From: z.number(),
-    To: z.number(),
-    Last: z.number(),
-    Offset: z.number(),
+    from: z.number(),
+    last: z.number(),
+    limit: z.number(),
+    offset: z.number(),
+    page: z.number(),
+    to: z.number(),
+    total: z.number(),
   }),
 });
 
