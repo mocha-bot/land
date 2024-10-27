@@ -3,7 +3,7 @@ import { i18n } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import getConfig from 'next/config';
 
-import { LandingPageContainer } from '@/modules/LandingPage/LandingPageContainer';
+import { LandingPageContainer } from '@/modules/landingPage/LandingPageContainer';
 
 const { publicRuntimeConfig } = getConfig();
 
