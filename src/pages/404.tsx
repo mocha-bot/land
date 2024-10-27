@@ -7,8 +7,8 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import getConfig from 'next/config';
 
 import { informations } from '@/config/config';
-import Footer from '@/uikit/Footer';
-import Header from '@/uikit/Header';
+import { Footer } from '@/uikit/Footer';
+import { Header } from '@/uikit/Header';
 
 const { publicRuntimeConfig } = getConfig();
 
