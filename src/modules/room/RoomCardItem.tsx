@@ -28,7 +28,7 @@ export function RoomCardItem({ room }: Props) {
       borderRadius='16px'
       p={4}
       gap={4}
-      bgColor='rgba(1, 1, 1, 0.4)'>
+      bgColor='background.dark'>
       <Flex flexDir='row' gap={3}>
         <Image
           src='https://placehold.co/60x60.png'
