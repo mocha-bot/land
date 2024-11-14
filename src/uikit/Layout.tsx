@@ -16,7 +16,9 @@ export function Layout({ children, bgImage }: LayoutProps) {
     <Box
       backgroundImage={bgImage}
       backgroundRepeat='no-repeat'
-      backgroundSize='cover'>
+      backgroundSize='cover'
+      // TODO: change to right after the image in home page is fixed
+      backgroundPosition='top'>
       <Header />
       <Flex
         as='main'
@@ -25,7 +27,6 @@ export function Layout({ children, bgImage }: LayoutProps) {
         justifyContent='center'
         alignItems='center'
         flexDirection='column'
-        px={8}
         gap={8}
         pt={16} // make sure the content is not hidden behind the header after scrolling
       >

@@ -1,3 +1,4 @@
+import { Container } from '@/uikit/Container';
 import { Layout } from '@/uikit/Layout';
 
 import { Discover } from './Discover';
@@ -9,11 +10,13 @@ import { Status } from './Status';
 export function LandingPageContainer() {
   return (
     <Layout bgImage='/assets/images/background_desktop.svg'>
-      <Hero />
-      <Features />
-      <Status />
-      <Discover />
-      <Invitation />
+      <Container>
+        <Hero />
+        <Features />
+        <Status />
+        <Discover />
+        <Invitation />
+      </Container>
     </Layout>
   );
 }

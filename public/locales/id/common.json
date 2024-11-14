@@ -19,6 +19,14 @@
       ]
     }
   },
+  "search": {
+    "title_desktop": "Jelajahi jutaan ruangan untuk terhubung",
+    "title_mobile": "Temukan ruangan",
+    "found_rooms": "<b>Ditemukan {{count}}</b> kamar yang cocok dengan filter Anda",
+    "filter": {
+      "name_placeholder": "Cari nama ruangan di sini ..."
+    }
+  },
   "not_found": {
     "title": "404",
     "descriptions": [

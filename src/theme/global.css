@@ -3,8 +3,9 @@ html {
 }
 
 body {
-  /* TODO: remove this hardcoded bgColor if we want to activate dark mode */
+  /* TODO: remove this hardcoded style if we want to activate dark mode */
   background-color: black !important;
+  color: white !important;
 }
 /* Custom Scroll */
 /* Works on Firefox */

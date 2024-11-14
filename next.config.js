@@ -23,6 +23,16 @@ const nextConfig = {
       process.env.PRODUCT_HUNT_URL ||
       'https://www.producthunt.com/products/mocha-2',
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        port: '',
+        pathname: '/**',
+      },
+    ],
+  },
 };
 
 module.exports = nextConfig;
