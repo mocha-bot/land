@@ -114,17 +114,43 @@ function Discover() {
     <Flex
       w='full'
       h='full'
-      maxW='5xl'
       justifyContent='space-between'
       alignItems='flex-start'
       flexDirection='column'
-      gap={8}
       py={{ base: 8, md: 24 }}
       color='white'>
-      <Text as='h2' fontWeight='semibold' fontSize='3xl'>
+      <Text
+        as='h2'
+        fontWeight='semibold'
+        fontSize={{
+          base: '16px',
+          md: '20px',
+        }}>
         Discover Room
       </Text>
-      <Text as='h2' fontWeight='light' fontSize='3xl'>
+      <Text
+        as='h2'
+        mt={{
+          base: 8,
+          md: 6,
+        }}
+        mb={{
+          base: 14,
+          md: 20,
+        }}
+        fontWeight='500'
+        maxW={{
+          base: 'full',
+          md: '80%',
+        }}
+        lineHeight={{
+          base: '40px',
+          md: '64px',
+        }}
+        fontSize={{
+          base: '40px',
+          md: '64px',
+        }}>
         Like others, join, connect, and have mocha time together
       </Text>
       {isMobile ? (
