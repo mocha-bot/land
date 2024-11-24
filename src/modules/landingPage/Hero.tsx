@@ -36,7 +36,7 @@ const buttons = [
   {
     label: 'Discover More',
     variant: 'glass',
-    href: '#',
+    href: '/search',
   },
   {
     label: 'See Documentation',
