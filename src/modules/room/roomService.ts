@@ -2,6 +2,8 @@ import getConfig from 'next/config';
 
 import { axios } from '@/lib/axios';
 
+import type { ApiMetadata } from '../api/apiEntity';
+
 import type { Room } from './roomEntity';
 import { ApiRoomSchema } from './roomEntity';
 
@@ -12,12 +14,16 @@ export type SearchRoomRequest = {
   limit?: number;
   query?: string;
 };
+export type SearchRoomResponse = {
+  rooms: Room[];
+  pagination?: ApiMetadata['pagination'];
+};
 
 export const searchRoom = async ({
   limit = 10,
   page = 1,
   query,
-}: SearchRoomRequest): Promise<Room[]> => {
+}: SearchRoomRequest): Promise<SearchRoomResponse> => {
   const url = new URL(`${publicRuntimeConfig.apiBaseUrl}/api/v1/room/search`);
   url.searchParams.append('page', page.toString());
   url.searchParams.append('limit', limit.toString());
@@ -34,5 +40,15 @@ export const searchRoom = async ({
     ApiRoomSchema,
   );
 
-  return response.data;
+  return {
+    rooms: response.data.map((room) => ({
+      serial: room.serial,
+      name: room.name,
+      description: room.description,
+      tags: room.tags,
+      totalChannel: room.total_channel,
+      rate: room.rate,
+    })),
+    pagination: response.metadata?.pagination,
+  };
 };

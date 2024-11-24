@@ -1,7 +1,6 @@
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
   Box,
-  Container,
   Drawer,
   DrawerBody,
   DrawerContent,
@@ -20,6 +19,7 @@ import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 
 import Button from './Button';
+import { Container } from './Container';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -144,8 +144,8 @@ export function Header() {
       backgroundColor={isBgTransparent ? 'transparent' : 'rgba(0, 0, 0, 0.7)'}
       backdropFilter={isBgTransparent ? 'none' : 'blur(10px)'}
       transition='0.3s ease'>
-      <Container as={Stack} maxW={{ base: 'xl', md: '6xl' }} h='full'>
-        <Flex py={{ base: 2 }} px={{ base: 0, md: 4 }} alignItems='center'>
+      <Container>
+        <Flex py={{ base: 2 }} alignItems='center'>
           <Flex
             flex={1}
             justifyContent='space-between'

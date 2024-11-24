@@ -22,6 +22,19 @@ const nextConfig = {
     productHuntUrl:
       process.env.PRODUCT_HUNT_URL ||
       'https://www.producthunt.com/products/mocha-2',
+    createRoomDocsUrl:
+      process.env.CREATE_ROOM_DOCS_URL ||
+      'https://docs.mocha-bot.xyz/core/room#create',
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'placehold.co',
+        port: '',
+        pathname: '/**',
+      },
+    ],
   },
 };
 
