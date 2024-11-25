@@ -22,8 +22,7 @@ function Card({ title, description, imageUrl }: CardProps) {
       color='white'
       justifyContent='flex-start'
       alignItems='flex-start'
-      flexDirection='column'
-      p={4}>
+      flexDirection='column'>
       <Image src={imageUrl} alt={title} borderRadius='lg' w='full' />
       <Box py={4}>
         <Text fontWeight='bold' fontSize='xl'>
@@ -66,7 +65,13 @@ function Title() {
       alignItems='center'
       color='white'
       gap={4}>
-      <Text as='h4' fontWeight='semibold'>
+      <Text
+        as='h4'
+        fontWeight='semibold'
+        fontSize={{
+          base: '16px',
+          md: '20px',
+        }}>
         Our Features
       </Text>
       <Flex
@@ -78,7 +83,10 @@ function Title() {
         letterSpacing='tighter'
         w='full'
         maxW={160}>
-        <Text as='h2' fontSize={{ base: '4xl', md: '5xl' }} lineHeight='none'>
+        <Text
+          as='h2'
+          fontSize={{ base: '28px', md: '48px' }}
+          lineHeight={{ base: '28px', md: '48px' }}>
           Arrange Your Mocha Time With Ease
         </Text>
       </Flex>
@@ -106,9 +114,12 @@ function Features() {
         flexDirection='column'
         gap={8}
         py={10}
-        px={4}>
+        px={{
+          base: 4,
+          md: 10,
+        }}>
         <Title />
-        <SimpleGrid columns={[1, 3]} gap={4}>
+        <SimpleGrid columns={[1, 3]} gap={6}>
           {features.map((feature) => (
             <Card
               key={feature.title}

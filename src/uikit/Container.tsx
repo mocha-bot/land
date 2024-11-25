@@ -3,8 +3,14 @@ import type { FlexProps } from '@chakra-ui/react';
 
 export function Container(props: FlexProps) {
   return (
-    <Flex px={{ base: 5, lg: 10 }} w='100%' flexDir='column' {...props}>
-      {props.children}
+    <Flex
+      w='100%'
+      px={{ base: 5, lg: 10 }}
+      flexDir='column'
+      justifyContent='center'>
+      <Flex mx='auto' w='100%' maxW='1200px' flexDir='column' {...props}>
+        {props.children}
+      </Flex>
     </Flex>
   );
 }

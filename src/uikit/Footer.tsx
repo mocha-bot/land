@@ -1,6 +1,5 @@
 import {
   Box,
-  Container,
   Image,
   Link,
   SimpleGrid,
@@ -11,6 +10,8 @@ import {
 
 import type { FooterInformation } from '@/types/Footer';
 
+import { Container } from './Container';
+
 type SubTitleProps = {
   title: string;
 };
@@ -20,7 +21,10 @@ function SubTitle({ title }: SubTitleProps) {
     <Text
       color='white'
       fontWeight='medium'
-      fontSize='sm'
+      fontSize={{
+        base: '16px',
+        md: '12px',
+      }}
       letterSpacing='widest'
       textTransform='uppercase'>
       {title}
@@ -38,7 +42,7 @@ export function Footer({ informations }: FooterProps) {
 
   return (
     <Box background='black'>
-      <Container as={Stack} maxW='6xl' py={16} px={10}>
+      <Container py={16}>
         <SimpleGrid
           templateColumns={{ sm: '1fr 1fr', md: '4fr 2fr 2fr' }}
           spacing={8}>
@@ -53,27 +57,50 @@ export function Footer({ informations }: FooterProps) {
                 height='logo.height.md'
                 alt='Mocha Logo'
               />
-              <Box color='subtitle'>
-                <Text fontSize='sm'>Your trusted bot for connecting</Text>
-                <Text fontSize='sm'>multi-chat cross-server</Text>
+              <Box color='subtitle' ml={2}>
+                <Text
+                  fontSize={{
+                    base: '16px',
+                    md: '12px',
+                  }}>
+                  Your trusted bot for connecting
+                </Text>
+                <Text
+                  fontSize={{
+                    base: '16px',
+                    md: '12px',
+                  }}>
+                  multi-chat cross-server
+                </Text>
               </Box>
             </Stack>
             {!isMobile && (
-              <Text fontSize='sm' color='subtitle'>
+              <Text
+                fontSize={{
+                  base: '16px',
+                  md: '12px',
+                }}
+                color='subtitle'
+                ml={2}>
                 Copyright © 2022 - {currentYear} Mocha
               </Text>
             )}
           </Stack>
           {/* information */}
           {informations?.map((information) => (
-            <Stack key={information.title} align='flex-start' gap={4}>
+            <Stack key={information.title} align='flex-start' gap={4} ml={2}>
               <SubTitle title={information.title} />
               {information.items.map((item) => (
                 <Link
                   href={item.href}
                   _hover={{ textDecoration: 'none' }}
                   key={item.title}>
-                  <Text fontWeight='hairline' fontSize='sm' color='subtitle'>
+                  <Text
+                    fontWeight='hairline'
+                    fontSize={{
+                      base: '16px',
+                      md: '12px',
+                    }}>
                     {item.title}
                   </Text>
                 </Link>
@@ -83,8 +110,13 @@ export function Footer({ informations }: FooterProps) {
         </SimpleGrid>
       </Container>
       {isMobile && (
-        <Box w='full' px={10} py={4} textAlign='center'>
-          <Text fontSize='sm' color='subtitle'>
+        <Box w='full' px={10} mt={-4} pb={8} textAlign='center'>
+          <Text
+            fontSize={{
+              base: '16px',
+              md: '12px',
+            }}
+            color='subtitle'>
             Copyright © 2020 - {currentYear} Mocha
           </Text>
         </Box>

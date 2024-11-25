@@ -11,11 +11,13 @@ const theme = extendTheme({
       width: {
         base: '20px',
         md: '119px',
+        lg: '209px',
         xl: '297px',
       },
       height: {
         base: '20px',
         md: '48px',
+        lg: '209px',
         xl: '297px',
       },
     },

@@ -3,6 +3,7 @@ import { defineStyleConfig } from '@chakra-ui/react';
 const Button = defineStyleConfig({
   variants: {
     glass: {
+      whiteSpace: 'nowrap',
       color: 'white',
       rounded: 56,
       opacity: 0.8,
@@ -29,6 +30,7 @@ const Button = defineStyleConfig({
       },
     },
     'glass-ghost': {
+      whiteSpace: 'nowrap',
       color: 'white',
       opacity: 0.8,
       fontSize: 'sm',

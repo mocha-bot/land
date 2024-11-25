@@ -103,6 +103,7 @@ export function Hero() {
                       alt={`${social.name} Icon`}
                     />
                   }
+                  _hover={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}
                 />
               </Link>
             ))}
