@@ -20,7 +20,7 @@ export type SearchRoomResponse = {
 };
 
 export const searchRoom = async ({
-  limit = 10,
+  limit = 5,
   page = 1,
   query,
 }: SearchRoomRequest): Promise<SearchRoomResponse> => {

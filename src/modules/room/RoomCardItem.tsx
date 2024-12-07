@@ -31,7 +31,7 @@ export function RoomCardItem({ room }: Props) {
       bgColor='background.dark'>
       <Flex flexDir='row' gap={3}>
         <Image
-          src='https://placehold.co/60x60.png'
+          src='/assets/images/logo-mocha.png'
           width={60}
           height={60}
           alt='server'
