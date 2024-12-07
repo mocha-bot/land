@@ -53,8 +53,13 @@ export function RoomSearchContainer() {
     ) {
       searchRoomQuery.fetchNextPage();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inView, searchRoomQuery.hasNextPage, searchRoomQuery.isFetchingNextPage]);
+  }, [
+    inView,
+    searchRoomQuery.hasNextPage,
+    searchRoomQuery.isFetchingNextPage,
+    searchRoomQuery.fetchNextPage,
+    searchRoomQuery,
+  ]);
 
   return (
     <Layout bgImage='/assets/images/search-room-background-image.svg'>
