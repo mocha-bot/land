@@ -23,7 +23,7 @@ export const useSearchRoomInfiniteQuery = (
   config?: UseSearchRoomQueryConfig,
 ) => {
   return useInfiniteQuery({
-    queryKey: ['room', Object.entries(request)],
+    queryKey: ['room', JSON.stringify(request)],
     queryFn: ({ pageParam }) => searchRoom({ page: pageParam, ...request }),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
