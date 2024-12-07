@@ -19,6 +19,15 @@
       ]
     }
   },
+  "search": {
+    "title_desktop": "Jelajahi jutaan ruangan untuk terhubung",
+    "title_mobile": "Temukan ruangan",
+    "found_rooms": "<b>Ditemukan {{count}}</b> ruangan yang cocok dengan filter Anda",
+    "not_found": "Maaf 🙏 kami tidak memiliki ruangan yang terkait dengan kata kunci Anda. Silakan coba lagi atau mungkin Anda dapat <a>membuat ruangan baru</a>",
+    "filter": {
+      "name_placeholder": "Cari nama ruangan di sini ..."
+    }
+  },
   "not_found": {
     "title": "404",
     "descriptions": [

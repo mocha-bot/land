@@ -19,6 +19,15 @@
       ]
     }
   },
+  "search": {
+    "title_desktop": "Explore millions of rooms to connect",
+    "title_mobile": "Discover Room",
+    "found_rooms": "<b>Found {{count}}</b> rooms match your filters",
+    "not_found": "Sorry 🙏 we don't have any room related to you keyword. Please try again or maybe you can <a>create a new room</a>",
+    "filter": {
+      "name_placeholder": "Search for a room name here ..."
+    }
+  },
   "not_found": {
     "title": "404",
     "descriptions": [

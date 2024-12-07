@@ -1,33 +1,25 @@
 import { Box, Flex } from '@chakra-ui/react';
-import { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 import { informations } from '@/config/config';
 
-import Footer from './Footer';
-import Header from './Header';
+import { Footer } from './Footer';
+import { Header } from './Header';
 
 type LayoutProps = {
   children: ReactNode;
+  bgImage?: string;
 };
 
-function Layout({ children }: LayoutProps) {
+export function Layout({ children, bgImage }: LayoutProps) {
   return (
     <Box
-      backgroundImage='/assets/images/background_desktop.svg'
+      backgroundImage={bgImage}
       backgroundRepeat='no-repeat'
-      backgroundSize='cover'>
-      <Box
-        w='full'
-        position='fixed'
-        top={0}
-        left={0}
-        right={0}
-        zIndex={15}
-        backgroundColor='rgba(0, 0, 0, 0.7)'
-        backdropFilter='blur(10px)'
-        transition='position 0.1s ease, top 0.1s ease'>
-        <Header />
-      </Box>
+      backgroundSize='cover'
+      // TODO: change to right after the image in home page is fixed
+      backgroundPosition='top'>
+      <Header />
       <Flex
         as='main'
         h='auto'
@@ -35,7 +27,6 @@ function Layout({ children }: LayoutProps) {
         justifyContent='center'
         alignItems='center'
         flexDirection='column'
-        px={8}
         gap={8}
         pt={16} // make sure the content is not hidden behind the header after scrolling
       >
@@ -45,5 +36,3 @@ function Layout({ children }: LayoutProps) {
     </Box>
   );
 }
-
-export default Layout;

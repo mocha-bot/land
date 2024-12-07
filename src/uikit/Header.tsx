@@ -1,7 +1,6 @@
 import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
   Box,
-  Container,
   Drawer,
   DrawerBody,
   DrawerContent,
@@ -9,14 +8,18 @@ import {
   Flex,
   IconButton,
   Image,
+  Link,
   Stack,
   Text,
   useBreakpointValue,
   useDisclosure,
 } from '@chakra-ui/react';
 import getConfig from 'next/config';
+import NextLink from 'next/link';
+import { useEffect, useState } from 'react';
 
 import Button from './Button';
+import { Container } from './Container';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -108,129 +111,158 @@ function MobileMenuButton({ isOpen, onToggle }: MobileMenuButtonProps) {
   );
 }
 
-export default function Header() {
+const OFFSET_TOP_SCROLL = 50;
+
+export function Header() {
+  const [isBgTransparent, setIsBgTransparent] = useState(true);
   const { isOpen, onToggle, onClose } = useDisclosure();
 
   const isMobile = useBreakpointValue({ base: true, md: false, lg: false });
   const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
   const isDesktop = useBreakpointValue({ base: false, md: false, lg: true });
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const handleScroll = () => {
+        setIsBgTransparent(window.pageYOffset < OFFSET_TOP_SCROLL);
+      };
+
+      window.addEventListener('scroll', handleScroll);
+
+      return () => window.removeEventListener('scroll', handleScroll);
+    }
+  }, []);
+
   return (
-    <Container as={Stack} maxW={{ base: 'xl', md: '6xl' }} h='full'>
-      <Flex py={{ base: 2 }} px={{ base: 0, md: 4 }} alignItems='center'>
-        <Flex
-          flex={1}
-          justifyContent='space-between'
-          alignItems='center'
-          h={12}>
-          <Image
-            src='/assets/images/mocha.png'
-            width='logo.width.md'
-            height='logo.height.md'
-            alt='Mocha Logo'
-          />
-
-          {/* Mobile Hamburger Menu */}
-          {(isMobile || isTablet) && (
-            <MobileMenuButton isOpen={isOpen} onToggle={onToggle} />
-          )}
-
-          {/* Menu for larger screens */}
-          {isDesktop && (
-            <Flex
-              h='full'
-              flex={{ base: 1, md: 'auto' }}
-              justify={{ base: 'center', md: 'center' }}
-              alignItems='stretch'
-              display={{ base: 'none', md: 'flex' }}>
-              <Menu menuList={menu} isOpen={isOpen} />
-            </Flex>
-          )}
-        </Flex>
-
-        {isDesktop && (
-          <Button
-            as='a'
-            variant='glass'
-            py={5}
-            px={6}
-            isAnimated
-            href={publicRuntimeConfig.botInvitationUrl}>
-            Invite to server
-          </Button>
-        )}
-
-        {/* Mobile Drawer */}
-        <Drawer
-          isOpen={isOpen}
-          placement='bottom'
-          onClose={onClose}
-          size='full'>
-          <DrawerOverlay backdropFilter='blur(10px)' transition='all 0.7s'>
-            <DrawerContent bg='rgba(0, 0, 0, 0.75)'>
-              <DrawerBody w='full' overflow='hidden' zIndex={10}>
-                <Flex
-                  flex={1}
-                  justifyContent='space-between'
-                  alignItems='center'>
-                  <Image
-                    src='/assets/images/mocha.png'
-                    width='logo.width.md'
-                    height='logo.height.md'
-                    alt='Mocha Logo'
-                  />
-
-                  <MobileMenuButton isOpen={isOpen} onToggle={onToggle} />
-                </Flex>
-
-                <Flex
-                  direction='column'
-                  h='full'
-                  justifyContent='center'
-                  alignItems='center'>
-                  <Flex direction='column' alignItems='center'>
-                    {menu.map((nav) => (
-                      <Box key={nav.label} mb={6}>
-                        <Text
-                          as='a'
-                          href={nav.href ?? '#'}
-                          fontSize='lg'
-                          fontWeight='hairline'
-                          color='white'
-                          onClick={onClose}
-                          _hover={{
-                            textDecoration: 'none',
-                            color: 'white',
-                          }}>
-                          {nav.label}
-                        </Text>
-                      </Box>
-                    ))}
-                  </Flex>
-                  <Button
-                    as='a'
-                    variant='glass'
-                    py={4}
-                    px={6}
-                    isAnimated
-                    href={publicRuntimeConfig.botInvitationUrl}>
-                    Invite to server
-                  </Button>
-                </Flex>
-              </DrawerBody>
-              {/* Flare bottom */}
+    <Box
+      w='full'
+      position='fixed'
+      top={0}
+      left={0}
+      right={0}
+      zIndex={15}
+      backgroundColor={isBgTransparent ? 'transparent' : 'rgba(0, 0, 0, 0.7)'}
+      backdropFilter={isBgTransparent ? 'none' : 'blur(10px)'}
+      transition='0.3s ease'>
+      <Container>
+        <Flex py={{ base: 2 }} alignItems='center'>
+          <Flex
+            flex={1}
+            justifyContent='space-between'
+            alignItems='center'
+            h={12}>
+            <Link as={NextLink} href='/'>
               <Image
-                src='/assets/images/flare_3.svg'
-                alt='flare'
-                w='full'
-                position='absolute'
-                bottom={{ base: '-105', md: '-255' }}
-                zIndex={3}
+                src='/assets/images/mocha.png'
+                width='logo.width.md'
+                height='logo.height.md'
+                alt='Mocha Logo'
               />
-            </DrawerContent>
-          </DrawerOverlay>
-        </Drawer>
-      </Flex>
-    </Container>
+            </Link>
+
+            {/* Mobile Hamburger Menu */}
+            {(isMobile || isTablet) && (
+              <MobileMenuButton isOpen={isOpen} onToggle={onToggle} />
+            )}
+
+            {/* Menu for larger screens */}
+            {isDesktop && (
+              <Flex
+                h='full'
+                flex={{ base: 1, md: 'auto' }}
+                justify={{ base: 'center', md: 'center' }}
+                alignItems='stretch'
+                display={{ base: 'none', md: 'flex' }}>
+                <Menu menuList={menu} isOpen={isOpen} />
+              </Flex>
+            )}
+          </Flex>
+
+          {isDesktop && (
+            <Button
+              as='a'
+              variant='glass'
+              py={5}
+              px={6}
+              isAnimated
+              href={publicRuntimeConfig.botInvitationUrl}>
+              Invite to server
+            </Button>
+          )}
+
+          {/* Mobile Drawer */}
+          <Drawer
+            isOpen={isOpen}
+            placement='right'
+            onClose={onClose}
+            size='full'>
+            <DrawerOverlay backdropFilter='blur(10px)' transition='all 0.7s'>
+              <DrawerContent bg='rgba(0, 0, 0, 0.5)'>
+                <DrawerBody w='full' overflow='hidden' zIndex={10}>
+                  <Flex
+                    flex={1}
+                    justifyContent='space-between'
+                    alignItems='center'>
+                    <Link as={NextLink} href='/'>
+                      <Image
+                        src='/assets/images/mocha.png'
+                        width='logo.width.md'
+                        height='logo.height.md'
+                        alt='Mocha Logo'
+                      />
+                    </Link>
+
+                    <MobileMenuButton isOpen={isOpen} onToggle={onToggle} />
+                  </Flex>
+
+                  <Flex
+                    direction='column'
+                    h='full'
+                    justifyContent='center'
+                    alignItems='center'>
+                    <Flex direction='column' alignItems='center'>
+                      {menu.map((nav) => (
+                        <Box key={nav.label} mb={6}>
+                          <Text
+                            as='a'
+                            href={nav.href ?? '#'}
+                            fontSize='lg'
+                            fontWeight='hairline'
+                            color='white'
+                            onClick={onClose}
+                            _hover={{
+                              textDecoration: 'none',
+                              color: 'white',
+                            }}>
+                            {nav.label}
+                          </Text>
+                        </Box>
+                      ))}
+                    </Flex>
+                    <Button
+                      as='a'
+                      variant='glass'
+                      py={4}
+                      px={6}
+                      isAnimated
+                      href={publicRuntimeConfig.botInvitationUrl}>
+                      Invite to server
+                    </Button>
+                  </Flex>
+                </DrawerBody>
+                {/* Flare bottom */}
+                <Image
+                  src='/assets/images/flare_3.svg'
+                  alt='flare'
+                  w='full'
+                  position='absolute'
+                  bottom={0}
+                />
+              </DrawerContent>
+            </DrawerOverlay>
+          </Drawer>
+        </Flex>
+      </Container>
+    </Box>
   );
 }

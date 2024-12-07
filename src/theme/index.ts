@@ -11,11 +11,13 @@ const theme = extendTheme({
       width: {
         base: '20px',
         md: '119px',
+        lg: '209px',
         xl: '297px',
       },
       height: {
         base: '20px',
         md: '48px',
+        lg: '209px',
         xl: '297px',
       },
     },
@@ -35,6 +37,7 @@ const theme = extendTheme({
     },
     background: {
       coffee: '#f6eee3',
+      dark: 'rgba(1, 1, 1, 0.4)',
     },
   },
   letterSpacings: {

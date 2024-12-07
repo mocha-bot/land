@@ -1,51 +1,24 @@
-// TODO: enhance this UI page
-import {
-  Flex,
-  FormControl,
-  FormLabel,
-  Input,
-  ListItem,
-  Spinner,
-  UnorderedList,
-} from '@chakra-ui/react';
-import { useState } from 'react';
+import type { GetStaticPropsContext } from 'next';
+import { i18n } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import getConfig from 'next/config';
 
-import { useSearchRoomQuery } from '@/modules/room/roomHook';
-import { debounce } from '@/shared/debounce';
+import { RoomSearchContainer } from '@/modules/room/RoomSearchContainer';
 
-function Search() {
-  const [query, setQuery] = useState('');
-  const searchRoomQuery = useSearchRoomQuery({
-    query,
-  });
+const { publicRuntimeConfig } = getConfig();
 
-  return (
-    <Flex w='full' h='100vh'>
-      <Flex flexDir='column' justifyContent='center' mx='auto' my='auto'>
-        <FormControl>
-          <FormLabel htmlFor='roomName' fontWeight='normal' textAlign='center'>
-            Room name
-          </FormLabel>
-          <Input
-            id='roomName'
-            placeholder='Insert room name'
-            onChange={debounce((e) => setQuery(e.target.value), 300)}
-          />
-        </FormControl>
-        {searchRoomQuery.isLoading ? (
-          <Spinner />
-        ) : (
-          <Flex>
-            <UnorderedList>
-              {searchRoomQuery.data?.map((room) => (
-                <ListItem key={room.serial}>{room.name}</ListItem>
-              ))}
-            </UnorderedList>
-          </Flex>
-        )}
-      </Flex>
-    </Flex>
-  );
+export default function Index() {
+  return <RoomSearchContainer />;
 }
 
-export default Search;
+export async function getStaticProps({ locale }: GetStaticPropsContext) {
+  if (!publicRuntimeConfig.isProduction) {
+    await i18n?.reloadResources();
+  }
+
+  return {
+    props: {
+      ...(locale ? await serverSideTranslations(locale, ['common']) : {}),
+    },
+  };
+}
