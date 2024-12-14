@@ -1,5 +1,5 @@
-import { Flex, SimpleGrid, Text } from '@chakra-ui/react';
-import { FaCaretUp } from 'react-icons/fa';
+import { Flex, Icon, SimpleGrid, Text } from '@chakra-ui/react';
+import { FaCaretUp as UpIcon } from 'react-icons/fa';
 
 type ItemProps = {
   title: string;
@@ -10,18 +10,20 @@ type ItemProps = {
 function Item({ title, value, percentage }: ItemProps) {
   return (
     <Flex flexDirection='column' justifyContent='flex-start'>
-      <Text as='h2' fontWeight='light' fontSize='xl'>
+      <Text as='h2' fontWeight='500' fontSize='28px'>
         {title}
       </Text>
-      <Flex flexDirection='row' gap={10} alignItems='center'>
-        <Text as='h3' fontWeight='light' fontSize='5xl'>
+      <Flex flexDirection='row' gap={4}>
+        <Text as='h3' fontWeight='700' fontSize='56px'>
           {value}
         </Text>
         {percentage > 0 && (
-          <Flex flexDirection='row' gap={2} alignItems='flex-end'>
+          <Flex flexDirection='row' gap={2} alignItems='flex-end' mb={4}>
             {/* just for marketing purpose, hide the red percentage */}
-            {/* {percentage < 0 && <FaCaretDown color='red' size={24} />} */}
-            {percentage > 0 && <FaCaretUp color='green' size={24} />}
+            {/* {percentage < 0 && <Icon as={UpIcon} fontSize={24} color='red' />} */}
+            {percentage > 0 && (
+              <Icon as={UpIcon} fontSize={24} color='green.400' />
+            )}
             <Text as='h3' fontWeight='light' fontSize='lg'>
               {percentage}%
             </Text>
@@ -40,7 +42,7 @@ const items = [
   },
   {
     title: 'Room Created',
-    value: '165K',
+    value: '165K+',
     percentage: -28,
   },
   {
@@ -55,22 +57,23 @@ function Status() {
     <Flex
       w='full'
       h='full'
-      maxW='5xl'
-      borderRadius={{ base: 24, lg: 'none' }}
-      backgroundColor={{
-        base: 'rgba(0, 0, 0, 0.6)',
-        md: 'rgba(0, 0, 0, 0.475)',
-        lg: 'transparent',
-      }}
       justifyContent='space-between'
       alignItems='flex-start'
       flexDirection='column'
-      gap={8}
+      gap={{
+        base: 8,
+        md: 12,
+      }}
       py={{ base: 10, md: 24 }}
-      px={4}
       color='white'
       id='status'>
-      <Text as='h2' fontWeight='semibold' fontSize='3xl'>
+      <Text
+        as='h2'
+        fontWeight='semibold'
+        fontSize={{
+          base: '16px',
+          md: '20px',
+        }}>
         Monthly Bot Status
       </Text>
       <SimpleGrid columns={[1, 3]} gap={4} w='full'>
