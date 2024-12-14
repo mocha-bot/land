@@ -15,7 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { Trans, useTranslation } from 'next-i18next';
 import getConfig from 'next/config';
-import { useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { IoSearch as SearchIcon } from 'react-icons/io5';
 import { LuMoveLeft as BackIcon } from 'react-icons/lu';
 import { useInView } from 'react-intersection-observer';
@@ -124,11 +124,19 @@ export function RoomSearchContainer() {
                 searchRoomQuery.data?.pages &&
                 searchRoomQuery.data.pages.length > 0 && (
                   <Flex flexDir='column' gap={4}>
-                    {searchRoomQuery.data.pages.map((page) =>
+                    {searchRoomQuery.data.pages.map((page, idx) => (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <Fragment key={idx}>
+                        {page.rooms.map((room) => (
+                          <RoomCardItem key={room.serial} room={room} />
+                        ))}
+                      </Fragment>
+                    ))}
+                    {/* {searchRoomQuery.data.pages.map((page) =>
                       page.rooms.map((room) => (
                         <RoomCardItem key={room.serial} room={room} />
                       )),
-                    )}
+                    )} */}
                   </Flex>
                 )}
 
