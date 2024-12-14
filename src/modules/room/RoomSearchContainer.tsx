@@ -62,7 +62,14 @@ export function RoomSearchContainer() {
   ]);
 
   return (
-    <Layout bgImage='/assets/images/search-room-background-image.svg'>
+    <Layout
+      containerProps={{
+        bgSize: 'contain',
+        bgImage: {
+          base: '/assets/images/search-room-background-image-mobile.svg',
+          md: '/assets/images/search-room-background-image-desktop.svg',
+        },
+      }}>
       <Container pt={6} minH='100vh'>
         <HStack spacing={2} color='white'>
           <Icon as={BackIcon} />
