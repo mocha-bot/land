@@ -2,6 +2,7 @@ import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { i18n } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import getConfig from 'next/config';
+import Head from 'next/head';
 
 import { RoomDetailContainer } from '@/modules/room/detail/RoomDetailContainer';
 import type { SearchRoomResponse } from '@/modules/room/roomService';
@@ -12,7 +13,25 @@ const { publicRuntimeConfig } = getConfig();
 export default function Index({
   room,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  return <RoomDetailContainer room={room} />;
+  return (
+    <>
+      <Head>
+        <meta property='og:title' content={room.name} key='meta-title' />
+        <meta
+          property='og:description'
+          content={room.description}
+          key='meta-description'
+        />
+        <meta property='og:image' content='/assets/images/logo-mocha.png' />
+        <meta property='og:locale' content='en_US' key='meta-locale' />
+        <meta
+          property='og:url'
+          content={`https://mocha-bot.xyz/room/${room.slug}`}
+        />
+      </Head>
+      <RoomDetailContainer room={room} />
+    </>
+  );
 }
 
 export async function getStaticProps({

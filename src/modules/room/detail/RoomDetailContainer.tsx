@@ -19,6 +19,7 @@ import {
   TagLabel,
   TagLeftIcon,
   Text,
+  useBreakpointValue,
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
@@ -47,10 +48,14 @@ type Props = {
   room: Room;
 };
 
-const SERVER_BANNER_URL = '/assets/images/detail-room-server-banner.png';
+const SERVER_BANNER_URL_DESKTOP =
+  '/assets/images/detail-room-server-banner-desktop.png';
+const SERVER_BANNER_URL_MOBILE =
+  '/assets/images/detail-room-server-banner-mobile.png';
 const SERVER_LOGO_URL = '/assets/images/logo-mocha.png';
 
 export function RoomDetailContainer(props: Props) {
+  const isMobile = useBreakpointValue({ base: true, md: false });
   const detailInfoModal = useDisclosure();
   const joinRoomModal = useDisclosure();
   const toast = useToast();
@@ -85,7 +90,7 @@ export function RoomDetailContainer(props: Props) {
       }}>
       <Container pt={6} minH='100vh'>
         <NextLink href='/search'>
-          <HStack spacing={2} color='white'>
+          <HStack spacing={2} color='white' marginBottom={6}>
             <Icon as={BackIcon} />
             <Text fontSize='14px'>Discover Room</Text>
           </HStack>
@@ -216,11 +221,15 @@ export function RoomDetailContainer(props: Props) {
                   <Text>Overview</Text>
                 </Box>
                 <Image
-                  src={SERVER_BANNER_URL}
+                  src={
+                    isMobile
+                      ? SERVER_BANNER_URL_MOBILE
+                      : SERVER_BANNER_URL_DESKTOP
+                  }
                   objectFit='cover'
                   alt={props.room.name}
                   height={{
-                    base: '180px',
+                    base: '120px',
                     md: '300px',
                   }}
                   borderRadius='16px'
