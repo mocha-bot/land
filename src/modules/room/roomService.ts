@@ -24,18 +24,17 @@ export const searchRoom = async ({
   page = 1,
   query,
 }: SearchRoomRequest): Promise<SearchRoomResponse> => {
-  const url = new URL(`${publicRuntimeConfig.apiBaseUrl}/api/v1/room/search`);
-  url.searchParams.append('page', page.toString());
-  url.searchParams.append('limit', limit.toString());
-
-  if (query) {
-    url.searchParams.append('q', query);
-  }
+  const url = `${publicRuntimeConfig.apiBaseUrl}/api/v1/room/search`;
 
   const response = await axios(
     {
-      method: 'GET',
-      url: url.toString(),
+      method: 'POST',
+      url,
+      data: {
+        q: query,
+        page,
+        limit,
+      },
     },
     ApiRoomSchema,
   );
