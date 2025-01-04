@@ -38,7 +38,7 @@ export function RoomSearchContainer() {
   const [query, setQuery] = useState('');
 
   const searchRoomQuery = useSearchRoomInfiniteQuery(
-    { query },
+    { q: query },
     { enabled: true },
   );
 
@@ -90,13 +90,14 @@ export function RoomSearchContainer() {
           templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(12, 1fr)' }}
           gap={6}
           my={8}>
+          {/* TODO: make the filter sticky when scroll */}
           <GridItem colSpan={{ base: 1, md: 4 }}>
             <Flex>
               <InputGroup>
                 <Input
                   placeholder={t('common:search.filter.name_placeholder')}
                   borderWidth={0}
-                  bgColor='rgba(1, 1, 1, 0.4)'
+                  bgColor='background.dark'
                   borderRadius='16px'
                   fontSize={{ base: '18px', md: '14px' }}
                   height={12}
@@ -131,15 +132,14 @@ export function RoomSearchContainer() {
                       // eslint-disable-next-line react/no-array-index-key
                       <Fragment key={idx}>
                         {page.rooms.map((room) => (
-                          <RoomCardItem key={room.serial} room={room} />
+                          <NextLink
+                            key={room.serial}
+                            href={`/room/${room.slug}`}>
+                            <RoomCardItem room={room} />
+                          </NextLink>
                         ))}
                       </Fragment>
                     ))}
-                    {/* {searchRoomQuery.data.pages.map((page) =>
-                      page.rooms.map((room) => (
-                        <RoomCardItem key={room.serial} room={room} />
-                      )),
-                    )} */}
                   </Flex>
                 )}
 

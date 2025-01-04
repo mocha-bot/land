@@ -20,6 +20,7 @@ type Props = {
 };
 
 const MAX_TAG_SHOW_COUNT = 2;
+const SERVER_LOGO_URL = '/assets/images/logo-mocha.png';
 
 export function RoomCardItem({ room }: Props) {
   return (
@@ -31,7 +32,7 @@ export function RoomCardItem({ room }: Props) {
       bgColor='background.dark'>
       <Flex flexDir='row' gap={3}>
         <Image
-          src='/assets/images/logo-mocha.png'
+          src={SERVER_LOGO_URL}
           width={60}
           height={60}
           alt='server'
@@ -44,7 +45,7 @@ export function RoomCardItem({ room }: Props) {
           <HStack spacing={3}>
             <HStack spacing={1}>
               <Icon as={StarIcon} fontSize='16px' />
-              <Text fontWeight={400}>{room.rate}</Text>
+              <Text fontWeight={400}>{room.rate.averageRating}</Text>
             </HStack>
             <HStack spacing={1}>
               <Icon as={ServerIcon} fontSize='16px' />

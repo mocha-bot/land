@@ -7,10 +7,16 @@ export const ApiRoomSchema = z.object({
     z.object({
       serial: z.string(),
       name: z.string().default(''),
+      slug: z.string().default(''),
       description: z.string().default(''),
       tags: z.array(z.string()).default([]),
       total_channel: z.number().default(0),
-      rate: z.number().default(0),
+      rate: z.object({
+        rating_count: z.number().default(0),
+        average_rating: z.number().default(0),
+      }),
+      created_by: z.string().default(''),
+      created_at: z.string().default(''),
     }),
   ),
   metadata: ApiMetadataSchema.optional(),
@@ -21,10 +27,16 @@ export type ApiRoom = z.infer<typeof ApiRoomSchema>;
 export type Room = {
   serial: string;
   name: string;
+  slug: string;
   description: string;
   totalChannel: number;
-  rate: number;
   tags: string[];
+  createdBy: string;
+  createdAt: string;
+  rate: {
+    ratingCount: number;
+    averageRating: number;
+  };
 };
 
 export const DUMMY_ROOM = {

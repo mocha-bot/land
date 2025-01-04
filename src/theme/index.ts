@@ -36,7 +36,7 @@ const theme = extendTheme({
     },
     background: {
       coffee: '#f6eee3',
-      dark: 'rgba(1, 1, 1, 0.4)',
+      dark: 'rgba(0, 0, 0, 0.4)',
     },
   },
   letterSpacings: {
