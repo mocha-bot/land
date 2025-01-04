@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import { Trans, useTranslation } from 'next-i18next';
 import getConfig from 'next/config';
+import NextLink from 'next/link';
 import { Fragment, useEffect, useState } from 'react';
 import { IoSearch as SearchIcon } from 'react-icons/io5';
 import { LuMoveLeft as BackIcon } from 'react-icons/lu';
@@ -71,10 +72,12 @@ export function RoomSearchContainer() {
         },
       }}>
       <Container pt={6} minH='100vh'>
-        <HStack spacing={2} color='white'>
-          <Icon as={BackIcon} />
-          <Text fontSize='14px'>Homepage</Text>
-        </HStack>
+        <NextLink href='/'>
+          <HStack spacing={2} color='white'>
+            <Icon as={BackIcon} />
+            <Text fontSize='14px'>Homepage</Text>
+          </HStack>
+        </NextLink>
         <Heading
           mt={{ base: 4, md: 6 }}
           fontSize={{ base: '40px', md: '64px' }}

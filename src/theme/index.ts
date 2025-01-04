@@ -28,7 +28,6 @@ const theme = extendTheme({
     160: '40rem',
     192: '48rem',
     280: '70rem',
-    300: '75rem',
   },
   colors: {
     subtitle: '#ADADAD',
