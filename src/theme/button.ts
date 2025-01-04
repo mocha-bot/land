@@ -8,7 +8,7 @@ const Button = defineStyleConfig({
       rounded: 56,
       opacity: 0.8,
       fontSize: 'sm',
-      backgroundColor: 'rgba(1, 1, 1, 0.4)',
+      backgroundColor: 'rgba(0, 0, 0, 0.4)',
       borderWidth: 3,
       borderColor: 'rgba(255, 255, 255, 0.2)',
       backgroundRepeat: 'no-repeat',
@@ -19,7 +19,7 @@ const Button = defineStyleConfig({
       },
       _active: {
         opacity: 1,
-        backgroundColor: 'rgba(1, 1, 1, 0.4)',
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
         borderColor: 'rgba(255, 255, 255, 0.25)',
       },
       _hover: {
@@ -39,7 +39,7 @@ const Button = defineStyleConfig({
       },
       _active: {
         opacity: 1,
-        backgroundColor: 'rgba(1, 1, 1, 0.4)',
+        backgroundColor: 'rgba(0, 0, 0, 0.4)',
         borderColor: 'rgba(255, 255, 255, 0.25)',
       },
       _hover: {

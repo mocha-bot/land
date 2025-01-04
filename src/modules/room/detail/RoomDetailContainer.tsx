@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 import { CloseIcon } from '@chakra-ui/icons';
 import {
   Box,
@@ -26,10 +27,8 @@ import NextLink from 'next/link';
 import React from 'react';
 import {
   FiCalendar as CalendarIcon,
-  FiGlobe as GlobeIcon,
   FiHash as HashtagIcon,
   FiServer as ServerIcon,
-  FiUser as UserIcon,
   FiUsers as UsersIcon,
 } from 'react-icons/fi';
 import { IoIosStarOutline as StarIcon } from 'react-icons/io';
@@ -40,36 +39,18 @@ import Button from '@/uikit/Button';
 import { Container } from '@/uikit/Container';
 import { Layout } from '@/uikit/Layout';
 
-import { DUMMY_ROOM } from '../roomEntity';
+import type { Room } from '../roomEntity';
 
 import { JoinRoomModal } from './JoinRoomModal';
 
-const DETAILS_INFO = [
-  {
-    icon: CalendarIcon,
-    label: 'Created',
-    value: dayjs(DUMMY_ROOM.createdAt).format('MMM YYYY'),
-  },
-  {
-    icon: GlobeIcon,
-    label: 'Language',
-    value: `${
-      DUMMY_ROOM.language.name
-    } (${DUMMY_ROOM.language.code.toUpperCase()})`,
-  },
-  {
-    icon: StarIcon,
-    label: 'Rate',
-    value: `${DUMMY_ROOM.rate} (${DUMMY_ROOM.totalReview} reviews)`,
-  },
-  {
-    icon: UsersIcon,
-    label: 'Server Joined',
-    value: DUMMY_ROOM.serverJoined,
-  },
-];
+type Props = {
+  room: Room;
+};
 
-export function RoomDetailContainer() {
+const SERVER_BANNER_URL = '/assets/images/detail-room-server-banner.png';
+const SERVER_LOGO_URL = '/assets/images/logo-mocha.png';
+
+export function RoomDetailContainer(props: Props) {
   const detailInfoModal = useDisclosure();
   const joinRoomModal = useDisclosure();
   const toast = useToast();
@@ -79,7 +60,7 @@ export function RoomDetailContainer() {
   };
 
   const handleClickCopyRoomCode = () => {
-    navigator.clipboard.writeText(DUMMY_ROOM.code);
+    navigator.clipboard.writeText(props.room.serial);
     toast({
       title: 'Room ID copied',
       description: 'You can paste it to invite your friends',
@@ -103,7 +84,7 @@ export function RoomDetailContainer() {
         },
       }}>
       <Container pt={6} minH='100vh'>
-        <NextLink href='/'>
+        <NextLink href='/search'>
           <HStack spacing={2} color='white'>
             <Icon as={BackIcon} />
             <Text fontSize='14px'>Discover Room</Text>
@@ -120,7 +101,7 @@ export function RoomDetailContainer() {
               <Flex flexDir='column' gap={6}>
                 <Flex flexDir='row'>
                   <Image
-                    src={DUMMY_ROOM.serverOwner.image}
+                    src={SERVER_LOGO_URL}
                     width={28}
                     height={28}
                     alt='server'
@@ -134,7 +115,7 @@ export function RoomDetailContainer() {
                         md: '40px',
                       }}
                       lineHeight='50px'>
-                      {DUMMY_ROOM.name}
+                      {props.room.name}
                     </Text>
                     <HStack spacing={3}>
                       <HStack spacing={1}>
@@ -152,17 +133,16 @@ export function RoomDetailContainer() {
                             md: '24px',
                           }}
                           lineHeight='30px'>
-                          {DUMMY_ROOM.rate}
+                          {props.room.rate.averageRating}
                           <Box
                             as='span'
                             display={{ base: 'none', md: 'inline' }}>
                             {' '}
-                            from {DUMMY_ROOM.totalReview} reviews
+                            from {props.room.rate.ratingCount} reviews
                           </Box>
                         </Text>
                       </HStack>
                       <Divider orientation='vertical' bgColor='white' />
-
                       <HStack spacing={1}>
                         <Icon
                           as={ServerIcon}
@@ -178,7 +158,7 @@ export function RoomDetailContainer() {
                             md: '24px',
                           }}
                           lineHeight='30px'>
-                          {DUMMY_ROOM.serverJoined} Server Joined
+                          {props.room.totalChannel} Server Joined
                         </Text>
                       </HStack>
                     </HStack>
@@ -236,19 +216,20 @@ export function RoomDetailContainer() {
                   <Text>Overview</Text>
                 </Box>
                 <Image
-                  src={DUMMY_ROOM.serverBanner}
+                  src={SERVER_BANNER_URL}
                   objectFit='cover'
-                  alt={DUMMY_ROOM.name}
+                  alt={props.room.name}
                   height={{
                     base: '180px',
                     md: '300px',
                   }}
                   borderRadius='16px'
                 />
-                <Text>{DUMMY_ROOM.description}</Text>
+                <Text>{props.room.description}</Text>
               </Flex>
               {/* server joined */}
-              <Flex flexDir='column' gap={6}>
+              {/* TODO: show server joined when API is ready */}
+              {/* <Flex flexDir='column' gap={6}>
                 <Box
                   borderBottomWidth='1px'
                   borderBottomColor='rgba(255,255,255,0.5))'
@@ -256,7 +237,7 @@ export function RoomDetailContainer() {
                   <Text>Server Joined</Text>
                 </Box>
                 <Grid templateColumns='repeat(2, 1fr)' gap={8}>
-                  {DUMMY_ROOM.servers.map((server, idx) => (
+                  {props.room.servers.map((server, idx) => (
                     <GridItem
                       // eslint-disable-next-line react/no-array-index-key
                       key={idx}
@@ -290,7 +271,7 @@ export function RoomDetailContainer() {
                     </GridItem>
                   ))}
                 </Grid>
-              </Flex>
+              </Flex> */}
             </Flex>
           </GridItem>
           {/* desktop screen */}
@@ -332,7 +313,7 @@ export function RoomDetailContainer() {
                 </Button>
               </Stack>
               <Box backgroundColor='background.dark' p={5} borderRadius='16px'>
-                <DetailInfo />
+                <DetailInfo room={props.room} />
               </Box>
             </Flex>
           </GridItem>
@@ -341,13 +322,14 @@ export function RoomDetailContainer() {
       <MobileDetailInfo
         isOpen={detailInfoModal.isOpen}
         onClose={() => detailInfoModal.onClose()}
+        room={props.room}
       />
       <JoinRoomModal
         isOpen={joinRoomModal.isOpen}
         onClose={() => joinRoomModal.onClose()}
         onClickCopy={handleClickCopyRoomCode}
-        roomCode={DUMMY_ROOM.code}
-        roomName={DUMMY_ROOM.name}
+        roomCode={props.room.serial}
+        roomName={props.room.name}
       />
     </Layout>
   );
@@ -355,36 +337,50 @@ export function RoomDetailContainer() {
 
 type DetailInfoProps = {
   onClickClose?: () => void;
+  room: Room;
 };
 
 function DetailInfo(props: DetailInfoProps) {
+  const detailInfo = [
+    {
+      icon: CalendarIcon,
+      label: 'Created',
+      value: dayjs(props.room.createdAt).format('MMM YYYY'),
+    },
+    // TODO: show language info when API is ready
+    // {
+    //   icon: GlobeIcon,
+    //   label: 'Language',
+    //   value: `${
+    //     props.room.language.name
+    //   } (${props.room.language.code.toUpperCase()})`,
+    // },
+    {
+      icon: StarIcon,
+      label: 'Rate',
+      value: `${props.room.rate.averageRating} (${props.room.rate.ratingCount} reviews)`,
+    },
+    {
+      icon: UsersIcon,
+      label: 'Server Joined',
+      value: props.room.totalChannel,
+    },
+  ];
+
   return (
     <Flex flexDir='column' gap={8}>
+      {/* TODO: show server owner info when API is ready */}
       {/* server owner info */}
-      <Flex flexDir='column' gap={3}>
+      {/* <Flex flexDir='column' gap={3}>
         <Flex flexDir='row' justifyContent='space-between' alignItems='center'>
           <Text fontSize='14px' fontWeight={700}>
             Owner
           </Text>
-          {props.onClickClose && (
-            <IconButton
-              onClick={props.onClickClose}
-              icon={<CloseIcon />}
-              variant='ghost'
-              aria-label='Toggle Navigation'
-              color='white'
-              _hover={{
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-              }}
-              size='sm'
-              borderRadius='100%'
-            />
-          )}
         </Flex>
         <Flex flexDir='row' gap={3}>
           <Image
             // TODO: change to real logo of the owner
-            src={DUMMY_ROOM.serverOwner.image}
+            src={props.room.serverOwner.image}
             width={14}
             height={14}
             alt='server-owner'
@@ -392,19 +388,34 @@ function DetailInfo(props: DetailInfoProps) {
           />
           <Flex flexDir='column'>
             <Text fontSize='20px' fontWeight={600}>
-              {DUMMY_ROOM.serverOwner.name}
+              {props.room.serverOwner.name}
             </Text>
-            <Text>{DUMMY_ROOM.serverOwner.owner}</Text>
+            <Text>{props.room.serverOwner.owner}</Text>
           </Flex>
         </Flex>
-      </Flex>
+      </Flex> */}
+      {props.onClickClose && (
+        <IconButton
+          onClick={props.onClickClose}
+          icon={<CloseIcon />}
+          variant='ghost'
+          aria-label='Toggle Navigation'
+          color='white'
+          _hover={{
+            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+          }}
+          size='sm'
+          borderRadius='100%'
+          position='absolute'
+          right={4}
+        />
+      )}
       {/* detail info */}
       <Flex gap={3} flexDir='column'>
         <Text fontSize='14px' fontWeight={700}>
           Details
         </Text>
-        {DETAILS_INFO.map((info, idx) => (
-          // eslint-disable-next-line react/no-array-index-key
+        {detailInfo.map((info, idx) => (
           <Flex flexDir='row' key={idx}>
             <Icon as={info.icon} fontSize='20px' />
             <Text fontWeight={500} ml={2}>
@@ -417,14 +428,13 @@ function DetailInfo(props: DetailInfoProps) {
         ))}
       </Flex>
       {/* room tags */}
-      {DUMMY_ROOM.tags.length > 0 && (
+      {props.room.tags.length > 0 && (
         <Flex flexDir='column' gap={3}>
           <Text fontSize='14px' fontWeight={700}>
             Room Tag
           </Text>
           <HStack spacing={2}>
-            {DUMMY_ROOM.tags.map((tag) => (
-              // eslint-disable-next-line react/no-array-index-key
+            {props.room.tags.map((tag) => (
               <Tag
                 key={tag}
                 fontSize='14px'
@@ -442,12 +452,12 @@ function DetailInfo(props: DetailInfoProps) {
   );
 }
 
-type MobileDetailInfoProps = {
+type MobileDetailInfoProps = DetailInfoProps & {
   isOpen: boolean;
   onClose: () => void;
 };
 
-function MobileDetailInfo({ isOpen, onClose }: MobileDetailInfoProps) {
+function MobileDetailInfo({ isOpen, onClose, ...rest }: MobileDetailInfoProps) {
   return (
     <Drawer isOpen={isOpen} placement='right' onClose={onClose} size='full'>
       <DrawerOverlay
@@ -456,7 +466,7 @@ function MobileDetailInfo({ isOpen, onClose }: MobileDetailInfoProps) {
         marginTop={16}>
         <DrawerContent bg='transparent'>
           <DrawerBody w='full' overflow='hidden' zIndex={10} pt={6}>
-            <DetailInfo onClickClose={onClose} />
+            <DetailInfo onClickClose={onClose} {...rest} />
           </DrawerBody>
         </DrawerContent>
       </DrawerOverlay>
