@@ -203,12 +203,18 @@ function PricingContainer() {
             Plans for every room, built for your community!
           </Text>
         </Box>
-        {/* Pricing Categories */}
-        <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4} mt={12}>
-          {PricingFeatures.map((feature) => (
-            <PricingFeature key={feature.category} {...feature} />
-          ))}
-        </SimpleGrid>
+        <Flex mt={8} gap={8} flexDirection='column'>
+          <Text fontSize='lg' fontWeight='light' textAlign='center'>
+            Mocha is <strong>totally free</strong>, but we offer premium
+            features to enhance your room experience and community.
+          </Text>
+          {/* Pricing Categories */}
+          <SimpleGrid columns={{ base: 1, md: 3 }} spacing={4}>
+            {PricingFeatures.map((feature) => (
+              <PricingFeature key={feature.category} {...feature} />
+            ))}
+          </SimpleGrid>
+        </Flex>
         {/* Description */}
         <Text fontWeight='light' textAlign='center' fontSize='sm'>
           Our payment process only accepts cryptocurrencies. If you have any
