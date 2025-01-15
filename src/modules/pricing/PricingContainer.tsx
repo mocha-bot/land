@@ -279,6 +279,11 @@ function PricingFeature(props: PricingFeatureProps) {
                 h={2}
                 borderRadius={16}
                 overflow='hidden'
+                role='progressbar'
+                aria-valuenow={feature.value}
+                aria-valuemin={0}
+                aria-valuemax={feature.maxValue}
+                aria-label={`${feature.name} usage: ${feature.value} out of ${feature.maxValue} ${feature.unit}`}
                 mt={2}>
                 <Box
                   bg='blue.500'
