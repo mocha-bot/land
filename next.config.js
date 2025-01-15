@@ -25,6 +25,8 @@ const nextConfig = {
     createRoomDocsUrl:
       process.env.CREATE_ROOM_DOCS_URL ||
       'https://docs.mocha-bot.xyz/core/room#create',
+    tawkPropertyId: process.env.TAWK_PROPERTY_ID || '0',
+    tawkWidgetId: process.env.TAWK_WIDGET_ID || '0',
   },
   images: {
     remotePatterns: [
