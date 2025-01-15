@@ -28,7 +28,6 @@ const theme = extendTheme({
     160: '40rem',
     192: '48rem',
     280: '70rem',
-    300: '75rem',
   },
   colors: {
     subtitle: '#ADADAD',
@@ -37,7 +36,7 @@ const theme = extendTheme({
     },
     background: {
       coffee: '#f6eee3',
-      dark: 'rgba(1, 1, 1, 0.4)',
+      dark: 'rgba(0, 0, 0, 0.4)',
     },
   },
   letterSpacings: {

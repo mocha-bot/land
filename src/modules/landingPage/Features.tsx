@@ -106,7 +106,6 @@ function Features() {
       <Flex
         w='full'
         h='full'
-        maxW={300}
         borderRadius={{ base: 24, md: 40 }}
         backgroundColor='rgba(0, 0, 0, 0.4)'
         justifyContent='center'

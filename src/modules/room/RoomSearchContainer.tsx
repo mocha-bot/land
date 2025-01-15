@@ -15,11 +15,13 @@ import {
 } from '@chakra-ui/react';
 import { Trans, useTranslation } from 'next-i18next';
 import getConfig from 'next/config';
-import { useState } from 'react';
+import NextLink from 'next/link';
+import { Fragment, useEffect, useState } from 'react';
 import { IoSearch as SearchIcon } from 'react-icons/io5';
 import { LuMoveLeft as BackIcon } from 'react-icons/lu';
+import { useInView } from 'react-intersection-observer';
 
-import { useSearchRoomQuery } from '@/modules/room/roomHook';
+import { useSearchRoomInfiniteQuery } from '@/modules/room/roomHook';
 import { debounce } from '@/shared/debounce';
 import { Container } from '@/uikit/Container';
 import { Layout } from '@/uikit/Layout';
@@ -34,17 +36,48 @@ export function RoomSearchContainer() {
   const { t } = useTranslation();
   const isMobile = useBreakpointValue({ base: true, md: false });
   const [query, setQuery] = useState('');
-  const searchRoomQuery = useSearchRoomQuery({
-    query,
+
+  const searchRoomQuery = useSearchRoomInfiniteQuery(
+    { q: query },
+    { enabled: true },
+  );
+
+  const { ref, inView } = useInView({
+    threshold: 0.92,
   });
 
+  useEffect(() => {
+    if (
+      inView &&
+      searchRoomQuery.hasNextPage &&
+      !searchRoomQuery.isFetchingNextPage
+    ) {
+      searchRoomQuery.fetchNextPage();
+    }
+  }, [
+    inView,
+    searchRoomQuery.hasNextPage,
+    searchRoomQuery.isFetchingNextPage,
+    searchRoomQuery.fetchNextPage,
+    searchRoomQuery,
+  ]);
+
   return (
-    <Layout bgImage='/assets/images/search-room-background-image.svg'>
+    <Layout
+      containerProps={{
+        bgSize: 'contain',
+        bgImage: {
+          base: '/assets/images/search-room-background-image-mobile.svg',
+          md: '/assets/images/search-room-background-image-desktop.svg',
+        },
+      }}>
       <Container pt={6} minH='100vh'>
-        <HStack spacing={2} color='white'>
-          <Icon as={BackIcon} />
-          <Text fontSize='14px'>Homepage</Text>
-        </HStack>
+        <NextLink href='/'>
+          <HStack spacing={2} color='white'>
+            <Icon as={BackIcon} />
+            <Text fontSize='14px'>Homepage</Text>
+          </HStack>
+        </NextLink>
         <Heading
           mt={{ base: 4, md: 6 }}
           fontSize={{ base: '40px', md: '64px' }}
@@ -57,13 +90,14 @@ export function RoomSearchContainer() {
           templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(12, 1fr)' }}
           gap={6}
           my={8}>
+          {/* TODO: make the filter sticky when scroll */}
           <GridItem colSpan={{ base: 1, md: 4 }}>
             <Flex>
               <InputGroup>
                 <Input
                   placeholder={t('common:search.filter.name_placeholder')}
                   borderWidth={0}
-                  bgColor='rgba(1, 1, 1, 0.4)'
+                  bgColor='background.dark'
                   borderRadius='16px'
                   fontSize={{ base: '18px', md: '14px' }}
                   height={12}
@@ -83,28 +117,42 @@ export function RoomSearchContainer() {
                   components={{
                     b: <strong />,
                   }}
-                  count={searchRoomQuery.data?.rooms.length || 0}
+                  count={searchRoomQuery.data?.pages[0]?.pagination?.total || 0}
                 />
-                {/* TODO: change to use pagination data after infinite scroll implemented */}
-                {/* <strong>Found {searchRoomQuery.data?.rooms.length}</strong>{' '}
-                rooms match your filters */}
               </Text>
-              {/* loading */}
+              {/* LOADING */}
               {searchRoomQuery.isLoading && <Spinner />}
-              {/* success with data */}
+
+              {/* DATA */}
               {!searchRoomQuery.isLoading &&
-                searchRoomQuery.data &&
-                searchRoomQuery.data?.rooms.length > 0 && (
+                searchRoomQuery.data?.pages &&
+                searchRoomQuery.data.pages.length > 0 && (
                   <Flex flexDir='column' gap={4}>
-                    {searchRoomQuery.data?.rooms.map((room) => (
-                      <RoomCardItem key={room.serial} room={room} />
+                    {searchRoomQuery.data.pages.map((page, idx) => (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <Fragment key={idx}>
+                        {page.rooms.map((room) => (
+                          <NextLink
+                            key={room.serial}
+                            href={`/room/${room.slug}`}>
+                            <RoomCardItem room={room} />
+                          </NextLink>
+                        ))}
+                      </Fragment>
                     ))}
                   </Flex>
                 )}
-              {/* success with empty data */}
+
+              {/* INFINITE SCROLL */}
+              <div ref={ref}>
+                {searchRoomQuery.isFetchingNextPage && <Spinner />}
+              </div>
+
+              {/* EMPTY STATE */}
               {!searchRoomQuery.isLoading &&
-                searchRoomQuery.data &&
-                searchRoomQuery.data?.rooms.length <= 0 && <EmptyState />}
+                (searchRoomQuery.data?.pages[0]?.rooms?.length ?? 0) <= 0 && (
+                  <EmptyState />
+                )}
             </Flex>
           </GridItem>
         </Grid>

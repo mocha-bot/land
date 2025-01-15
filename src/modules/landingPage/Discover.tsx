@@ -10,7 +10,6 @@ import {
 import { CiServer } from 'react-icons/ci';
 
 import { HorizontalScroll } from '@/components/HorizontalScroll/HorizontalScroll';
-import Button from '@/uikit/Button';
 
 type ItemProps = {
   roomName: string;
@@ -20,13 +19,7 @@ type ItemProps = {
   photoUrl: string;
 };
 
-function Item({
-  roomName,
-  roomSerial,
-  totalChannels,
-  description,
-  photoUrl,
-}: ItemProps) {
+function Item({ roomName, totalChannels, description, photoUrl }: ItemProps) {
   return (
     <Flex
       justifyContent='flex-start'
@@ -62,16 +55,6 @@ function Item({
       <Text as='h3' fontWeight='light' fontSize='sm' noOfLines={3}>
         {description}
       </Text>
-      <Button
-        as='a'
-        w='full'
-        variant='glass'
-        py={5}
-        px={6}
-        isAnimated
-        href={`/room/${roomSerial}`}>
-        Room Detail
-      </Button>
     </Flex>
   );
 }
@@ -83,7 +66,7 @@ const items = [
     totalChannels: 100,
     description:
       'Mocha Room is a room for all Mocha users to share their experiences, ask questions, and get help from the community.',
-    photoUrl: '/assets/images/flare_1.svg',
+    photoUrl: '/assets/images/logo-mocha.png',
   },
   {
     roomName: 'Tech Room',
@@ -91,7 +74,7 @@ const items = [
     totalChannels: 200,
     description:
       'Tech Room is a room for all tech enthusiasts to share their knowledge, ask questions, and get help from the community.',
-    photoUrl: '/assets/images/flare_1.svg',
+    photoUrl: '/assets/images/logo-mocha.png',
   },
   {
     roomName: 'Game Room',
@@ -99,16 +82,12 @@ const items = [
     totalChannels: 300,
     description:
       'Game Room is a room for all gamers to share their experiences, ask questions, and get help from the community.',
-    photoUrl: '/assets/images/flare_1.svg',
+    photoUrl: '/assets/images/logo-mocha.png',
   },
 ];
 
 function Discover() {
   const isMobile = useBreakpointValue({ base: true, md: false });
-
-  const itemNodes = items.map((item) => (
-    <Item key={item.roomSerial} {...item} />
-  ));
 
   return (
     <Flex
@@ -154,10 +133,16 @@ function Discover() {
         Like others, join, connect, and have mocha time together
       </Text>
       {isMobile ? (
-        <HorizontalScroll items={itemNodes} />
+        <HorizontalScroll
+          items={items.map((item) => (
+            <Item key={item.roomSerial} {...item} />
+          ))}
+        />
       ) : (
         <SimpleGrid columns={[1, 3]} gap={4} w='full'>
-          {itemNodes}
+          {items.map((item) => (
+            <Item key={item.roomSerial} {...item} />
+          ))}
         </SimpleGrid>
       )}
     </Flex>

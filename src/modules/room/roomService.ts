@@ -12,7 +12,8 @@ const { publicRuntimeConfig } = getConfig();
 export type SearchRoomRequest = {
   page?: number;
   limit?: number;
-  query?: string;
+  q?: string;
+  slug?: string;
 };
 export type SearchRoomResponse = {
   rooms: Room[];
@@ -20,22 +21,30 @@ export type SearchRoomResponse = {
 };
 
 export const searchRoom = async ({
-  limit = 10,
+  limit = 5,
   page = 1,
-  query,
+  ...payload
 }: SearchRoomRequest): Promise<SearchRoomResponse> => {
-  const url = new URL(`${publicRuntimeConfig.apiBaseUrl}/api/v1/room/search`);
-  url.searchParams.append('page', page.toString());
-  url.searchParams.append('limit', limit.toString());
+  const url = `${publicRuntimeConfig.apiBaseUrl}/api/v1/room/search`;
 
-  if (query) {
-    url.searchParams.append('q', query);
+  const data: SearchRoomRequest = {
+    limit,
+    page,
+  };
+
+  if (payload.q) {
+    data.q = payload.q;
+  }
+
+  if (payload.slug) {
+    data.slug = payload.slug;
   }
 
   const response = await axios(
     {
-      method: 'GET',
-      url: url.toString(),
+      method: 'POST',
+      url,
+      data,
     },
     ApiRoomSchema,
   );
@@ -44,10 +53,16 @@ export const searchRoom = async ({
     rooms: response.data.map((room) => ({
       serial: room.serial,
       name: room.name,
+      slug: room.slug,
       description: room.description,
       tags: room.tags,
       totalChannel: room.total_channel,
-      rate: room.rate,
+      createdBy: room.created_by,
+      createdAt: room.created_at,
+      rate: {
+        ratingCount: room.rate.rating_count,
+        averageRating: room.rate.average_rating,
+      },
     })),
     pagination: response.metadata?.pagination,
   };
