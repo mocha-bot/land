@@ -1,4 +1,11 @@
-import { Box, Flex, SimpleGrid, Text, Tooltip } from '@chakra-ui/react';
+import {
+  Box,
+  Divider,
+  Flex,
+  SimpleGrid,
+  Text,
+  Tooltip,
+} from '@chakra-ui/react';
 import React from 'react';
 
 import Button from '@/uikit/Button';
@@ -261,6 +268,7 @@ function PricingFeature(props: PricingFeatureProps) {
       <Button w='full' variant='glass' borderRadius={16}>
         Upgrade
       </Button>
+      <Divider />
       <Box>
         {props.features.map((feature) => (
           <Box key={feature.name} mb={4}>
