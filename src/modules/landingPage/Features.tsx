@@ -1,5 +1,5 @@
 import {
-  AspectRatio,
+  // AspectRatio,
   Box,
   Flex,
   Image,
@@ -128,10 +128,10 @@ function Features() {
             />
           ))}
         </SimpleGrid>
-        <Text as='h4' fontWeight='semibold' color='white'>
+        {/* TODO: uncomment this when the demo video is ready */}
+        {/* <Text as='h4' fontWeight='semibold' color='white'>
           See Our Demo
         </Text>
-        {/* TODO: change to video */}
         <AspectRatio maxW={280} ratio={16 / 9} w='full' h='full'>
           <Image
             src='/assets/images/feature-image_2.svg'
@@ -139,7 +139,7 @@ function Features() {
             objectFit='cover'
             borderRadius={20}
           />
-        </AspectRatio>
+        </AspectRatio> */}
       </Flex>
     </Flex>
   );
