@@ -13,6 +13,7 @@ export default function Index() {
   return (
     <>
       <Head>
+        <title>Mocha - Premium</title>
         <meta property='og:title' content='Mocha - Premium' key='meta-title' />
         <meta
           property='og:description'
@@ -21,7 +22,7 @@ export default function Index() {
         />
         <meta property='og:image' content='/assets/images/logo-mocha.png' />
         <meta property='og:locale' content='en_US' key='meta-locale' />
-        <meta property='og:url' content='https://mocha-bot.xyz/premium' />
+        <meta property='og:url' content='https://mocha-bot.xyz/pricing' />
       </Head>
       <PricingContainer />
     </>
