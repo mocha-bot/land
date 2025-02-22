@@ -1,4 +1,4 @@
-import { CopyIcon } from '@chakra-ui/icons';
+import { CheckIcon, CopyIcon } from '@chakra-ui/icons';
 import {
   Flex,
   IconButton,
@@ -14,7 +14,6 @@ import {
   useClipboard,
 } from '@chakra-ui/react';
 import { useTranslation } from 'next-i18next';
-import { FaCheck } from 'react-icons/fa';
 
 interface DonationModalProps {
   walletAddress: string;
@@ -50,7 +49,7 @@ function DonationModal(props: DonationModalProps) {
               </Kbd>
               <IconButton
                 aria-label='Copy Address'
-                icon={hasCopied ? <FaCheck /> : <CopyIcon />}
+                icon={hasCopied ? <CheckIcon /> : <CopyIcon />}
                 onClick={onCopy}
               />
             </Flex>
