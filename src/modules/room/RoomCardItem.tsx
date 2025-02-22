@@ -57,12 +57,12 @@ export function RoomCardItem({ room }: Props) {
                 <HStack spacing={2}>
                   {room.tags.slice(0, MAX_TAG_SHOW_COUNT).map((tag) => (
                     <Tag
-                      key={tag}
+                      key={tag.serial}
                       fontSize='14px'
                       bgColor='rgba(255, 255, 255, 0.25)'
                       color='white'>
                       <TagLeftIcon as={HashtagIcon} mr={1} />
-                      <TagLabel>{tag}</TagLabel>
+                      <TagLabel>{tag.name}</TagLabel>
                     </Tag>
                   ))}
                   {room.tags.length > MAX_TAG_SHOW_COUNT && (

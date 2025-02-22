@@ -1,6 +1,8 @@
 import { z } from 'zod';
 
 import { ApiMetadataSchema } from '../api/apiEntity';
+import { TagSchema } from '../tag/tagEntity';
+import type { Tag } from '../tag/tagEntity';
 
 export const ApiRoomSchema = z.object({
   data: z.array(
@@ -9,7 +11,7 @@ export const ApiRoomSchema = z.object({
       name: z.string().default(''),
       slug: z.string().default(''),
       description: z.string().default(''),
-      tags: z.array(z.string()).default([]),
+      tags: z.array(TagSchema).default([]),
       total_channel: z.number().default(0),
       rate: z.object({
         rating_count: z.number().default(0),
@@ -30,7 +32,7 @@ export type Room = {
   slug: string;
   description: string;
   totalChannel: number;
-  tags: string[];
+  tags: Tag[];
   createdBy: string;
   createdAt: string;
   rate: {
