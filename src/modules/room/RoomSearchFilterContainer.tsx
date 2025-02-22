@@ -34,14 +34,12 @@ export function RoomSearchFilterContainer(props: Props) {
   const [filter, setFilter] = useState<Filter>(props.value || DEFAULT_FILTER);
 
   const handleChangeFilter = (newFilter: Partial<Filter>) => {
-    props.onFilterChange({
+    const updatedFilter = {
       ...filter,
       ...newFilter,
-    });
-    setFilter((prevFilter) => ({
-      ...prevFilter,
-      ...newFilter,
-    }));
+    };
+    setFilter(updatedFilter);
+    props.onFilterChange(updatedFilter);
   };
 
   return (
