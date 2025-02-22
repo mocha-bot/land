@@ -14,6 +14,11 @@ export type SearchRoomRequest = {
   limit?: number;
   q?: string;
   slug?: string;
+  rate?: number;
+  tags?: string[];
+  languages?: string[];
+  channel_join_min?: number;
+  channel_join_max?: number;
 };
 export type SearchRoomResponse = {
   rooms: Room[];
@@ -38,6 +43,26 @@ export const searchRoom = async ({
 
   if (payload.slug) {
     data.slug = payload.slug;
+  }
+
+  if (payload.rate) {
+    data.rate = payload.rate;
+  }
+
+  if (payload.tags) {
+    data.tags = payload.tags;
+  }
+
+  if (payload.languages) {
+    data.languages = payload.languages;
+  }
+
+  if (payload.channel_join_min) {
+    data.channel_join_min = payload.channel_join_min;
+  }
+
+  if (payload.channel_join_max) {
+    data.channel_join_max = payload.channel_join_max;
   }
 
   const response = await axios(
