@@ -445,13 +445,13 @@ function DetailInfo(props: DetailInfoProps) {
           <HStack spacing={2}>
             {props.room.tags.map((tag) => (
               <Tag
-                key={tag}
+                key={tag.serial}
                 fontSize='14px'
                 bgColor='transparent'
                 color='white'
                 pl={0}>
                 <TagLeftIcon as={HashtagIcon} mr={1} />
-                <TagLabel>{tag}</TagLabel>
+                <TagLabel>{tag.name}</TagLabel>
               </Tag>
             ))}
           </HStack>
