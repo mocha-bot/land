@@ -156,7 +156,7 @@ export function HomeContainer() {
                   borderColor: 'white',
                 }}
                 onClick={onOpen}>
-                <GiTwoCoins color='icon.coin' />
+                <Icon as={GiTwoCoins} color='icon.coin' />
                 {t('common:home.donate.title')}
               </Button>
             </Box>
