@@ -69,7 +69,9 @@ export const searchRoom = async (
       method: 'POST',
       url,
       data,
-      headers,
+      headers: {
+        ...headers,
+      },
     },
     ApiRoomSchema,
   );
