@@ -16,6 +16,7 @@ export default function Index({
   return (
     <>
       <Head>
+        <title>Mocha Bot - {room.name}</title>
         <meta property='og:title' content={room.name} key='meta-title' />
         <meta
           property='og:description'

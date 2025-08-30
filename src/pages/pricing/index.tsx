@@ -13,7 +13,7 @@ export default function Index() {
   return (
     <>
       <Head>
-        <title>Mocha - Premium</title>
+        <title>Mocha Bot - Premium</title>
         <meta property='og:title' content='Mocha - Premium' key='meta-title' />
         <meta
           property='og:description'

@@ -5,6 +5,7 @@ import type { GetStaticPropsContext } from 'next';
 import { i18n, useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import getConfig from 'next/config';
+import Head from 'next/head';
 
 import { informations } from '@/config/config';
 import { Footer } from '@/uikit/Footer';
@@ -151,47 +152,52 @@ function Page404() {
   const isMobile = useBreakpointValue({ base: true, lg: false });
 
   return (
-    <Flex flexDirection='column'>
-      <Box w='full' position='fixed' top={0} left={0} right={0} zIndex={15}>
-        <Header />
-      </Box>
-      <Flex
-        justifyContent='center'
-        alignItems='center'
-        flexDirection='column'
-        w='full'
-        h='100vh'
-        background='black'
-        position='relative'
-        overflow='hidden'>
+    <>
+      <Head>
+        <title>Mocha Bot - Page Not Found</title>
+      </Head>
+      <Flex flexDirection='column'>
+        <Box w='full' position='fixed' top={0} left={0} right={0} zIndex={15}>
+          <Header />
+        </Box>
         <Flex
-          zIndex={10}
-          color='white'
+          justifyContent='center'
           alignItems='center'
           flexDirection='column'
-          px={10}>
-          <Text
-            as='h1'
-            fontWeight='bold'
-            fontSize={{ base: '9xl', lg: '10xl' }}>
-            {t('common:not_found.title')}
-          </Text>
-          <Box
-            fontSize={{ base: 'lg', md: '2xl', lg: '3xl' }}
-            textAlign={{ base: 'center' }}>
-            <NotFoundDescription
-              isMobile={isMobile}
-              descriptions={t('common:not_found.descriptions', {
-                returnObjects: true,
-              })}
-            />
-          </Box>
-        </Flex>
+          w='full'
+          h='100vh'
+          background='black'
+          position='relative'
+          overflow='hidden'>
+          <Flex
+            zIndex={10}
+            color='white'
+            alignItems='center'
+            flexDirection='column'
+            px={10}>
+            <Text
+              as='h1'
+              fontWeight='bold'
+              fontSize={{ base: '9xl', lg: '10xl' }}>
+              {t('common:not_found.title')}
+            </Text>
+            <Box
+              fontSize={{ base: 'lg', md: '2xl', lg: '3xl' }}
+              textAlign={{ base: 'center' }}>
+              <NotFoundDescription
+                isMobile={isMobile}
+                descriptions={t('common:not_found.descriptions', {
+                  returnObjects: true,
+                })}
+              />
+            </Box>
+          </Flex>
 
-        <PlanetBackground isMobile={isMobile} />
+          <PlanetBackground isMobile={isMobile} />
+        </Flex>
+        <Footer informations={informations} />
       </Flex>
-      <Footer informations={informations} />
-    </Flex>
+    </>
   );
 }
 
