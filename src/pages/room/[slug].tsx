@@ -88,6 +88,7 @@ export const getStaticPaths = async () => {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Error fetching room slugs:', {
+      error,
       message: error instanceof Error ? error.message : 'Unknown error',
       status:
         error &&
