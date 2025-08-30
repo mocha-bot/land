@@ -31,17 +31,45 @@ export const axios: Axios = (config, schema) => {
       })
       .catch((err) => {
         if (err instanceof ZodError) {
+          // eslint-disable-next-line no-console
+          console.error('Zod Validation Error:', {
+            url: config.url,
+            method: config.method,
+            message: err.message,
+            errors: err.errors,
+            receivedData: err.issues,
+          });
           reject({
             _type: 'DECODE_ERROR',
             message: JSON.stringify(err.errors),
           });
         }
         if (err instanceof AxiosError) {
+          // eslint-disable-next-line no-console
+          console.error('Axios Error:', {
+            url: config.url,
+            method: config.method,
+            message: err.message,
+            status: err.response?.status,
+            statusText: err.response?.statusText,
+            data: err.response?.data,
+            headers: err.response?.headers,
+            code: err.code,
+            stack: err.stack,
+          });
           reject({
             _type: 'AXIOS_ERROR',
             message: err.message,
           });
         }
+        // eslint-disable-next-line no-console
+        console.error('Unknown Error:', {
+          url: config.url,
+          method: config.method,
+          error: err,
+          message: err?.message || 'Unknown error',
+          stack: err?.stack,
+        });
         reject({ _type: 'UNKNOWN_ERROR', message: 'Unknown err' });
       });
   });
