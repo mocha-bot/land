@@ -83,12 +83,14 @@ export const getStaticPaths = async () => {
     return {
       paths,
       fallback: 'blocking',
+      revalidate: 60 * 30, // 30 minutes
     };
   } catch (error) {
     console.error('Error fetching room slugs:', error);
     return {
       paths: [],
       fallback: 'blocking',
+      revalidate: 60 * 30, // 30 minutes
     };
   }
 };
