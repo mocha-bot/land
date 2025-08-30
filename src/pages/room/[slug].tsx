@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { i18n } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -51,7 +52,7 @@ export async function getStaticProps({
   }
 
   return {
-    revalidate: 60 * 60, // 1 hour
+    revalidate: 60 * 30, // 30 minutes
     props: {
       ...(locale ? await serverSideTranslations(locale, ['common']) : {}),
       room: room.rooms[0],
@@ -83,14 +84,37 @@ export const getStaticPaths = async () => {
     return {
       paths,
       fallback: 'blocking',
-      revalidate: 60 * 30, // 30 minutes
     };
   } catch (error) {
-    console.error('Error fetching room slugs:', error);
+    // eslint-disable-next-line no-console
+    console.error('Error fetching room slugs:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      status:
+        error &&
+        typeof error === 'object' &&
+        'response' in error &&
+        (error as any).response &&
+        typeof (error as any).response === 'object' &&
+        'status' in (error as any).response
+          ? (error as any).response.status
+          : undefined,
+      data:
+        error &&
+        typeof error === 'object' &&
+        'response' in error &&
+        (error as any).response &&
+        typeof (error as any).response === 'object' &&
+        'data' in (error as any).response
+          ? (error as any).response.data
+          : undefined,
+      response:
+        error && typeof error === 'object' && 'response' in error
+          ? (error as any).response
+          : undefined,
+    });
     return {
       paths: [],
       fallback: 'blocking',
-      revalidate: 60 * 30, // 30 minutes
     };
   }
 };
