@@ -60,27 +60,35 @@ export async function getStaticProps({
 }
 
 export const getStaticPaths = async () => {
-  const firstItem = await searchRoom({ limit: 1, page: 1 });
-  const totalItem = firstItem.pagination?.total ?? 0;
-  let res: SearchRoomResponse = {
-    rooms: [],
-  };
+  try {
+    const firstItem = await searchRoom({ limit: 1, page: 1 });
+    const totalItem = firstItem.pagination?.total ?? 0;
+    let res: SearchRoomResponse = {
+      rooms: [],
+    };
 
-  if (totalItem > 0) {
-    res = await searchRoom({ limit: totalItem, page: 1 });
+    if (totalItem > 0) {
+      res = await searchRoom({ limit: totalItem, page: 1 });
+    }
+
+    const paths = res.rooms
+      // ensure that the room has a slug
+      .filter((room) => !!room.slug)
+      .map((room) => ({
+        params: {
+          slug: room.slug,
+        },
+      }));
+
+    return {
+      paths,
+      fallback: 'blocking',
+    };
+  } catch (error) {
+    console.error('Error fetching room slugs:', error);
+    return {
+      paths: [],
+      fallback: 'blocking',
+    };
   }
-
-  const paths = res.rooms
-    // ensure that the room has a slug
-    .filter((room) => !!room.slug)
-    .map((room) => ({
-      params: {
-        slug: room.slug,
-      },
-    }));
-
-  return {
-    paths,
-    fallback: 'blocking',
-  };
 };
