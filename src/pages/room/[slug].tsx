@@ -43,7 +43,12 @@ export async function getStaticProps({
   if (!publicRuntimeConfig.isProduction) {
     await i18n?.reloadResources();
   }
-  const room = await searchRoom({ slug: params?.slug as string });
+  const room = await searchRoom(
+    { slug: params?.slug as string },
+    {
+      'X-Secret-Bypass-CF': publicRuntimeConfig.nextISRSecretHeader,
+    },
+  );
 
   if (room.rooms.length < 1) {
     return {
@@ -62,14 +67,24 @@ export async function getStaticProps({
 
 export const getStaticPaths = async () => {
   try {
-    const firstItem = await searchRoom({ limit: 1, page: 1 });
+    const firstItem = await searchRoom(
+      { limit: 1, page: 1 },
+      {
+        'X-Secret-Bypass-CF': publicRuntimeConfig.nextISRSecretHeader,
+      },
+    );
     const totalItem = firstItem.pagination?.total ?? 0;
     let res: SearchRoomResponse = {
       rooms: [],
     };
 
     if (totalItem > 0) {
-      res = await searchRoom({ limit: totalItem, page: 1 });
+      res = await searchRoom(
+        { limit: totalItem, page: 1 },
+        {
+          'X-Secret-Bypass-CF': publicRuntimeConfig.nextISRSecretHeader,
+        },
+      );
     }
 
     const paths = res.rooms

@@ -25,11 +25,10 @@ export type SearchRoomResponse = {
   pagination?: ApiMetadata['pagination'];
 };
 
-export const searchRoom = async ({
-  limit = 5,
-  page = 1,
-  ...payload
-}: SearchRoomRequest): Promise<SearchRoomResponse> => {
+export const searchRoom = async (
+  { limit = 5, page = 1, ...payload }: SearchRoomRequest,
+  headers?: Record<string, string>,
+): Promise<SearchRoomResponse> => {
   const url = `${publicRuntimeConfig.apiBaseUrl}/api/v1/room/search`;
 
   const data: SearchRoomRequest = {
@@ -70,6 +69,7 @@ export const searchRoom = async ({
       method: 'POST',
       url,
       data,
+      headers,
     },
     ApiRoomSchema,
   );
