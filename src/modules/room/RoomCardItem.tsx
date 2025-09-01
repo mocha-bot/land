@@ -45,7 +45,7 @@ export function RoomCardItem({ room }: Props) {
           <HStack spacing={3}>
             <HStack spacing={1}>
               <Icon as={StarIcon} fontSize='16px' />
-              <Text fontWeight={400}>{room.rate.averageRating}</Text>
+              <Text fontWeight={400}>{room.rate.averageRating.toFixed(2)}</Text>
             </HStack>
             <HStack spacing={1}>
               <Icon as={ServerIcon} fontSize='16px' />

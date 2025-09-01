@@ -138,7 +138,7 @@ export function RoomDetailContainer(props: Props) {
                             md: '24px',
                           }}
                           lineHeight='30px'>
-                          {props.room.rate.averageRating}
+                          {props.room.rate.averageRating.toFixed(2)}
                           <Box
                             as='span'
                             display={{ base: 'none', md: 'inline' }}>
@@ -367,7 +367,9 @@ function DetailInfo(props: DetailInfoProps) {
     {
       icon: StarIcon,
       label: 'Rate',
-      value: `${props.room.rate.averageRating} (${props.room.rate.ratingCount} reviews)`,
+      value: `${props.room.rate.averageRating.toFixed(2)} (${
+        props.room.rate.ratingCount
+      } reviews)`,
     },
     {
       icon: UsersIcon,

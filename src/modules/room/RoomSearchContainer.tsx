@@ -14,6 +14,8 @@ import {
   InputGroup,
   InputRightElement,
   Link,
+  Skeleton,
+  SkeletonCircle,
   Spinner,
   Tag,
   Text,
@@ -44,6 +46,42 @@ import type { Filter as SearchFilter } from './RoomSearchFilterContainer';
 const { publicRuntimeConfig } = getConfig();
 
 const CREATE_ROOM_URL = publicRuntimeConfig.createRoomDocsUrl;
+
+function RoomCardSkeleton() {
+  return (
+    <Flex
+      flexDir='column'
+      borderRadius='16px'
+      p={4}
+      gap={4}
+      bgColor='background.dark'>
+      <Flex flexDir='row' gap={3}>
+        <SkeletonCircle size='60px' />
+        <Flex flexDir='column' gap={2} flex={1}>
+          <Skeleton height='6' width='60%' />
+          <HStack spacing={3}>
+            <HStack spacing={1}>
+              <SkeletonCircle size='4' />
+              <Skeleton height='4' width='40px' />
+            </HStack>
+            <HStack spacing={1}>
+              <SkeletonCircle size='4' />
+              <Skeleton height='4' width='100px' />
+            </HStack>
+            <HStack spacing={2} display={{ base: 'none', md: 'flex' }}>
+              <Skeleton height='6' width='60px' borderRadius='20px' />
+              <Skeleton height='6' width='80px' borderRadius='20px' />
+            </HStack>
+          </HStack>
+        </Flex>
+      </Flex>
+      <Flex flexDir='column' gap={1}>
+        <Skeleton height='4' width='100%' />
+        <Skeleton height='4' width='80%' />
+      </Flex>
+    </Flex>
+  );
+}
 
 export function RoomSearchContainer() {
   const { t } = useTranslation();
@@ -186,7 +224,13 @@ export function RoomSearchContainer() {
                 />
               </Text>
               {/* LOADING */}
-              {searchRoomQuery.isLoading && <Spinner />}
+              {searchRoomQuery.isLoading && (
+                <Flex flexDir='column' gap={4}>
+                  {Array.from({ length: 6 }, (_, idx) => (
+                    <RoomCardSkeleton key={idx} />
+                  ))}
+                </Flex>
+              )}
 
               {/* DATA */}
               {!searchRoomQuery.isLoading &&
