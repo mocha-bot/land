@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - fix-deployment-blocked-cf
+      - master
 
 jobs:
   git-sync:
