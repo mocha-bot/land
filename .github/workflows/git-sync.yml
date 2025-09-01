@@ -1,7 +1,8 @@
 on:
   push:
     branches:
-      - master
+      # - master
+      - fix/fix-client-side-error-detail
 
 jobs:
   git-sync:
@@ -11,7 +12,9 @@ jobs:
         uses: wei/git-sync@v3
         with:
           source_repo: ${{ vars.GIT_SYNC_SOURCE_REPO }}
-          source_branch: ${{ vars.GIT_SYNC_SOURCE_BRANCH }}
+          # source_branch: ${{ vars.GIT_SYNC_SOURCE_BRANCH }}
+          source_branch: fix/fix-client-side-error-detail
           destination_repo: ${{ vars.GIT_SYNC_DESTINATION_REPO }}
-          destination_branch: ${{ vars.GIT_SYNC_DESTINATION_BRANCH }}
+          # destination_branch: ${{ vars.GIT_SYNC_DESTINATION_BRANCH }}
+          destination_branch: fix/fix-client-side-error-detail
           ssh_private_key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
