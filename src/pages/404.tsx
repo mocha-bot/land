@@ -131,7 +131,12 @@ function NotFoundDescription({
   if (isMobile) {
     return (
       <Text as='h3' fontWeight='light'>
-        {descriptions?.join(' ')}
+        {Array.isArray(descriptions) &&
+          descriptions?.map((desc) => (
+            <span className='inline' key={desc}>
+              {desc}{' '}
+            </span>
+          ))}
       </Text>
     );
   }
