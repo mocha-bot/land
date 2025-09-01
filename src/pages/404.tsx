@@ -141,15 +141,19 @@ function NotFoundDescription({
     );
   }
 
-  return (
-    <>
-      {descriptions.map((desc) => (
-        <Text key={desc} as='h3' fontWeight='light'>
-          {desc}
-        </Text>
-      ))}
-    </>
-  );
+  if (Array.isArray(descriptions)) {
+    return (
+      <>
+        {descriptions.map((desc) => (
+          <Text key={desc} as='h3' fontWeight='light'>
+            {desc}
+          </Text>
+        ))}
+      </>
+    );
+  }
+
+  return null;
 }
 
 function Page404() {
