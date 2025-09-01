@@ -19,23 +19,25 @@ export type SearchRoomRequest = {
   languages?: string[];
   channel_join_min?: number;
   channel_join_max?: number;
+  bypassCf?: boolean;
 };
 export type SearchRoomResponse = {
   rooms: Room[];
   pagination?: ApiMetadata['pagination'];
 };
 
-export const searchRoom = async ({
-  limit = 5,
-  page = 1,
-  ...payload
-}: SearchRoomRequest): Promise<SearchRoomResponse> => {
+export const searchRoom = async (
+  { limit = 5, page = 1, ...payload }: SearchRoomRequest,
+  headers?: Record<string, string>,
+): Promise<SearchRoomResponse> => {
   const url = `${publicRuntimeConfig.apiBaseUrl}/api/v1/room/search`;
 
   const data: SearchRoomRequest = {
     limit,
     page,
   };
+
+  const params: Record<string, string> = {};
 
   if (payload.q) {
     data.q = payload.q;
@@ -65,11 +67,19 @@ export const searchRoom = async ({
     data.channel_join_max = payload.channel_join_max;
   }
 
+  if (payload.bypassCf !== undefined) {
+    params.bypassCf = String(payload.bypassCf);
+  }
+
   const response = await axios(
     {
       method: 'POST',
+      params,
       url,
       data,
+      headers: {
+        ...headers,
+      },
     },
     ApiRoomSchema,
   );

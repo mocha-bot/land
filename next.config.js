@@ -27,6 +27,7 @@ const nextConfig = {
       'https://docs.mocha-bot.xyz/core/room#create',
     tawkPropertyId: process.env.TAWK_PROPERTY_ID || '0',
     tawkWidgetId: process.env.TAWK_WIDGET_ID || '0',
+    nextISRSecretHeader: process.env.NEXT_ISR_SECRET_HEADER || '',
   },
   images: {
     remotePatterns: [
@@ -39,11 +40,6 @@ const nextConfig = {
     ],
   },
   optimizeFonts: true,
-  experimental: {
-    fontLoaders: [
-      { loader: 'next/font/google', options: { subsets: ['latin'] } },
-    ],
-  },
 };
 
 module.exports = nextConfig;
