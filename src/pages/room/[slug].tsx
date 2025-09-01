@@ -46,7 +46,7 @@ export async function getStaticProps({
   const room = await searchRoom(
     { slug: params?.slug as string },
     {
-      'X-Secret-Bypass-CF': publicRuntimeConfig.nextISRSecretHeader,
+      'x-secret-bypass-cf': publicRuntimeConfig.nextISRSecretHeader,
     },
   );
 
@@ -70,7 +70,7 @@ export const getStaticPaths = async () => {
     const firstItem = await searchRoom(
       { limit: 1, page: 1 },
       {
-        'X-Secret-Bypass-CF': publicRuntimeConfig.nextISRSecretHeader,
+        'x-secret-bypass-cf': publicRuntimeConfig.nextISRSecretHeader,
       },
     );
     const totalItem = firstItem.pagination?.total ?? 0;
@@ -82,7 +82,7 @@ export const getStaticPaths = async () => {
       res = await searchRoom(
         { limit: totalItem, page: 1 },
         {
-          'X-Secret-Bypass-CF': publicRuntimeConfig.nextISRSecretHeader,
+          'x-secret-bypass-cf': publicRuntimeConfig.nextISRSecretHeader,
         },
       );
     }
