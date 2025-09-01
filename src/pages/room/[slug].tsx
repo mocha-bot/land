@@ -1,23 +1,22 @@
 import type { GetStaticPropsContext } from 'next';
-import { i18n } from 'next-i18next';
+import { i18n, useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import getConfig from 'next/config';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+import { NotFoundUI } from '@/components/ErrorPages/NotFoundUI';
+import { ServerErrorUI } from '@/components/ErrorPages/ServerErrorUI';
 import { RoomDetailContainer } from '@/modules/room/detail/RoomDetailContainer';
 import { RoomDetailSkeleton } from '@/modules/room/RoomDetailSkeleton';
 import type { Room } from '@/modules/room/roomEntity';
 import { useSearchRoomQuery } from '@/modules/room/roomHook';
 
-// Import error page components
-import Page404 from '../404';
-import Page500 from '../500';
-
 const { publicRuntimeConfig } = getConfig();
 
 export default function Index() {
+  const { t } = useTranslation();
   const router = useRouter();
   const { slug } = router.query;
   const [room, setRoom] = useState<Room | null>(null);
@@ -53,21 +52,60 @@ export default function Index() {
       (error as any)?.message?.toLowerCase().includes('not found');
 
     if (isNotFoundError) {
-      return <Page404 />;
+      return (
+        <>
+          <Head>
+            <title>Mocha Bot - Room Not Found</title>
+          </Head>
+          <NotFoundUI
+            title={t('common:not_found.title')}
+            descriptions={t('common:not_found.descriptions', {
+              returnObjects: true,
+            })}
+            pageTitle='Mocha Bot - Room Not Found'
+          />
+        </>
+      );
     }
 
     // For other errors, show 500 page
-    return <Page500 />;
+    return (
+      <>
+        <Head>
+          <title>Mocha Bot - Error</title>
+        </Head>
+        <ServerErrorUI
+          title={t('common:server_error.title', { defaultValue: '500' })}
+          descriptions={t('common:server_error.descriptions', {
+            returnObjects: true,
+            defaultValue: [
+              'Oops! Something went wrong on our end.',
+              'Our engineers have been notified and are working to fix this.',
+              'Please try again in a few minutes.',
+            ],
+          })}
+          pageTitle='Mocha Bot - Error'
+        />
+      </>
+    );
   }
 
   // Handle case where data is loaded but no room found
-  if (!room && data && data.rooms.length === 0) {
-    return <Page404 />;
-  }
-
-  // Final null check before rendering
-  if (!room) {
-    return <Page404 />;
+  if (!room || (data && data.rooms.length === 0)) {
+    return (
+      <>
+        <Head>
+          <title>Mocha Bot - Room Not Found</title>
+        </Head>
+        <NotFoundUI
+          title={t('common:not_found.title')}
+          descriptions={t('common:not_found.descriptions', {
+            returnObjects: true,
+          })}
+          pageTitle='Mocha Bot - Room Not Found'
+        />
+      </>
+    );
   }
 
   return (
