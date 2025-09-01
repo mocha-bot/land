@@ -34,5 +34,13 @@
       "Waduh, Anda telah tersesat jauh, bahkan Pluto sudah di belakang Anda!",
       "Sepertinya halaman yang Anda cari telah melenceng dari jalur."
     ]
+  },
+  "server_error": {
+    "title": "500",
+    "descriptions": [
+      "Aduh! Ada yang salah di pihak kami.",
+      "Tim teknis kami sudah diberitahu dan sedang bekerja untuk memperbaikinya.",
+      "Silakan coba lagi dalam beberapa menit."
+    ]
   }
 }

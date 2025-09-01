@@ -31,8 +31,16 @@
   "not_found": {
     "title": "404",
     "descriptions": [
-      "Whoops, you’ve wandered far, even Pluto is in your rearview!",
-      "Seems like the page you’re looking for has drifted off-course."
+      "Whoops, you've wandered far, even Pluto is in your rearview!",
+      "Seems like the page you're looking for has drifted off-course."
+    ]
+  },
+  "server_error": {
+    "title": "500",
+    "descriptions": [
+      "Oops! Something went wrong on our end.",
+      "Our engineers have been notified and are working to fix this.",
+      "Please try again in a few minutes."
     ]
   }
 }

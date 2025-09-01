@@ -19,6 +19,7 @@ export type SearchRoomRequest = {
   languages?: string[];
   channel_join_min?: number;
   channel_join_max?: number;
+  bypassCf?: boolean;
 };
 export type SearchRoomResponse = {
   rooms: Room[];
@@ -62,6 +63,10 @@ export const searchRoom = async (
 
   if (payload.channel_join_max) {
     data.channel_join_max = payload.channel_join_max;
+  }
+
+  if (payload.bypassCf !== undefined) {
+    data.bypassCf = payload.bypassCf;
   }
 
   const response = await axios(
