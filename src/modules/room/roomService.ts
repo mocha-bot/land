@@ -37,6 +37,8 @@ export const searchRoom = async (
     page,
   };
 
+  const params: Record<string, string> = {};
+
   if (payload.q) {
     data.q = payload.q;
   }
@@ -66,12 +68,13 @@ export const searchRoom = async (
   }
 
   if (payload.bypassCf !== undefined) {
-    data.bypassCf = payload.bypassCf;
+    params.bypassCf = String(payload.bypassCf);
   }
 
   const response = await axios(
     {
       method: 'POST',
+      params,
       url,
       data,
       headers: {
