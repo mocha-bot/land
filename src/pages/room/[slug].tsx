@@ -1,7 +1,6 @@
 import type { GetStaticPropsContext } from 'next';
 import { i18n, useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
-import getConfig from 'next/config';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -12,8 +11,6 @@ import { RoomDetailContainer } from '@/modules/room/detail/RoomDetailContainer';
 import { RoomDetailSkeleton } from '@/modules/room/RoomDetailSkeleton';
 import type { Room } from '@/modules/room/roomEntity';
 import { useSearchRoomQuery } from '@/modules/room/roomHook';
-
-const { publicRuntimeConfig } = getConfig();
 
 export default function Index() {
   const { t } = useTranslation();
@@ -131,9 +128,7 @@ export default function Index() {
 }
 
 export async function getStaticProps({ locale }: GetStaticPropsContext) {
-  if (!publicRuntimeConfig.isProduction) {
-    await i18n?.reloadResources();
-  }
+  await i18n?.reloadResources();
 
   return {
     props: {
