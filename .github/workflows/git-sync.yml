@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - master
+      - feat/fix-i18n-error-room
 
 jobs:
   git-sync:
@@ -11,7 +12,9 @@ jobs:
         uses: wei/git-sync@v3
         with:
           source_repo: ${{ vars.GIT_SYNC_SOURCE_REPO }}
-          source_branch: ${{ vars.GIT_SYNC_SOURCE_BRANCH }}
+          # source_branch: ${{ vars.GIT_SYNC_SOURCE_BRANCH }}
+          source_branch: feat/fix-i18n-error-room
           destination_repo: ${{ vars.GIT_SYNC_DESTINATION_REPO }}
-          destination_branch: ${{ vars.GIT_SYNC_DESTINATION_BRANCH }}
+          # destination_branch: ${{ vars.GIT_SYNC_DESTINATION_BRANCH }}
+          destination_branch: feat/fix-i18n-error-room-mirror
           ssh_private_key: ${{ secrets.GIT_SSH_PRIVATE_KEY }}
