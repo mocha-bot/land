@@ -1,6 +1,7 @@
 {
   "mocha_developer": "Mocha Developer",
   "version": "version",
+  "invite_to_server": "Invite to server",
   "home": {
     "tag_one": "Drink mocha with",
     "tag_two": "people across the universe.",

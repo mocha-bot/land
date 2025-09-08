@@ -14,6 +14,7 @@ import {
   useBreakpointValue,
   useDisclosure,
 } from '@chakra-ui/react';
+import { useTranslation } from 'next-i18next';
 import getConfig from 'next/config';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
@@ -115,6 +116,7 @@ function MobileMenuButton({ isOpen, onToggle }: MobileMenuButtonProps) {
 const OFFSET_TOP_SCROLL = 50;
 
 export function Header() {
+  const { t } = useTranslation('common');
   const [isBgTransparent, setIsBgTransparent] = useState(true);
   const { isOpen, onToggle, onClose } = useDisclosure();
 
@@ -187,7 +189,7 @@ export function Header() {
               px={6}
               isAnimated
               href={publicRuntimeConfig.botInvitationUrl}>
-              Invite to server
+              {t('invite_to_server')}
             </Button>
           )}
 
@@ -247,7 +249,7 @@ export function Header() {
                       px={6}
                       isAnimated
                       href={publicRuntimeConfig.botInvitationUrl}>
-                      Invite to server
+                      {t('invite_to_server')}
                     </Button>
                   </Flex>
                 </DrawerBody>
