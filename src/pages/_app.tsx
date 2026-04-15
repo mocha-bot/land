@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { appWithTranslation } from 'next-i18next';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { GoogleAnalytics } from 'nextjs-google-analytics';
 
 import { AppProvider } from '@/AppProvider';
@@ -17,6 +18,9 @@ const { publicRuntimeConfig } = getConfig();
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID || '';
 
 function App({ Component, pageProps }: AppProps) {
+  const router = useRouter();
+  const shouldRenderTawk = router.pathname !== '/';
+
   return (
     <>
       <style jsx global>
@@ -31,10 +35,12 @@ function App({ Component, pageProps }: AppProps) {
       </Head>
       <GoogleAnalytics trackPageViews gaMeasurementId={GA_TRACKING_ID} />
       <AppProvider>
-        <TawkMessenger
-          propertyId={publicRuntimeConfig.tawkPropertyId}
-          widgetId={publicRuntimeConfig.tawkWidgetId}
-        />
+        {shouldRenderTawk && (
+          <TawkMessenger
+            propertyId={publicRuntimeConfig.tawkPropertyId}
+            widgetId={publicRuntimeConfig.tawkWidgetId}
+          />
+        )}
         <Component {...pageProps} />
         <Analytics />
       </AppProvider>

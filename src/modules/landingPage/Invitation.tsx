@@ -5,7 +5,27 @@ import Button from '@/uikit/Button';
 
 const { publicRuntimeConfig } = getConfig();
 
-function Invitation() {
+export type InvitationVariant = 'default' | 'earlyAccess';
+
+type InvitationProps = {
+  variant?: InvitationVariant;
+  onJoinWaitlist?: () => void;
+};
+
+function Invitation({
+  variant = 'default',
+  onJoinWaitlist,
+}: InvitationProps) {
+  const isEarly = variant === 'earlyAccess';
+
+  const headline = isEarly
+    ? 'Ready to reserve your seat?'
+    : 'Lets get have a mocha time together';
+
+  const body = isEarly
+    ? 'Seats for the early access round are limited. Drop your email and we will ping you the moment your spot is ready.'
+    : 'Invite mocha from your dashboard now and enjoy connect to others with ease. Just right under your own server';
+
   return (
     <Flex
       w='full'
@@ -36,7 +56,7 @@ function Invitation() {
               base: '40px',
               md: '64px',
             }}>
-            Lets get have a mocha time together
+            {headline}
           </Text>
         </Box>
         <Box maxW={96}>
@@ -51,20 +71,31 @@ function Invitation() {
               base: '20px',
               md: '25px',
             }}>
-            Invite mocha from your dashboard now and enjoy connect to others
-            with ease. Just right under your own server
+            {body}
           </Text>
         </Box>
-        <Button
-          as='a'
-          w='fit-content'
-          variant='glass'
-          py={5}
-          px={6}
-          isAnimated
-          href={publicRuntimeConfig.botInvitationUrl}>
-          Invite to server
-        </Button>
+        {isEarly ? (
+          <Button
+            w='fit-content'
+            variant='glass'
+            py={5}
+            px={6}
+            isAnimated
+            onClick={onJoinWaitlist}>
+            Join the waitlist
+          </Button>
+        ) : (
+          <Button
+            as='a'
+            w='fit-content'
+            variant='glass'
+            py={5}
+            px={6}
+            isAnimated
+            href={publicRuntimeConfig.botInvitationUrl}>
+            Invite to server
+          </Button>
+        )}
       </Flex>
       <Image
         ml='auto'

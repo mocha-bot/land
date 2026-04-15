@@ -40,6 +40,20 @@ const nextConfig = {
     ],
   },
   optimizeFonts: true,
+  async redirects() {
+    return [
+      {
+        source: '/pricing',
+        destination: '/',
+        permanent: false,
+      },
+      {
+        source: '/pricing/:path*',
+        destination: '/',
+        permanent: false,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
