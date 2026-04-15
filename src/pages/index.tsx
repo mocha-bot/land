@@ -14,7 +14,7 @@ function Index() {
       <Head>
         <title>Mocha Bot</title>
       </Head>
-      <LandingPageContainer />
+      <LandingPageContainer variant='earlyAccess' />
     </>
   );
 }

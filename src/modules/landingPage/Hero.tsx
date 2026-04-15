@@ -14,6 +14,13 @@ import Button from '@/uikit/Button';
 
 const { publicRuntimeConfig } = getConfig();
 
+export type HeroVariant = 'default' | 'earlyAccess';
+
+type HeroProps = {
+  variant?: HeroVariant;
+  onJoinWaitlist?: () => void;
+};
+
 const socials = [
   {
     name: 'discord',
@@ -32,7 +39,7 @@ const socials = [
   },
 ];
 
-const buttons = [
+const defaultButtons = [
   {
     label: 'Discover More',
     variant: 'glass',
@@ -45,8 +52,17 @@ const buttons = [
   },
 ];
 
-export function Hero() {
+export function Hero({ variant = 'default', onJoinWaitlist }: HeroProps) {
   const isMobile = useBreakpointValue({ base: true, md: false });
+  const isEarly = variant === 'earlyAccess';
+
+  const headline = isEarly
+    ? 'Early access is open — reserve your seat at the mocha table'
+    : 'Drink mocha with people across the universe';
+
+  const subheadline = isEarly
+    ? 'We are opening a limited waitlist for the next generation of Mocha — one unified cross-server chat, built for communities that actually want to pay for something that works.'
+    : 'Mocha is a Discord bot for multi-chat cross-server, that allows you to send messages to multiple channels at once. ';
 
   return (
     <Flex
@@ -65,26 +81,46 @@ export function Hero() {
           color='white'
           fontSize={{ base: '5xl', lg: '6xl' }}
           lineHeight='none'>
-          Drink mocha with people across the universe
+          {headline}
         </Text>
         <Text color='white' fontSize={20} lineHeight='none' fontWeight='light'>
-          Mocha is a Discord bot for multi-chat cross-server, that allows you to
-          send messages to multiple channels at once.{' '}
+          {subheadline}
         </Text>
       </VStack>
       <HStack w='full' justifyContent={{ base: 'center', md: 'space-between' }}>
         <HStack w='full'>
-          {buttons.map((button) => (
-            <Button
-              as='a'
-              py={6}
-              px={10}
-              key={button.label}
-              variant={button.variant}
-              href={button.href}>
-              {button.label}
-            </Button>
-          ))}
+          {isEarly ? (
+            <>
+              <Button
+                py={6}
+                px={10}
+                variant='glass'
+                isAnimated
+                onClick={onJoinWaitlist}>
+                Join the waitlist
+              </Button>
+              <Button
+                as='a'
+                py={6}
+                px={10}
+                variant='glass-ghost'
+                href={publicRuntimeConfig.docsUrl}>
+                See Documentation
+              </Button>
+            </>
+          ) : (
+            defaultButtons.map((button) => (
+              <Button
+                as='a'
+                py={6}
+                px={10}
+                key={button.label}
+                variant={button.variant}
+                href={button.href}>
+                {button.label}
+              </Button>
+            ))
+          )}
         </HStack>
         {!isMobile && (
           <HStack gap={8}>
