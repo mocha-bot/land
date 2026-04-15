@@ -16,6 +16,7 @@ import {
   useToast,
   VStack,
 } from '@chakra-ui/react';
+import type { FormEvent } from 'react';
 import { useState } from 'react';
 
 import { Container } from '@/uikit/Container';
@@ -82,7 +83,7 @@ function WaitlistModalInline({ isOpen, onClose }: WaitlistModalInlineProps) {
     }, 200);
   };
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const trimmed = email.trim();
     if (!EMAIL_RE.test(trimmed)) {
@@ -162,7 +163,9 @@ function WaitlistModalInline({ isOpen, onClose }: WaitlistModalInlineProps) {
                     value={email}
                     onChange={(e) => {
                       setEmail(e.target.value);
-                      if (clientError) setClientError(null);
+                      if (clientError) {
+                        setClientError(null);
+                      }
                     }}
                     bg='rgba(255, 255, 255, 0.08)'
                     borderColor='rgba(255, 255, 255, 0.2)'

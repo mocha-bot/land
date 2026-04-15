@@ -1,0 +1,22 @@
+{
+  "name": "Mocha Bot",
+  "short_name": "Mocha",
+  "description": "Discord bot for multi-chat cross-server messaging.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B0B0F",
+  "theme_color": "#0B0B0F",
+  "icons": [
+    {
+      "src": "/assets/images/logo-mocha.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48",
+      "type": "image/x-icon"
+    }
+  ]
+}

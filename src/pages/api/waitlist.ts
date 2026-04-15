@@ -32,7 +32,7 @@ export default async function handler(
     return res.status(500).json({ ok: false, error: 'not_configured' });
   }
 
-  const safeEmail = email.replace(/`/g, "'");
+  const safeEmail = email.replace(/`/g, '\'');
   const content = `**New waitlist signup** \`${safeEmail}\` — \`${new Date().toISOString()}\``;
 
   try {
