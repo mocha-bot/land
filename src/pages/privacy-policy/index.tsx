@@ -1,11 +1,33 @@
 import { Container, Heading, Text, VStack } from '@chakra-ui/react';
+import { generateNextSeo } from 'next-seo/pages';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
+
+import {
+  buildCanonical,
+  buildLanguageAlternates,
+  ogLocaleFor,
+} from '@/config/seo';
 
 function PrivacyPolicy() {
+  const { locale } = useRouter();
+  const canonical = buildCanonical('/privacy-policy', locale);
+
   return (
     <>
       <Head>
-        <title>Mocha Bot - Privacy Policy</title>
+        {generateNextSeo({
+          title: 'Privacy Policy',
+          description:
+            'Read how Mocha collects, uses, and protects your information. Details on log files, cookies, third-party advertisers, and children information.',
+          canonical,
+          languageAlternates: buildLanguageAlternates('/privacy-policy'),
+          openGraph: {
+            type: 'article',
+            url: canonical,
+            locale: ogLocaleFor(locale),
+          },
+        })}
       </Head>
       <Container maxW='3xl'>
         <VStack spacing={2} alignItems='flex-start'>

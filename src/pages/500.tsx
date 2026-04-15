@@ -1,6 +1,7 @@
 import type { GetStaticPropsContext } from 'next';
 import { i18n, useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { generateNextSeo } from 'next-seo/pages';
 import getConfig from 'next/config';
 import Head from 'next/head';
 
@@ -14,7 +15,12 @@ function Page500() {
   return (
     <>
       <Head>
-        <title>Mocha Bot - Server Error</title>
+        {generateNextSeo({
+          title: 'Server Error',
+          description: 'Something went wrong on our end. Please try again.',
+          noindex: true,
+          nofollow: true,
+        })}
       </Head>
       <ServerErrorUI
         title={t('common:server_error.title', { defaultValue: '500' })}

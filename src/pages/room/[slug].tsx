@@ -1,12 +1,20 @@
 import type { GetStaticPropsContext } from 'next';
 import { i18n, useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { generateNextSeo } from 'next-seo/pages';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import { NotFoundUI } from '@/components/ErrorPages/NotFoundUI';
 import { ServerErrorUI } from '@/components/ErrorPages/ServerErrorUI';
+import {
+  buildCanonical,
+  buildLanguageAlternates,
+  ogLocaleFor,
+  SITE_URL,
+} from '@/config/seo';
+import { breadcrumbJsonLd, jsonLdScriptProps } from '@/config/structuredData';
 import { RoomDetailContainer } from '@/modules/room/detail/RoomDetailContainer';
 import { RoomDetailSkeleton } from '@/modules/room/RoomDetailSkeleton';
 import type { Room } from '@/modules/room/roomEntity';
@@ -33,7 +41,11 @@ export default function Index() {
     return (
       <>
         <Head>
-          <title>Mocha Bot - Loading...</title>
+          {generateNextSeo({
+            title: 'Loading room',
+            noindex: true,
+            nofollow: true,
+          })}
         </Head>
         <RoomDetailSkeleton />
       </>
@@ -52,7 +64,11 @@ export default function Index() {
       return (
         <>
           <Head>
-            <title>Mocha Bot - Room Not Found</title>
+            {generateNextSeo({
+              title: 'Room Not Found',
+              noindex: true,
+              nofollow: true,
+            })}
           </Head>
           <NotFoundUI
             title={t('common:not_found.title')}
@@ -69,7 +85,11 @@ export default function Index() {
     return (
       <>
         <Head>
-          <title>Mocha Bot - Error</title>
+          {generateNextSeo({
+            title: 'Error',
+            noindex: true,
+            nofollow: true,
+          })}
         </Head>
         <ServerErrorUI
           title={t('common:server_error.title', { defaultValue: '500' })}
@@ -92,7 +112,11 @@ export default function Index() {
     return (
       <>
         <Head>
-          <title>Mocha Bot - Room Not Found</title>
+          {generateNextSeo({
+            title: 'Room Not Found',
+            noindex: true,
+            nofollow: true,
+          })}
         </Head>
         <NotFoundUI
           title={t('common:not_found.title')}
@@ -105,21 +129,34 @@ export default function Index() {
     );
   }
 
+  const path = `/room/${room.slug}`;
+  const canonical = buildCanonical(path, router.locale);
+  const description =
+    room.description?.trim() ||
+    `Join ${room.name} on Mocha — a cross-server Discord community room.`;
+
   return (
     <>
       <Head>
-        <title>Mocha Bot - {room.name}</title>
-        <meta property='og:title' content={room.name} key='meta-title' />
-        <meta
-          property='og:description'
-          content={room.description}
-          key='meta-description'
-        />
-        <meta property='og:image' content='/assets/images/logo-mocha.png' />
-        <meta property='og:locale' content='en_US' key='meta-locale' />
-        <meta
-          property='og:url'
-          content={`https://mocha-bot.xyz/room/${room.slug}`}
+        {generateNextSeo({
+          title: room.name,
+          description,
+          canonical,
+          languageAlternates: buildLanguageAlternates(path),
+          openGraph: {
+            type: 'article',
+            url: canonical,
+            locale: ogLocaleFor(router.locale),
+          },
+        })}
+        <script
+          {...jsonLdScriptProps(
+            breadcrumbJsonLd([
+              { name: 'Home', url: `${SITE_URL}/` },
+              { name: 'Search Rooms', url: `${SITE_URL}/search` },
+              { name: room.name, url: canonical },
+            ]),
+          )}
         />
       </Head>
       <RoomDetailContainer room={room} />

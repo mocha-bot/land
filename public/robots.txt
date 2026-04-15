@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Allow: /api/sitemap.xml
+
+Sitemap: https://mocha-bot.xyz/api/sitemap.xml

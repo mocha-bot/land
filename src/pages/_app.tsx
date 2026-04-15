@@ -1,5 +1,6 @@
 import { Analytics } from '@vercel/analytics/react';
 import { appWithTranslation } from 'next-i18next';
+import { generateDefaultSeo } from 'next-seo/pages';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -7,6 +8,7 @@ import { GoogleAnalytics } from 'nextjs-google-analytics';
 
 import { AppProvider } from '@/AppProvider';
 import TawkMessenger from '@/components/TawkMessenger/TawkMessenger';
+import { defaultSeoConfig } from '@/config/seo';
 import { fonts } from '@/theme/fonts';
 
 import '@/theme/global.css';
@@ -30,9 +32,7 @@ function App({ Component, pageProps }: AppProps) {
           }
         `}
       </style>
-      <Head>
-        <title>Mocha Bot</title>
-      </Head>
+      <Head>{generateDefaultSeo(defaultSeoConfig)}</Head>
       <GoogleAnalytics trackPageViews gaMeasurementId={GA_TRACKING_ID} />
       <AppProvider>
         {shouldRenderTawk && (

@@ -1,6 +1,7 @@
 import type { GetStaticPropsContext } from 'next';
 import { i18n, useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { generateNextSeo } from 'next-seo/pages';
 import getConfig from 'next/config';
 import Head from 'next/head';
 
@@ -14,7 +15,12 @@ function Page404() {
   return (
     <>
       <Head>
-        <title>Mocha Bot - Page Not Found</title>
+        {generateNextSeo({
+          title: 'Page Not Found',
+          description: 'The page you are looking for could not be found.',
+          noindex: true,
+          nofollow: true,
+        })}
       </Head>
       <NotFoundUI
         title={t('common:not_found.title')}
