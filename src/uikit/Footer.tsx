@@ -44,7 +44,7 @@ export function Footer({ informations }: FooterProps) {
     <Box background='black'>
       <Container py={16}>
         <SimpleGrid
-          templateColumns={{ sm: '1fr 1fr', md: '4fr 2fr 2fr' }}
+          templateColumns={{ sm: '1fr 1fr', md: '4fr 2fr 2fr 2fr' }}
           spacing={8}>
           <Stack
             h={{ base: 'full', md: '5xs' }}

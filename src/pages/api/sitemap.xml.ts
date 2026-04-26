@@ -13,6 +13,8 @@ const STATIC_ENTRIES: StaticEntry[] = [
   { path: '/', changefreq: 'weekly', priority: '1.0' },
   { path: '/search', changefreq: 'daily', priority: '0.8' },
   { path: '/privacy-policy', changefreq: 'yearly', priority: '0.3' },
+  { path: '/terms-of-service', changefreq: 'yearly', priority: '0.3' },
+  { path: '/refund-policy', changefreq: 'yearly', priority: '0.3' },
 ];
 
 const MAX_SITEMAP_PAGES = 50;

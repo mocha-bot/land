@@ -26,6 +26,17 @@ const socialItems: FooterInformationItem[] = [
   },
 ];
 
+const legalItems: FooterInformationItem[] = [
+  {
+    title: 'Terms of Service',
+    href: '/terms-of-service',
+  },
+  {
+    title: 'Privacy Policy',
+    href: '/privacy-policy',
+  },
+];
+
 const informations: FooterInformation[] = [
   {
     title: 'Plugins',
@@ -34,6 +45,10 @@ const informations: FooterInformation[] = [
   {
     title: 'Socials',
     items: socialItems,
+  },
+  {
+    title: 'Legal',
+    items: legalItems,
   },
 ];
 
