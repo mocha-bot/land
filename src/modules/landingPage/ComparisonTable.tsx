@@ -1,60 +1,205 @@
-import { Box, Flex, SimpleGrid, Text } from '@chakra-ui/react';
+import { Box, Flex, SimpleGrid, Text, useBreakpointValue } from '@chakra-ui/react';
 
-import { AnimateOnView } from '@/components/AnimateOnView/AnimateOnView';
+import { AnimateOnView, StaggerContainer, staggerItem } from '@/components/AnimateOnView/AnimateOnView';
+import { motion } from 'framer-motion';
 
 type CellValue = true | false | string;
 
-type Row = {
-  feature: string;
-  mocha: CellValue;
-  manual: CellValue;
-  custom: CellValue;
+type Column = {
+  key: string;
+  label: string;
+  sublabel: string;
+  highlight: boolean;
+  values: CellValue[];
 };
 
-const rows: Row[] = [
-  { feature: 'Cross-server messaging',      mocha: true,       manual: false,        custom: true },
-  { feature: 'Public room directory',        mocha: true,       manual: false,        custom: false },
-  { feature: 'No server migration needed',   mocha: true,       manual: true,         custom: true },
-  { feature: 'Built-in moderation tools',    mocha: true,       manual: false,        custom: 'Depends' },
-  { feature: 'Free to start',               mocha: true,       manual: true,         custom: false },
-  { feature: 'Setup time',                  mocha: 'Minutes',  manual: 'Days',       custom: 'Weeks' },
+const features = [
+  'Cross-server messaging',
+  'Public room directory',
+  'No server migration',
+  'Built-in moderation',
+  'Free to start',
+  'Setup time',
 ];
 
-function Cell({ value, highlight }: { value: CellValue; highlight?: boolean }) {
+const columns: Column[] = [
+  {
+    key: 'mocha',
+    label: 'Mocha',
+    sublabel: 'This bot',
+    highlight: true,
+    values: [true, true, true, true, true, 'Minutes'],
+  },
+  {
+    key: 'manual',
+    label: 'Server partnerships',
+    sublabel: 'Manual coordination',
+    highlight: false,
+    values: [false, false, true, false, true, 'Days'],
+  },
+  {
+    key: 'custom',
+    label: 'Build your own bot',
+    sublabel: 'Dev work required',
+    highlight: false,
+    values: [true, false, true, 'Depends', false, 'Weeks'],
+  },
+];
+
+function CellDisplay({ value, highlight }: { value: CellValue; highlight?: boolean }) {
   if (value === true) {
     return (
-      <Text
-        color={highlight ? 'yellow.300' : 'white'}
-        fontWeight='semibold'
-        fontSize='lg'>
+      <Text color={highlight ? 'yellow.300' : 'green.400'} fontWeight='bold' fontSize='lg'>
         ✓
       </Text>
     );
   }
   if (value === false) {
     return (
-      <Text color='whiteAlpha.300' fontWeight='semibold' fontSize='lg'>
+      <Text color='whiteAlpha.300' fontWeight='bold' fontSize='lg'>
         ✗
       </Text>
     );
   }
   return (
-    <Text
-      color={highlight ? 'yellow.200' : 'whiteAlpha.700'}
-      fontSize='sm'
-      fontWeight={highlight ? 'semibold' : 'normal'}>
+    <Text color={highlight ? 'yellow.200' : 'whiteAlpha.600'} fontSize='sm' fontWeight={highlight ? 'semibold' : 'normal'}>
       {value}
     </Text>
   );
 }
 
-const COL_HEADERS = [
-  { label: 'Mocha', highlight: true },
-  { label: 'Manual server\npartnerships', highlight: false },
-  { label: 'Build your\nown bot', highlight: false },
-];
+// Mobile: one card per column (option)
+function OptionCard({ col }: { col: Column }) {
+  return (
+    <Flex
+      flexDirection='column'
+      borderRadius='xl'
+      overflow='hidden'
+      border='1px solid'
+      borderColor={col.highlight ? 'rgba(255,220,0,0.4)' : 'rgba(255,255,255,0.08)'}
+      boxShadow={col.highlight ? '0 0 32px rgba(255,220,0,0.08)' : 'none'}
+      position='relative'>
+      {col.highlight && (
+        <Box
+          position='absolute'
+          top={0}
+          left={0}
+          right={0}
+          h='2px'
+          bgGradient='linear(to-r, transparent, yellow.400, transparent)'
+        />
+      )}
+      {/* Card header */}
+      <Box
+        px={5}
+        py={4}
+        backgroundColor={col.highlight ? 'rgba(255,220,0,0.08)' : 'rgba(0,0,0,0.5)'}>
+        <Text
+          color={col.highlight ? 'yellow.300' : 'white'}
+          fontWeight='bold'
+          fontSize='md'>
+          {col.label}
+        </Text>
+        <Text color='whiteAlpha.500' fontSize='xs' mt={0.5}>
+          {col.sublabel}
+        </Text>
+      </Box>
+      {/* Feature rows */}
+      {features.map((feature, i) => (
+        <Flex
+          key={feature}
+          px={5}
+          py={3}
+          justifyContent='space-between'
+          alignItems='center'
+          backgroundColor={(() => {
+            const even = i % 2 === 0;
+            if (col.highlight) { return even ? 'rgba(255,220,0,0.03)' : 'rgba(255,220,0,0.01)'; }
+            return even ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.15)';
+          })()}
+          borderTop='1px solid rgba(255,255,255,0.05)'>
+          <Text color='whiteAlpha.700' fontSize='xs' maxW='60%' lineHeight='short'>
+            {feature}
+          </Text>
+          <CellDisplay value={col.values[i]} highlight={col.highlight} />
+        </Flex>
+      ))}
+    </Flex>
+  );
+}
+
+// Desktop: classic table
+function DesktopTable() {
+  return (
+    <Box borderRadius='xl' border='1px solid rgba(255,255,255,0.08)' overflow='hidden'>
+      {/* Header */}
+      <SimpleGrid columns={4} backgroundColor='rgba(0,0,0,0.6)' borderBottom='1px solid rgba(255,255,255,0.08)'>
+        <Box px={6} py={5} />
+        {columns.map((col) => (
+          <Box
+            key={col.key}
+            px={6}
+            py={5}
+            borderLeft='1px solid rgba(255,255,255,0.08)'
+            backgroundColor={col.highlight ? 'rgba(255,220,0,0.07)' : 'transparent'}
+            borderTop={col.highlight ? '2px solid rgba(255,220,0,0.5)' : '2px solid transparent'}
+            position='relative'>
+            {col.highlight && (
+              <Box
+                position='absolute'
+                top={0}
+                left={0}
+                right={0}
+                h='2px'
+                bgGradient='linear(to-r, transparent, yellow.400, transparent)'
+              />
+            )}
+            <Text
+              color={col.highlight ? 'yellow.300' : 'whiteAlpha.600'}
+              fontSize='xs'
+              fontWeight='bold'
+              textTransform='uppercase'
+              letterSpacing='wider'>
+              {col.label}
+            </Text>
+            <Text color='whiteAlpha.400' fontSize='xs' mt={1}>
+              {col.sublabel}
+            </Text>
+          </Box>
+        ))}
+      </SimpleGrid>
+
+      {/* Rows */}
+      {features.map((feature, i) => (
+        <SimpleGrid
+          key={feature}
+          columns={4}
+          backgroundColor={i % 2 === 0 ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.15)'}
+          borderBottom={i < features.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none'}>
+          <Box px={6} py={4}>
+            <Text color='whiteAlpha.800' fontSize='sm'>{feature}</Text>
+          </Box>
+          {columns.map((col) => (
+            <Box
+              key={col.key}
+              px={6}
+              py={4}
+              display='flex'
+              alignItems='center'
+              borderLeft='1px solid rgba(255,255,255,0.05)'
+              backgroundColor={col.highlight ? 'rgba(255,220,0,0.04)' : 'transparent'}>
+              <CellDisplay value={col.values[i]} highlight={col.highlight} />
+            </Box>
+          ))}
+        </SimpleGrid>
+      ))}
+    </Box>
+  );
+}
 
 export function ComparisonTable() {
+  const isMobile = useBreakpointValue({ base: true, md: false });
+
   return (
     <AnimateOnView>
       <Flex
@@ -74,72 +219,23 @@ export function ComparisonTable() {
             The fastest path to cross-server chat
           </Text>
           <Text color='whiteAlpha.600' fontSize='sm' maxW='xl' lineHeight='tall'>
-            Compared to the alternatives, Mocha gives your community cross-server messaging in minutes — no dev work, no coordination overhead.
+            Compared to alternatives, Mocha gives your community cross-server messaging in minutes — no dev work, no coordination overhead.
           </Text>
         </Flex>
 
-        <Box
-          borderRadius='xl'
-          border='1px solid rgba(255,255,255,0.08)'
-          overflow='hidden'>
-          {/* Header row */}
-          <SimpleGrid
-            columns={4}
-            backgroundColor='rgba(0,0,0,0.5)'
-            borderBottom='1px solid rgba(255,255,255,0.08)'>
-            <Box px={6} py={4} />
-            {COL_HEADERS.map((col) => (
-              <Box
-                key={col.label}
-                px={6}
-                py={4}
-                borderLeft='1px solid rgba(255,255,255,0.08)'
-                backgroundColor={col.highlight ? 'rgba(255,220,0,0.06)' : 'transparent'}
-                borderTop={col.highlight ? '2px solid rgba(255,220,0,0.5)' : '2px solid transparent'}>
-                <Text
-                  color={col.highlight ? 'yellow.300' : 'whiteAlpha.600'}
-                  fontSize='xs'
-                  fontWeight='bold'
-                  textTransform='uppercase'
-                  letterSpacing='wider'
-                  whiteSpace='pre-line'>
-                  {col.label}
-                </Text>
-              </Box>
-            ))}
-          </SimpleGrid>
-
-          {/* Data rows */}
-          {rows.map((row, i) => (
-            <SimpleGrid
-              key={row.feature}
-              columns={4}
-              backgroundColor={i % 2 === 0 ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.15)'}
-              borderBottom={i < rows.length - 1 ? '1px solid rgba(255,255,255,0.05)' : 'none'}>
-              <Box px={6} py={4}>
-                <Text color='whiteAlpha.800' fontSize='sm'>
-                  {row.feature}
-                </Text>
-              </Box>
-              {([
-                { value: row.mocha, highlight: true, key: 'mocha' },
-                { value: row.manual, highlight: false, key: 'manual' },
-                { value: row.custom, highlight: false, key: 'custom' },
-              ] as { value: CellValue; highlight: boolean; key: string }[]).map((cell) => (
-                <Box
-                  key={cell.key}
-                  px={6}
-                  py={4}
-                  display='flex'
-                  alignItems='center'
-                  borderLeft='1px solid rgba(255,255,255,0.05)'
-                  backgroundColor={cell.highlight ? 'rgba(255,220,0,0.04)' : 'transparent'}>
-                  <Cell value={cell.value} highlight={cell.highlight} />
-                </Box>
+        {isMobile ? (
+          <StaggerContainer staggerDelay={0.1}>
+            <Flex flexDirection='column' gap={4}>
+              {columns.map((col) => (
+                <motion.div key={col.key} variants={staggerItem}>
+                  <OptionCard col={col} />
+                </motion.div>
               ))}
-            </SimpleGrid>
-          ))}
-        </Box>
+            </Flex>
+          </StaggerContainer>
+        ) : (
+          <DesktopTable />
+        )}
       </Flex>
     </AnimateOnView>
   );
