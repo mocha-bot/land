@@ -16,13 +16,6 @@ import Button from '@/uikit/Button';
 
 const { publicRuntimeConfig } = getConfig();
 
-export type HeroVariant = 'default' | 'earlyAccess';
-
-type HeroProps = {
-  variant?: HeroVariant;
-  onJoinWaitlist?: () => void;
-};
-
 const socials = [
   {
     name: 'discord',
@@ -41,30 +34,8 @@ const socials = [
   },
 ];
 
-const defaultButtons = [
-  {
-    label: 'Discover More',
-    variant: 'glass',
-    href: '/search',
-  },
-  {
-    label: 'See Documentation',
-    variant: 'glass-ghost',
-    href: publicRuntimeConfig.docsUrl,
-  },
-];
-
-export function Hero({ variant = 'default', onJoinWaitlist }: HeroProps) {
+export function Hero() {
   const isMobile = useBreakpointValue({ base: true, md: false });
-  const isEarly = variant === 'earlyAccess';
-
-  const headline = isEarly
-    ? 'Cross-server chat for Discord communities'
-    : 'Drink mocha with people across the universe';
-
-  const subheadline = isEarly
-    ? 'Mocha is a Discord bot that lets communities create shared rooms one message reaches every connected server at once. No more jumping between servers to stay in the loop. Early access is now open.'
-    : 'Mocha is a Discord bot for multi-chat cross-server, that allows you to send messages to multiple channels at once.';
 
   return (
     <Flex
@@ -106,72 +77,56 @@ export function Hero({ variant = 'default', onJoinWaitlist }: HeroProps) {
           color='white'
           fontSize={{ base: '5xl', lg: '6xl' }}
           lineHeight='none'>
-          {headline}
+          Cross-server chat for Discord communities
         </Text>
         <Text color='white' fontSize={20} lineHeight='none' fontWeight='light'>
-          {subheadline}
+          Mocha is a Discord bot that lets communities create shared rooms — one message reaches every connected server at once. No more jumping between servers to stay in the loop.
         </Text>
       </VStack>
       <AnimateOnView delay={0.3}>
-      <HStack w='full' justifyContent={{ base: 'center', md: 'space-between' }}>
-        <HStack w='full'>
-          {isEarly ? (
-            <>
-              <Button
-                py={6}
-                px={10}
-                variant='glass'
-                isAnimated
-                onClick={onJoinWaitlist}>
-                Join the waitlist
-              </Button>
-              <Button
-                as='a'
-                py={6}
-                px={10}
-                variant='glass-ghost'
-                href='/pricing'>
-                View Pricing
-              </Button>
-            </>
-          ) : (
-            defaultButtons.map((button) => (
-              <Button
-                as='a'
-                py={6}
-                px={10}
-                key={button.label}
-                variant={button.variant}
-                href={button.href}>
-                {button.label}
-              </Button>
-            ))
+        <HStack w='full' justifyContent={{ base: 'center', md: 'space-between' }}>
+          <HStack w='full'>
+            <Button
+              as='a'
+              py={6}
+              px={10}
+              variant='glass'
+              isAnimated
+              href={publicRuntimeConfig.botInvitationUrl}>
+              Invite to Server
+            </Button>
+            <Button
+              as='a'
+              py={6}
+              px={10}
+              variant='glass-ghost'
+              href='https://dash.mocha-bot.xyz'>
+              Get Access
+            </Button>
+          </HStack>
+          {!isMobile && (
+            <HStack gap={8}>
+              {socials.map((social) => (
+                <Link key={`social-${social.name}`} href={social.href}>
+                  <IconButton
+                    isRound
+                    backgroundColor='rgba(255, 255, 255, 0.20)'
+                    aria-label={`${social.name} mocha`}
+                    icon={
+                      <Image
+                        src={social.icon}
+                        width={8}
+                        height={8}
+                        alt={`${social.name} Icon`}
+                      />
+                    }
+                    _hover={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}
+                  />
+                </Link>
+              ))}
+            </HStack>
           )}
         </HStack>
-        {!isMobile && (
-          <HStack gap={8}>
-            {socials.map((social) => (
-              <Link key={`social-${social.name}`} href={social.href}>
-                <IconButton
-                  key={social.name}
-                  isRound
-                  backgroundColor='rgba(255, 255, 255, 0.20)'
-                  aria-label={`${social.name} mocha`}
-                  icon={
-                    <Image
-                      src={social.icon}
-                      width={8}
-                      height={8}
-                      alt={`${social.name} Icon`}
-                    />
-                  }
-                  _hover={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}
-                />
-              </Link>
-            ))}
-          </HStack>
-        )}
-      </HStack>
       </AnimateOnView>
     </Flex>
   );

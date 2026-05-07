@@ -44,7 +44,7 @@ function Index({ locale }: IndexProps) {
         <script {...jsonLdScriptProps(organizationJsonLd())} />
         <script {...jsonLdScriptProps(softwareApplicationJsonLd())} />
       </Head>
-      <LandingPageContainer variant='earlyAccess' />
+      <LandingPageContainer />
     </>
   );
 }

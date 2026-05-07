@@ -7,7 +7,6 @@ import {
   SimpleGrid,
   Skeleton,
   Text,
-  useDisclosure,
   VStack,
 } from '@chakra-ui/react';
 import type { GetStaticPropsContext } from 'next';
@@ -22,7 +21,6 @@ import { useRouter } from 'next/router';
 import { buildCanonical, ogLocaleFor } from '@/config/seo';
 import { useAddonPackages, useSubscriptionPackages } from '@/modules/pricing/pricingHook';
 import type { Package } from '@/modules/pricing/types';
-import { WaitlistModal } from '@/modules/waitlist/WaitlistModal';
 import Button from '@/uikit/Button';
 import { Container } from '@/uikit/Container';
 import { Layout } from '@/uikit/Layout';
@@ -125,7 +123,6 @@ function PackageCardSkeleton() {
 function Pricing() {
   const { locale } = useRouter();
   const canonical = buildCanonical('/pricing', locale);
-  const disclosure = useDisclosure();
 
   const subscriptions = useSubscriptionPackages();
   const addons = useAddonPackages();
@@ -177,7 +174,7 @@ function Pricing() {
               </Text>
             </VStack>
 
-            {/* Empty / waitlist fallback */}
+            {/* Empty state */}
             {hasNoData && (
               <VStack alignItems='flex-start' spacing={12} maxW={{ base: 'full', md: 'xl' }}>
                 <Text
@@ -191,18 +188,17 @@ function Pricing() {
                   fontSize={20}
                   lineHeight='short'
                   fontWeight='light'>
-                  Mocha will stay free for everyone. Premium features for power
-                  communities are coming with our early-access launch — join the
-                  waitlist and we&apos;ll loop you in the moment plans go live.
+                  Mocha is free to get started. Premium features for power communities are coming soon — invite the bot now and you'll have access the moment plans go live.
                 </Text>
                 <HStack flexWrap='wrap' gap={4}>
                   <Button
+                    as='a'
                     py={6}
                     px={10}
                     variant='glass'
                     isAnimated
-                    onClick={disclosure.onOpen}>
-                    Join the early access waitlist
+                    href={publicRuntimeConfig.botInvitationUrl}>
+                    Invite to Server
                   </Button>
                   <Button
                     as='a'
@@ -277,10 +273,6 @@ function Pricing() {
           </Flex>
         </Container>
       </Layout>
-      <WaitlistModal
-        isOpen={disclosure.isOpen}
-        onClose={disclosure.onClose}
-      />
     </>
   );
 }
