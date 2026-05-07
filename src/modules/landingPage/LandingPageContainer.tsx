@@ -1,7 +1,6 @@
 import { Container } from '@/uikit/Container';
 import { Layout } from '@/uikit/Layout';
 
-import { Discover } from './Discover';
 import { FAQ } from './FAQ';
 import { Features } from './Features';
 import { Hero } from './Hero';
@@ -17,7 +16,6 @@ export function LandingPageContainer() {
         <HowItWorks />
         <Features />
         <UseCases />
-        <Discover />
         <FAQ />
         <Invitation />
       </Container>

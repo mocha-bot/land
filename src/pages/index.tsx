@@ -11,11 +11,15 @@ import {
   ogLocaleFor,
 } from '@/config/seo';
 import {
+  faqJsonLd,
+  howToJsonLd,
   jsonLdScriptProps,
   organizationJsonLd,
   softwareApplicationJsonLd,
+  webSiteJsonLd,
 } from '@/config/structuredData';
 import { LandingPageContainer } from '@/modules/landingPage/LandingPageContainer';
+import { FAQ_ITEMS } from '@/modules/landingPage/faqData';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -43,6 +47,9 @@ function Index({ locale }: IndexProps) {
         })}
         <script {...jsonLdScriptProps(organizationJsonLd())} />
         <script {...jsonLdScriptProps(softwareApplicationJsonLd())} />
+        <script {...jsonLdScriptProps(webSiteJsonLd())} />
+        <script {...jsonLdScriptProps(howToJsonLd())} />
+        <script {...jsonLdScriptProps(faqJsonLd(FAQ_ITEMS))} />
       </Head>
       <LandingPageContainer />
     </>

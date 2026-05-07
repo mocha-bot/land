@@ -1,9 +1,20 @@
 /** @type {import('next').NextConfig} */
 const { i18n } = require('./next-i18next.config');
 
+const securityHeaders = [
+  { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+  { key: 'X-Content-Type-Options', value: 'nosniff' },
+  { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+  { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+  { key: 'X-DNS-Prefetch-Control', value: 'on' },
+];
+
 const nextConfig = {
   i18n,
   reactStrictMode: true,
+  async headers() {
+    return [{ source: '/(.*)', headers: securityHeaders }];
+  },
   publicRuntimeConfig: {
     showVersion: process.env.SHOW_VERSION === 'TRUE',
     clientVersion: process.env.COMMIT_HASH || 'local-0.0.1',
@@ -25,8 +36,6 @@ const nextConfig = {
     createRoomDocsUrl:
       process.env.CREATE_ROOM_DOCS_URL ||
       'https://docs.mocha-bot.xyz/core/room#create',
-    tawkPropertyId: process.env.TAWK_PROPERTY_ID || '0',
-    tawkWidgetId: process.env.TAWK_WIDGET_ID || '0',
     nextISRSecretHeader: process.env.NEXT_ISR_SECRET_HEADER || '',
   },
   images: {
