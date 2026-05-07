@@ -54,11 +54,12 @@ export default function Index() {
 
   // Handle errors
   if (error) {
+    type ApiError = { response?: { status: number }; status?: number; message?: string };
     // Check if it's a 404 error (room not found)
     const isNotFoundError =
-      (error as any)?.response?.status === 404 ||
-      (error as any)?.status === 404 ||
-      (error as any)?.message?.toLowerCase().includes('not found');
+      (error as ApiError)?.response?.status === 404 ||
+      (error as ApiError)?.status === 404 ||
+      (error as ApiError)?.message?.toLowerCase().includes('not found');
 
     if (isNotFoundError) {
       return (

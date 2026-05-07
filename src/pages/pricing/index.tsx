@@ -37,7 +37,7 @@ const cardStyle = {
 };
 
 function formatPrice(cents: number, currency: string, interval: string): string {
-  if (cents === 0) return 'Free';
+  if (cents === 0) { return 'Free'; }
   const amount = (cents / 100).toFixed(2);
   const symbol = currency.toUpperCase() === 'USD' ? '$' : currency;
   const intervalLabel = interval ? ` / ${interval}` : '';
@@ -81,8 +81,8 @@ function PackageCard({ pkg, isAddon }: { pkg: Package; isAddon?: boolean }) {
 
       {pkg.features.length > 0 && (
         <VStack alignItems='flex-start' spacing={2} flex={1}>
-          {pkg.features.map((feature, idx) => (
-            <HStack key={idx} spacing={2} alignItems='flex-start'>
+          {pkg.features.map((feature) => (
+            <HStack key={feature} spacing={2} alignItems='flex-start'>
               <Text color='yellow.300' fontSize='sm' flexShrink={0}>
                 ✓
               </Text>
@@ -130,7 +130,7 @@ function Pricing() {
   const subscriptions = useSubscriptionPackages();
   const addons = useAddonPackages();
 
-  const isLoading = subscriptions.isLoading;
+  const { isLoading } = subscriptions;
   const hasNoData = !isLoading && subscriptions.data.length === 0 && addons.data.length === 0;
 
   return (

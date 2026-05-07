@@ -28,6 +28,7 @@ export default async function handler(
 
   const webhookUrl = process.env.DISCORD_WAITLIST_WEBHOOK_URL;
   if (!webhookUrl) {
+    // eslint-disable-next-line no-console
     console.error('[waitlist] DISCORD_WAITLIST_WEBHOOK_URL is not set');
     return res.status(500).json({ ok: false, error: 'not_configured' });
   }
@@ -43,10 +44,12 @@ export default async function handler(
     });
 
     if (!discordRes.ok) {
+      // eslint-disable-next-line no-console
       console.error('[waitlist] discord webhook failed', discordRes.status);
       return res.status(502).json({ ok: false, error: 'upstream_failed' });
     }
   } catch (err) {
+    // eslint-disable-next-line no-console
     console.error('[waitlist] discord webhook threw', err);
     return res.status(502).json({ ok: false, error: 'upstream_failed' });
   }
