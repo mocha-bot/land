@@ -7,6 +7,7 @@ import { WaitlistModal } from '../waitlist/WaitlistModal';
 import { Discover } from './Discover';
 import { Features } from './Features';
 import { Hero } from './Hero';
+import { HowItWorks } from './HowItWorks';
 import { Invitation } from './Invitation';
 
 export type LandingPageVariant = 'default' | 'earlyAccess';
@@ -25,6 +26,7 @@ export function LandingPageContainer({
     <Layout bgImage='/assets/images/background_desktop.svg'>
       <Container>
         <Hero variant={variant} onJoinWaitlist={disclosure.onOpen} />
+        <HowItWorks />
         <Features />
         {!isEarly && <Discover />}
         <Invitation variant={variant} onJoinWaitlist={disclosure.onOpen} />
