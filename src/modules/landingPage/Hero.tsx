@@ -77,6 +77,24 @@ export function Hero({ variant = 'default', onJoinWaitlist }: HeroProps) {
         alignItems='flex-start'
         spacing={12}
         maxW={{ base: 'full', md: 'xl' }}>
+        <Flex
+          display='inline-flex'
+          alignItems='center'
+          gap={2}
+          px={4}
+          py={2}
+          borderRadius='full'
+          border='1px solid rgba(255, 255, 255, 0.15)'
+          backgroundColor='rgba(255, 255, 255, 0.06)'
+          backdropFilter='blur(8px)'>
+          <Text fontSize='xs' color='yellow.300' fontWeight='bold' letterSpacing='wider' textTransform='uppercase'>
+            ✦ For Discord
+          </Text>
+          <Text fontSize='xs' color='whiteAlpha.400'>·</Text>
+          <Text fontSize='xs' color='whiteAlpha.700' fontWeight='medium'>
+            Like Slack Connect, but built for communities
+          </Text>
+        </Flex>
         <Text
           color='white'
           fontSize={{ base: '5xl', lg: '6xl' }}
