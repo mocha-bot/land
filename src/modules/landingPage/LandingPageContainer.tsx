@@ -5,10 +5,12 @@ import { Layout } from '@/uikit/Layout';
 
 import { WaitlistModal } from '../waitlist/WaitlistModal';
 import { Discover } from './Discover';
+import { FAQ } from './FAQ';
 import { Features } from './Features';
 import { Hero } from './Hero';
 import { HowItWorks } from './HowItWorks';
 import { Invitation } from './Invitation';
+import { UseCases } from './UseCases';
 
 export type LandingPageVariant = 'default' | 'earlyAccess';
 
@@ -28,7 +30,9 @@ export function LandingPageContainer({
         <Hero variant={variant} onJoinWaitlist={disclosure.onOpen} />
         <HowItWorks />
         <Features />
+        <UseCases />
         {!isEarly && <Discover />}
+        <FAQ />
         <Invitation variant={variant} onJoinWaitlist={disclosure.onOpen} />
       </Container>
       {isEarly && (
