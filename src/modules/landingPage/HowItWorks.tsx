@@ -1,4 +1,7 @@
 import { Box, Flex, SimpleGrid, Text } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
+
+import { AnimateOnView, StaggerContainer, staggerItem } from '@/components/AnimateOnView/AnimateOnView';
 
 type StepProps = {
   step: number;
@@ -142,25 +145,31 @@ export function HowItWorks() {
       gap={10}
       py={{ base: 10, md: 24 }}
       color='white'>
-      <Flex flexDirection='column' gap={3}>
-        <Text fontWeight='semibold' fontSize={{ base: '16px', md: '20px' }}>
-          How it works
-        </Text>
-        <Text
-          fontSize={{ base: '28px', md: '48px' }}
-          lineHeight={{ base: '32px', md: '52px' }}
-          maxW='2xl'>
-          From zero to cross-server chat in four steps
-        </Text>
-        <Text color='whiteAlpha.600' fontSize='sm' maxW='xl' lineHeight='tall'>
-          Mocha works at the channel level — one channel joins one room. Any server, any channel, any room.
-        </Text>
-      </Flex>
-      <SimpleGrid columns={[1, null, 2, 4]} gap={6}>
-        {steps.map((s) => (
-          <Step key={s.step} {...s} />
-        ))}
-      </SimpleGrid>
+      <AnimateOnView>
+        <Flex flexDirection='column' gap={3}>
+          <Text fontWeight='semibold' fontSize={{ base: '16px', md: '20px' }}>
+            How it works
+          </Text>
+          <Text
+            fontSize={{ base: '28px', md: '48px' }}
+            lineHeight={{ base: '32px', md: '52px' }}
+            maxW='2xl'>
+            From zero to cross-server chat in four steps
+          </Text>
+          <Text color='whiteAlpha.600' fontSize='sm' maxW='xl' lineHeight='tall'>
+            Mocha works at the channel level — one channel joins one room. Any server, any channel, any room.
+          </Text>
+        </Flex>
+      </AnimateOnView>
+      <StaggerContainer>
+        <SimpleGrid columns={[1, null, 2, 4]} gap={6}>
+          {steps.map((s) => (
+            <motion.div key={s.step} variants={staggerItem}>
+              <Step {...s} />
+            </motion.div>
+          ))}
+        </SimpleGrid>
+      </StaggerContainer>
     </Flex>
   );
 }

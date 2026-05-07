@@ -1,4 +1,7 @@
 import { Box, Flex, SimpleGrid, Text } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
+
+import { AnimateOnView, StaggerContainer, staggerItem } from '@/components/AnimateOnView/AnimateOnView';
 
 type UseCaseProps = {
   emoji: string;
@@ -91,25 +94,31 @@ export function UseCases() {
       gap={10}
       py={{ base: 10, md: 24 }}
       color='white'>
-      <Flex flexDirection='column' gap={3}>
-        <Text fontWeight='semibold' fontSize={{ base: '16px', md: '20px' }}>
-          Who uses Mocha
-        </Text>
-        <Text
-          fontSize={{ base: '28px', md: '48px' }}
-          lineHeight={{ base: '32px', md: '52px' }}
-          maxW='2xl'>
-          Any community that outgrows one server
-        </Text>
-        <Text color='whiteAlpha.600' fontSize='sm' maxW='xl' lineHeight='tall'>
-          If your people are scattered across servers, Mocha brings the conversation together without forcing anyone to move.
-        </Text>
-      </Flex>
-      <SimpleGrid columns={[1, null, 2, 3]} gap={6}>
-        {useCases.map((uc) => (
-          <UseCaseCard key={uc.title} {...uc} />
-        ))}
-      </SimpleGrid>
+      <AnimateOnView>
+        <Flex flexDirection='column' gap={3}>
+          <Text fontWeight='semibold' fontSize={{ base: '16px', md: '20px' }}>
+            Who uses Mocha
+          </Text>
+          <Text
+            fontSize={{ base: '28px', md: '48px' }}
+            lineHeight={{ base: '32px', md: '52px' }}
+            maxW='2xl'>
+            Any community that outgrows one server
+          </Text>
+          <Text color='whiteAlpha.600' fontSize='sm' maxW='xl' lineHeight='tall'>
+            If your people are scattered across servers, Mocha brings the conversation together without forcing anyone to move.
+          </Text>
+        </Flex>
+      </AnimateOnView>
+      <StaggerContainer staggerDelay={0.08}>
+        <SimpleGrid columns={[1, null, 2, 3]} gap={6}>
+          {useCases.map((uc) => (
+            <motion.div key={uc.title} variants={staggerItem}>
+              <UseCaseCard {...uc} />
+            </motion.div>
+          ))}
+        </SimpleGrid>
+      </StaggerContainer>
     </Flex>
   );
 }

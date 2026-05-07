@@ -8,8 +8,10 @@ import {
   useBreakpointValue,
   VStack,
 } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
 import getConfig from 'next/config';
 
+import { AnimateOnView } from '@/components/AnimateOnView/AnimateOnView';
 import Button from '@/uikit/Button';
 
 const { publicRuntimeConfig } = getConfig();
@@ -76,7 +78,12 @@ export function Hero({ variant = 'default', onJoinWaitlist }: HeroProps) {
       <VStack
         alignItems='flex-start'
         spacing={12}
-        maxW={{ base: 'full', md: 'xl' }}>
+        maxW={{ base: 'full', md: 'xl' }}
+        as={motion.div}
+        initial={{ opacity: 0, y: 32 }}
+        animate={{ opacity: 1, y: 0 }}
+        // @ts-expect-error framer types
+        transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}>
         <Flex
           display='inline-flex'
           alignItems='center'
@@ -105,6 +112,7 @@ export function Hero({ variant = 'default', onJoinWaitlist }: HeroProps) {
           {subheadline}
         </Text>
       </VStack>
+      <AnimateOnView delay={0.3}>
       <HStack w='full' justifyContent={{ base: 'center', md: 'space-between' }}>
         <HStack w='full'>
           {isEarly ? (
@@ -164,6 +172,7 @@ export function Hero({ variant = 'default', onJoinWaitlist }: HeroProps) {
           </HStack>
         )}
       </HStack>
+      </AnimateOnView>
     </Flex>
   );
 }

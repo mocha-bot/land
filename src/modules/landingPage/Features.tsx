@@ -6,6 +6,9 @@ import {
   SimpleGrid,
   Text,
 } from '@chakra-ui/react';
+import { motion } from 'framer-motion';
+
+import { AnimateOnView, StaggerContainer, staggerItem } from '@/components/AnimateOnView/AnimateOnView';
 
 type CardProps = {
   title: string;
@@ -117,17 +120,22 @@ function Features() {
           base: 4,
           md: 10,
         }}>
-        <Title />
-        <SimpleGrid columns={[1, 3]} gap={6}>
-          {features.map((feature) => (
-            <Card
-              key={feature.title}
-              title={feature.title}
-              description={feature.description}
-              imageUrl={feature.imageUrl}
-            />
-          ))}
-        </SimpleGrid>
+        <AnimateOnView>
+          <Title />
+        </AnimateOnView>
+        <StaggerContainer>
+          <SimpleGrid columns={[1, 3]} gap={6}>
+            {features.map((feature) => (
+              <motion.div key={feature.title} variants={staggerItem}>
+                <Card
+                  title={feature.title}
+                  description={feature.description}
+                  imageUrl={feature.imageUrl}
+                />
+              </motion.div>
+            ))}
+          </SimpleGrid>
+        </StaggerContainer>
         {/* TODO: uncomment this when the demo video is ready */}
         {/* <Text as='h4' fontWeight='semibold' color='white'>
           See Our Demo

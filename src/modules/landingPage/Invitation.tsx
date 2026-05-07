@@ -1,6 +1,7 @@
 import { Box, Flex, Image, Text } from '@chakra-ui/react';
 import getConfig from 'next/config';
 
+import { AnimateOnView } from '@/components/AnimateOnView/AnimateOnView';
 import Button from '@/uikit/Button';
 
 const { publicRuntimeConfig } = getConfig();
@@ -27,6 +28,7 @@ function Invitation({
     : 'Invite mocha from your dashboard now and enjoy connect to others with ease. Just right under your own server';
 
   return (
+    <AnimateOnView>
     <Flex
       w='full'
       h='full'
@@ -112,6 +114,7 @@ function Invitation({
         color='white'
       />
     </Flex>
+    </AnimateOnView>
   );
 }
 
