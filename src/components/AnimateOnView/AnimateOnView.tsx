@@ -1,8 +1,9 @@
 import { type Variants, motion, useInView } from 'framer-motion';
+import type { ReactNode } from 'react';
 import { useRef } from 'react';
 
 type AnimateOnViewProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   delay?: number;
   variant?: 'fadeUp' | 'fadeIn' | 'fadeLeft' | 'fadeRight';
   duration?: number;
@@ -53,7 +54,7 @@ export function AnimateOnView({
 }
 
 type StaggerContainerProps = {
-  children: React.ReactNode;
+  children: ReactNode;
   staggerDelay?: number;
   className?: string;
 };
