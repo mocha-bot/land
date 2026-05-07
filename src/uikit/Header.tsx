@@ -30,8 +30,9 @@ interface NavItem {
 }
 
 const menu: Array<NavItem> = [
-  { label: 'about us', href: '/#' },
+  { label: 'about us', href: '/#about-us' },
   { label: 'features', href: '/#features' },
+  { label: 'pricing', href: '/pricing' },
 ];
 
 interface MenuProps {

@@ -57,12 +57,12 @@ export function Hero({ variant = 'default', onJoinWaitlist }: HeroProps) {
   const isEarly = variant === 'earlyAccess';
 
   const headline = isEarly
-    ? 'Early access is open — reserve your seat at the mocha table'
+    ? 'Cross-server chat for Discord communities'
     : 'Drink mocha with people across the universe';
 
   const subheadline = isEarly
-    ? 'We are opening a limited waitlist for the next generation of Mocha — one unified cross-server chat, built for communities that actually want to pay for something that works.'
-    : 'Mocha is a Discord bot for multi-chat cross-server, that allows you to send messages to multiple channels at once. ';
+    ? 'Mocha is a Discord bot that lets communities create shared rooms one message reaches every connected server at once. No more jumping between servers to stay in the loop. Early access is now open.'
+    : 'Mocha is a Discord bot for multi-chat cross-server, that allows you to send messages to multiple channels at once.';
 
   return (
     <Flex
@@ -104,8 +104,8 @@ export function Hero({ variant = 'default', onJoinWaitlist }: HeroProps) {
                 py={6}
                 px={10}
                 variant='glass-ghost'
-                href={publicRuntimeConfig.docsUrl}>
-                See Documentation
+                href='/pricing'>
+                View Pricing
               </Button>
             </>
           ) : (

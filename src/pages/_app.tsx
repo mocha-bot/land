@@ -3,26 +3,17 @@ import { appWithTranslation } from 'next-i18next';
 import { generateDefaultSeo } from 'next-seo/pages';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import { GoogleAnalytics } from 'nextjs-google-analytics';
 
 import { AppProvider } from '@/AppProvider';
-import TawkMessenger from '@/components/TawkMessenger/TawkMessenger';
 import { defaultSeoConfig } from '@/config/seo';
 import { fonts } from '@/theme/fonts';
 
 import '@/theme/global.css';
 
-import getConfig from 'next/config';
-
-const { publicRuntimeConfig } = getConfig();
-
 const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_TRACKING_ID || '';
 
 function App({ Component, pageProps }: AppProps) {
-  const router = useRouter();
-  const shouldRenderTawk = router.pathname !== '/';
-
   return (
     <>
       <style jsx global>
@@ -35,12 +26,6 @@ function App({ Component, pageProps }: AppProps) {
       <Head>{generateDefaultSeo(defaultSeoConfig)}</Head>
       <GoogleAnalytics trackPageViews gaMeasurementId={GA_TRACKING_ID} />
       <AppProvider>
-        {shouldRenderTawk && (
-          <TawkMessenger
-            propertyId={publicRuntimeConfig.tawkPropertyId}
-            widgetId={publicRuntimeConfig.tawkWidgetId}
-          />
-        )}
         <Component {...pageProps} />
         <Analytics />
       </AppProvider>
