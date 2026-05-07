@@ -188,7 +188,7 @@ function Pricing() {
                   fontSize={20}
                   lineHeight='short'
                   fontWeight='light'>
-                  Mocha is free to get started. Premium features for power communities are coming soon — invite the bot now and you'll have access the moment plans go live.
+                  Mocha is free to get started. Premium features for power communities are coming soon — invite the bot now and you&apos;ll have access the moment plans go live.
                 </Text>
                 <HStack flexWrap='wrap' gap={4}>
                   <Button
