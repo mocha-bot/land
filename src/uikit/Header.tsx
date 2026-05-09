@@ -115,6 +115,7 @@ const OFFSET_TOP_SCROLL = 50;
 
 export function Header() {
   const [isBgTransparent, setIsBgTransparent] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
   const { isOpen, onToggle, onClose } = useDisclosure();
 
   const isMobile = useBreakpointValue({ base: true, md: false, lg: false });
@@ -132,6 +133,17 @@ export function Header() {
       return () => window.removeEventListener('scroll', handleScroll);
     }
   }, []);
+
+  useEffect(() => {
+    fetch(`${publicRuntimeConfig.apiBaseUrl}/api/v1/user/me`, { credentials: 'include' })
+      .then((r) => { setIsLoggedIn(r.ok); })
+      .catch(() => { setIsLoggedIn(false); });
+  }, []);
+
+  const authHref = isLoggedIn
+    ? publicRuntimeConfig.dashboardUrl
+    : `${publicRuntimeConfig.ssoUrl}?redirect_to=${encodeURIComponent(publicRuntimeConfig.dashboardUrl)}`;
+  const authLabel = isLoggedIn ? 'Dashboard' : 'Sign In';
 
   return (
     <Box
@@ -179,15 +191,28 @@ export function Header() {
           </Flex>
 
           {isDesktop && (
-            <Button
-              as='a'
-              variant='glass'
-              py={5}
-              px={6}
-              isAnimated
-              href={publicRuntimeConfig.botInvitationUrl}>
-              Invite to server
-            </Button>
+            <Flex gap={3} alignItems='center'>
+              <Button
+                as='a'
+                variant='glass'
+                py={5}
+                px={6}
+                isAnimated
+                href={authHref}
+                opacity={isLoggedIn === null ? 0.5 : 1}
+                pointerEvents={isLoggedIn === null ? 'none' : 'auto'}>
+                {authLabel}
+              </Button>
+              <Button
+                as='a'
+                variant='glass'
+                py={5}
+                px={6}
+                isAnimated
+                href={publicRuntimeConfig.botInvitationUrl}>
+                Invite to server
+              </Button>
+            </Flex>
           )}
 
           {/* Mobile Drawer */}
@@ -239,15 +264,28 @@ export function Header() {
                         </Box>
                       ))}
                     </Flex>
-                    <Button
-                      as='a'
-                      variant='glass'
-                      py={4}
-                      px={6}
-                      isAnimated
-                      href={publicRuntimeConfig.botInvitationUrl}>
-                      Invite to server
-                    </Button>
+                    <Flex direction='column' gap={3} alignItems='center'>
+                      <Button
+                        as='a'
+                        variant='glass'
+                        py={4}
+                        px={6}
+                        isAnimated
+                        href={authHref}
+                        opacity={isLoggedIn === null ? 0.5 : 1}
+                        pointerEvents={isLoggedIn === null ? 'none' : 'auto'}>
+                        {authLabel}
+                      </Button>
+                      <Button
+                        as='a'
+                        variant='glass'
+                        py={4}
+                        px={6}
+                        isAnimated
+                        href={publicRuntimeConfig.botInvitationUrl}>
+                        Invite to server
+                      </Button>
+                    </Flex>
                   </Flex>
                 </DrawerBody>
                 {/* Flare bottom */}

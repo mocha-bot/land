@@ -37,6 +37,8 @@ const nextConfig = {
       process.env.CREATE_ROOM_DOCS_URL ||
       'https://docs.mocha-bot.xyz/core/room#create',
     nextISRSecretHeader: process.env.NEXT_ISR_SECRET_HEADER || '',
+    dashboardUrl: process.env.DASHBOARD_URL || 'https://dash.mocha-bot.xyz',
+    ssoUrl: process.env.SSO_URL || 'https://sso.mocha-bot.xyz',
   },
   images: {
     remotePatterns: [
