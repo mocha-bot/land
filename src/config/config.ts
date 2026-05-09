@@ -5,6 +5,7 @@ import type { FooterInformation, FooterInformationItem } from '@/types/Footer';
 const { publicRuntimeConfig } = getConfig();
 
 const productItems: FooterInformationItem[] = [
+  { title: 'Solutions', href: '/solutions' },
   { title: 'Search Rooms', href: '/search' },
   { title: 'Pricing', href: '/pricing' },
   { title: 'Documentation', href: publicRuntimeConfig.docsUrl },

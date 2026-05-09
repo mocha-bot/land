@@ -1,4 +1,4 @@
-import { CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
+import { ChevronDownIcon, CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
   Box,
   Drawer,
@@ -9,6 +9,11 @@ import {
   IconButton,
   Image,
   Link,
+  Popover,
+  PopoverBody,
+  PopoverContent,
+  PopoverTrigger,
+  SimpleGrid,
   Stack,
   Text,
   useBreakpointValue,
@@ -17,6 +22,9 @@ import {
 import getConfig from 'next/config';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
+
+import { SolutionCard } from '@/modules/solutions/SolutionCard';
+import { solutions } from '@/modules/solutions/data';
 
 import Button from './Button';
 import { Container } from './Container';
@@ -27,10 +35,12 @@ interface NavItem {
   label: string;
   subLabel?: string;
   href?: string;
+  isDropdown?: boolean;
 }
 
 const menu: Array<NavItem> = [
   { label: 'features', href: '/#features' },
+  { label: 'solutions', href: '/solutions', isDropdown: true },
   { label: 'discover', href: '/search' },
   { label: 'pricing', href: '/pricing' },
   { label: 'docs', href: publicRuntimeConfig.docsUrl },
@@ -76,6 +86,74 @@ function MenuItem({ label, href }: NavItem) {
   );
 }
 
+function SolutionsDropdownMenuItem() {
+  return (
+    <Popover trigger='hover' placement='bottom-start' openDelay={50} closeDelay={100}>
+      <PopoverTrigger>
+        <Flex
+          role='group'
+          position='relative'
+          h='full'
+          alignItems='center'
+          cursor='pointer'>
+          <Flex
+            alignItems='center'
+            gap={1}
+            fontSize='sm'
+            fontWeight={500}
+            color='white'
+            opacity={0.6}
+            h='full'
+            px={4}
+            position='relative'
+            zIndex={11}
+            _hover={{
+              textDecoration: 'none',
+              color: 'white',
+              opacity: 1,
+              bg: 'radial-gradient(circle at bottom, rgba(255, 255, 255, 0.2), transparent 60%)',
+              transition: 'all 0.3s ease-in-out',
+            }}>
+            solutions
+            <ChevronDownIcon boxSize={3} />
+          </Flex>
+        </Flex>
+      </PopoverTrigger>
+      <PopoverContent
+        bg='rgba(5, 10, 20, 0.95)'
+        border='1px solid rgba(255, 255, 255, 0.1)'
+        backdropFilter='blur(20px)'
+        borderRadius='xl'
+        boxShadow='0 20px 60px rgba(0,0,0,0.6)'
+        w='560px'
+        mt={2}
+        _focus={{ outline: 'none' }}>
+        <PopoverBody p={4}>
+          <Flex justifyContent='space-between' alignItems='center' mb={3} px={1}>
+            <Text color='whiteAlpha.500' fontSize='xs' textTransform='uppercase' letterSpacing='wider'>
+              Solutions
+            </Text>
+            <Box
+              as={NextLink}
+              href='/solutions'
+              color='white'
+              fontSize='xs'
+              fontWeight='light'
+              _hover={{ textDecoration: 'underline' }}>
+              View all
+            </Box>
+          </Flex>
+          <SimpleGrid columns={2} gap={1}>
+            {solutions.map((solution) => (
+              <SolutionCard key={solution.slug} solution={solution} isCompact />
+            ))}
+          </SimpleGrid>
+        </PopoverBody>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 function Menu({ menuList, isOpen }: MenuProps) {
   return (
     <Stack
@@ -85,9 +163,13 @@ function Menu({ menuList, isOpen }: MenuProps) {
       alignItems='stretch'
       display={{ base: isOpen ? 'flex' : 'none', md: 'flex' }}
       zIndex={10}>
-      {menuList.map((nav) => (
-        <MenuItem key={nav.label} label={nav.label} href={nav.href} />
-      ))}
+      {menuList.map((nav) =>
+        nav.isDropdown ? (
+          <SolutionsDropdownMenuItem key={nav.label} />
+        ) : (
+          <MenuItem key={nav.label} label={nav.label} href={nav.href} />
+        ),
+      )}
     </Stack>
   );
 }
