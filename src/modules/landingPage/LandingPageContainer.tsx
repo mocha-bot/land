@@ -1,3 +1,5 @@
+import { Box } from '@chakra-ui/react';
+
 import { AnimateOnView } from '@/components/AnimateOnView/AnimateOnView';
 import { Container } from '@/uikit/Container';
 import { Layout } from '@/uikit/Layout';
@@ -17,7 +19,9 @@ export function LandingPageContainer() {
       <Container>
         <Hero />
         <AnimateOnView delay={0.3}>
-          <PreviewCard />
+          <Box py={16}>
+            <PreviewCard />
+          </Box>
         </AnimateOnView>
         <HowItWorks />
         <Features />
