@@ -263,8 +263,6 @@ export function HeroVisual() {
                 strokeWidth='1.5'
                 initial={{ scale: 0, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-                // @ts-expect-error framer svg
-                style={{ originX: `${n.cx + 20}px`, originY: `${n.cy - 16}px` }}
                 transition={{ type: 'spring', stiffness: 400, damping: 15 }}
               />
             )}
@@ -302,7 +300,6 @@ export function HeroVisual() {
             key={`bubble-pa-${loopKey}`}
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
-            // @ts-expect-error framer svg
             transition={{ duration: 0.25 }}>
             <rect
               x='88'
@@ -331,7 +328,6 @@ export function HeroVisual() {
             key={`bubble-gj-${loopKey}`}
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
-            // @ts-expect-error framer svg
             transition={{ duration: 0.3 }}>
             <rect
               x='218'
@@ -360,7 +356,6 @@ export function HeroVisual() {
             key={`bubble-id-${loopKey}`}
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
-            // @ts-expect-error framer svg
             transition={{ duration: 0.3, delay: 0.05 }}>
             <rect
               x='215'
