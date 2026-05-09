@@ -5,12 +5,12 @@ import { Container } from '@/uikit/Container';
 import { Layout } from '@/uikit/Layout';
 
 import { ComparisonTable } from './ComparisonTable';
+import { CrossServerCard } from './CrossServerCard';
 import { FAQ } from './FAQ';
 import { Features } from './Features';
 import { Hero } from './Hero';
 import { HowItWorks } from './HowItWorks';
 import { Invitation } from './Invitation';
-import { PreviewCard } from './PreviewCard';
 import { UseCases } from './UseCases';
 
 export function LandingPageContainer() {
@@ -20,7 +20,7 @@ export function LandingPageContainer() {
         <Hero />
         <AnimateOnView delay={0.3}>
           <Box py={24}>
-            <PreviewCard />
+            <CrossServerCard />
           </Box>
         </AnimateOnView>
         <HowItWorks />
