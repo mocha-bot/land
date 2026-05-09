@@ -117,7 +117,7 @@ export function Footer({ informations }: FooterProps) {
               md: '12px',
             }}
             color='subtitle'>
-            Copyright © 2020 - {currentYear} Mocha
+            Copyright © 2022 - {currentYear} Mocha
           </Text>
         </Box>
       )}
