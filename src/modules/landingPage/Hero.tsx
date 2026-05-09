@@ -13,6 +13,7 @@ import getConfig from 'next/config';
 
 import { AnimateOnView } from '@/components/AnimateOnView/AnimateOnView';
 import Button from '@/uikit/Button';
+import { PreviewCard } from './PreviewCard';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -127,6 +128,9 @@ export function Hero() {
             </HStack>
           )}
         </HStack>
+      </AnimateOnView>
+      <AnimateOnView delay={0.5}>
+        <PreviewCard />
       </AnimateOnView>
     </Flex>
   );

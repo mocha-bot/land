@@ -1,7 +1,6 @@
 import { Container } from '@/uikit/Container';
 import { Layout } from '@/uikit/Layout';
 
-import { CommandReference } from './CommandReference';
 import { ComparisonTable } from './ComparisonTable';
 import { FAQ } from './FAQ';
 import { Features } from './Features';
@@ -16,7 +15,6 @@ export function LandingPageContainer() {
       <Container>
         <Hero />
         <HowItWorks />
-        <CommandReference />
         <Features />
         <ComparisonTable />
         <UseCases />
