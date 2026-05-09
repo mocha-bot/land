@@ -272,7 +272,7 @@ export function CrossServerCard() {
 
     // ── Phase: typing ──────────────────────────────────────────────────────────
     t(() => setPhase('typing'), offset);
-    for (let i = 1; i <= TYPED_MSG.length; i++) {
+    for (let i = 1; i <= TYPED_MSG.length; i += 1) {
       const n = i;
       offset += 55;
       t(() => setTypedChars(n), offset);
@@ -362,10 +362,9 @@ export function CrossServerCard() {
   const showCursor = phase === 'typing';
   const inputActive = phase === 'typing';
 
-  const highlightMsgId =
-    phase === 'arrived' ? NEW_MSG_ID :
-    phase === 'backarrived' ? REPLY_MSG_ID :
-    null;
+  let highlightMsgId: number | null = null;
+  if (phase === 'arrived') { highlightMsgId = NEW_MSG_ID; }
+  else if (phase === 'backarrived') { highlightMsgId = REPLY_MSG_ID; }
 
   return (
     <Box
