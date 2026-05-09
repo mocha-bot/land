@@ -13,6 +13,7 @@ import getConfig from 'next/config';
 
 import { AnimateOnView } from '@/components/AnimateOnView/AnimateOnView';
 import Button from '@/uikit/Button';
+import { HeroVisual } from './HeroVisual';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -41,14 +42,19 @@ export function Hero() {
     <Flex
       w='full'
       pt={{ base: 8, md: 12, lg: 44 }}
-      alignItems='flex-start'
       flexDirection='column'
       gap={32}
       id='about-us'>
+      <Flex
+        w='full'
+        flexDirection={{ base: 'column', lg: 'row' }}
+        align={{ base: 'flex-start', lg: 'center' }}
+        justify='space-between'
+        gap={{ base: 16, lg: 12 }}>
       <VStack
         alignItems='flex-start'
         spacing={12}
-        maxW={{ base: 'full', md: '5xl' }}
+        flex={1}
         as={motion.div}
         initial={{ opacity: 0, y: 32 }}
         animate={{ opacity: 1, y: 0 }}
@@ -82,6 +88,8 @@ export function Hero() {
           Mocha is a Discord bot that lets communities create shared rooms — one message reaches every connected server at once. No more jumping between servers to stay in the loop.
         </Text>
       </VStack>
+      <HeroVisual />
+      </Flex>
       <AnimateOnView delay={0.3}>
         <HStack w='full' justifyContent={{ base: 'center', md: 'space-between' }}>
           <HStack w='full'>
