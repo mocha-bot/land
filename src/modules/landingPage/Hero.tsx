@@ -40,7 +40,6 @@ export function Hero() {
   return (
     <Flex
       w='full'
-      maxW={{ base: 'full', md: '5xl' }}
       pt={{ base: 8, md: 12, lg: 44 }}
       alignItems='flex-start'
       flexDirection='column'
@@ -49,7 +48,7 @@ export function Hero() {
       <VStack
         alignItems='flex-start'
         spacing={12}
-        maxW={{ base: 'full', md: 'xl' }}
+        maxW={{ base: 'full', md: '5xl' }}
         as={motion.div}
         initial={{ opacity: 0, y: 32 }}
         animate={{ opacity: 1, y: 0 }}
