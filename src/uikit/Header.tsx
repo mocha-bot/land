@@ -198,10 +198,8 @@ export function Header() {
                 py={5}
                 px={6}
                 isAnimated
-                href={authHref}
-                opacity={isLoggedIn === null ? 0.5 : 1}
-                pointerEvents={isLoggedIn === null ? 'none' : 'auto'}>
-                {authLabel}
+                href={publicRuntimeConfig.botInvitationUrl}>
+                Invite to server
               </Button>
               <Button
                 as='a'
@@ -209,8 +207,10 @@ export function Header() {
                 py={5}
                 px={6}
                 isAnimated
-                href={publicRuntimeConfig.botInvitationUrl}>
-                Invite to server
+                href={authHref}
+                opacity={isLoggedIn === null ? 0.5 : 1}
+                pointerEvents={isLoggedIn === null ? 'none' : 'auto'}>
+                {authLabel}
               </Button>
             </Flex>
           )}
@@ -271,10 +271,8 @@ export function Header() {
                         py={4}
                         px={6}
                         isAnimated
-                        href={authHref}
-                        opacity={isLoggedIn === null ? 0.5 : 1}
-                        pointerEvents={isLoggedIn === null ? 'none' : 'auto'}>
-                        {authLabel}
+                        href={publicRuntimeConfig.botInvitationUrl}>
+                        Invite to server
                       </Button>
                       <Button
                         as='a'
@@ -282,8 +280,10 @@ export function Header() {
                         py={4}
                         px={6}
                         isAnimated
-                        href={publicRuntimeConfig.botInvitationUrl}>
-                        Invite to server
+                        href={authHref}
+                        opacity={isLoggedIn === null ? 0.5 : 1}
+                        pointerEvents={isLoggedIn === null ? 'none' : 'auto'}>
+                        {authLabel}
                       </Button>
                     </Flex>
                   </Flex>
