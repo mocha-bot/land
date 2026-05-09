@@ -1,4 +1,5 @@
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import { AnimatePresence, motion } from 'framer-motion';
 import { appWithTranslation } from 'next-i18next';
 import { generateDefaultSeo } from 'next-seo/pages';
@@ -47,6 +48,7 @@ function App({ Component, pageProps }: AppProps) {
           </motion.div>
         </AnimatePresence>
         <Analytics />
+        <SpeedInsights />
       </AppProvider>
     </>
   );

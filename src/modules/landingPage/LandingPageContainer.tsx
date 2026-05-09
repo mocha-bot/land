@@ -19,7 +19,7 @@ export function LandingPageContainer() {
       <Container>
         <Hero />
         <AnimateOnView delay={0.3}>
-          <Box py={16}>
+          <Box py={24}>
             <PreviewCard />
           </Box>
         </AnimateOnView>
