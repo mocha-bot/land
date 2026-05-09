@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Text } from '@chakra-ui/react';
 import NextLink from 'next/link';
 
 import type { Solution } from './data';
@@ -8,7 +8,10 @@ type SolutionCardProps = {
   isCompact?: boolean;
 };
 
-export function SolutionCard({ solution, isCompact = false }: SolutionCardProps) {
+export function SolutionCard({
+  solution,
+  isCompact = false,
+}: SolutionCardProps) {
   if (isCompact) {
     return (
       <Box
@@ -18,12 +21,24 @@ export function SolutionCard({ solution, isCompact = false }: SolutionCardProps)
         px={3}
         py={2}
         borderRadius='md'
-        _hover={{ backgroundColor: 'rgba(255, 255, 255, 0.06)', textDecoration: 'none' }}
+        _hover={{
+          backgroundColor: 'rgba(255, 255, 255, 0.06)',
+          textDecoration: 'none',
+        }}
         transition='background-color 0.15s'>
-        <Text color='white' fontSize='sm' fontWeight='medium' lineHeight='1.3' mb={0.5}>
+        <Text
+          color='white'
+          fontSize='sm'
+          fontWeight='medium'
+          lineHeight='1.3'
+          mb={0.5}>
           {solution.title}
         </Text>
-        <Text color='whiteAlpha.500' fontSize='xs' lineHeight='tall' noOfLines={1}>
+        <Text
+          color='whiteAlpha.500'
+          fontSize='xs'
+          lineHeight='tall'
+          noOfLines={1}>
           {solution.tagline}
         </Text>
       </Box>
@@ -52,7 +67,12 @@ export function SolutionCard({ solution, isCompact = false }: SolutionCardProps)
         <Text color='white' fontSize='lg' fontWeight='semibold' mb={1}>
           {solution.title}
         </Text>
-        <Text color='whiteAlpha.500' fontSize='xs' fontWeight='medium' textTransform='uppercase' letterSpacing='wider'>
+        <Text
+          color='whiteAlpha.500'
+          fontSize='xs'
+          fontWeight='medium'
+          textTransform='uppercase'
+          letterSpacing='wider'>
           {solution.tagline}
         </Text>
       </Box>
