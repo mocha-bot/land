@@ -2,7 +2,16 @@ import { Box } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
-type Phase = 'idle' | 'sending' | 'traveling' | 'receiving' | 'pause';
+type Phase =
+  | 'idle'
+  | 'sending'
+  | 'traveling'
+  | 'receiving'
+  | 'pause'
+  | 'replying'
+  | 'reply-traveling'
+  | 'reply-receiving'
+  | 'reply-pause';
 
 const PA = {
   cx: 65,
@@ -31,6 +40,7 @@ const ID = {
 const NODES = [PA, GJ, ID];
 
 const MSG = 'hey all! 👋';
+const REPLY = 'nice! 🎉';
 
 export function HeroVisual() {
   const [phase, setPhase] = useState<Phase>('idle');
@@ -45,40 +55,103 @@ export function HeroVisual() {
     setPhase('idle');
 
     let offset = 600;
-    t(() => setPhase('sending'), offset);
 
+    // ── PA sends ───────────────────────────────────────────────────────────────
+    t(() => setPhase('sending'), offset);
     offset += 700;
     t(() => setPhase('traveling'), offset);
-
     offset += 900;
     t(() => setPhase('receiving'), offset);
-
-    offset += 2000;
+    offset += 1000;
     t(() => setPhase('pause'), offset);
+    offset += 600;
 
-    offset += 800;
+    // ── GJ replies ─────────────────────────────────────────────────────────────
+    t(() => setPhase('replying'), offset);
+    offset += 700;
+    t(() => setPhase('reply-traveling'), offset);
+    offset += 900;
+    t(() => setPhase('reply-receiving'), offset);
+    offset += 1800;
+    t(() => setPhase('reply-pause'), offset);
+    offset += 600;
+
     t(() => setLoopKey((k) => k + 1), offset);
 
     return () => timers.forEach(clearTimeout);
   }, [loopKey]);
 
+  // ── Derived booleans ──────────────────────────────────────────────────────────
+  const paSending = phase === 'sending' || phase === 'traveling';
+  const gjSending = phase === 'replying' || phase === 'reply-traveling';
+  const gjReceived = phase === 'receiving' || phase === 'pause';
+  const idReceived =
+    phase === 'receiving' ||
+    phase === 'pause' ||
+    phase === 'replying' ||
+    phase === 'reply-traveling';
+  const paReplied = phase === 'reply-receiving' || phase === 'reply-pause';
+  const idReplied = phase === 'reply-receiving' || phase === 'reply-pause';
+
+  const linesActive =
+    phase === 'traveling' ||
+    phase === 'receiving' ||
+    phase === 'pause' ||
+    phase === 'replying';
+  const replyLines =
+    phase === 'reply-traveling' ||
+    phase === 'reply-receiving' ||
+    phase === 'reply-pause';
+
+  const pajaGjLine = linesActive || replyLines;
+  const paIdLine =
+    phase === 'traveling' || phase === 'receiving' || phase === 'pause';
+  const gjIdLine =
+    phase === 'reply-traveling' ||
+    phase === 'reply-receiving' ||
+    phase === 'reply-pause';
+
+  // Outbound packets (PA → GJ, PA → ID)
   const packetsVisible =
     phase === 'sending' || phase === 'traveling' || phase === 'receiving';
-  const gjReceived = phase === 'receiving' || phase === 'pause';
-  const idReceived = phase === 'receiving' || phase === 'pause';
-  const paSending = phase === 'sending' || phase === 'traveling';
-  const linesActive =
-    phase === 'traveling' || phase === 'receiving' || phase === 'pause';
-
   const p1 =
-    phase === 'traveling' || phase === 'receiving' || phase === 'pause'
+    phase === 'traveling' ||
+    phase === 'receiving' ||
+    phase === 'pause' ||
+    phase === 'replying' ||
+    phase === 'reply-traveling' ||
+    phase === 'reply-receiving' ||
+    phase === 'reply-pause'
       ? { cx: GJ.cx, cy: GJ.cy }
       : { cx: PA.cx, cy: PA.cy };
-
   const p2 =
-    phase === 'traveling' || phase === 'receiving' || phase === 'pause'
+    phase === 'traveling' ||
+    phase === 'receiving' ||
+    phase === 'pause' ||
+    phase === 'replying' ||
+    phase === 'reply-traveling' ||
+    phase === 'reply-receiving' ||
+    phase === 'reply-pause'
       ? { cx: ID.cx, cy: ID.cy }
       : { cx: PA.cx, cy: PA.cy };
+
+  // Reply packets (GJ → PA, GJ → ID)
+  const replyPackets =
+    phase === 'replying' ||
+    phase === 'reply-traveling' ||
+    phase === 'reply-receiving';
+  const rp1 =
+    phase === 'reply-traveling' ||
+    phase === 'reply-receiving' ||
+    phase === 'reply-pause'
+      ? { cx: PA.cx, cy: PA.cy }
+      : { cx: GJ.cx, cy: GJ.cy };
+  const rp2 =
+    phase === 'reply-traveling' ||
+    phase === 'reply-receiving' ||
+    phase === 'reply-pause'
+      ? { cx: ID.cx, cy: ID.cy }
+      : { cx: GJ.cx, cy: GJ.cy };
 
   return (
     <Box
@@ -116,24 +189,23 @@ export function HeroVisual() {
               <feMergeNode in='SourceGraphic' />
             </feMerge>
           </filter>
-          <filter id='hv-softglow' x='-80%' y='-80%' width='260%' height='260%'>
-            <feGaussianBlur stdDeviation='10' result='blur' />
-            <feMerge>
-              <feMergeNode in='blur' />
-              <feMergeNode in='SourceGraphic' />
-            </feMerge>
-          </filter>
         </defs>
 
-        {/* Soft bg glow on PA when sending */}
+        {/* Soft bg glows */}
         {paSending && (
           <circle cx={PA.cx} cy={PA.cy} r='52' fill='rgba(255,220,0,0.06)' />
         )}
+        {gjSending && (
+          <circle cx={GJ.cx} cy={GJ.cy} r='52' fill='rgba(100,220,140,0.07)' />
+        )}
         {gjReceived && (
-          <circle cx={GJ.cx} cy={GJ.cy} r='52' fill='rgba(100,220,140,0.06)' />
+          <circle cx={GJ.cx} cy={GJ.cy} r='52' fill='rgba(100,220,140,0.05)' />
         )}
         {idReceived && (
-          <circle cx={ID.cx} cy={ID.cy} r='52' fill='rgba(255,200,120,0.06)' />
+          <circle cx={ID.cx} cy={ID.cy} r='52' fill='rgba(255,200,120,0.05)' />
+        )}
+        {paReplied && (
+          <circle cx={PA.cx} cy={PA.cy} r='52' fill='rgba(100,220,140,0.05)' />
         )}
 
         {/* Connection lines */}
@@ -143,7 +215,7 @@ export function HeroVisual() {
           x2={GJ.cx}
           y2={GJ.cy}
           stroke={
-            linesActive ? 'rgba(255,220,0,0.45)' : 'rgba(255,255,255,0.07)'
+            pajaGjLine ? 'rgba(255,220,0,0.45)' : 'rgba(255,255,255,0.07)'
           }
           strokeWidth='1.5'
           strokeDasharray='6 5'
@@ -154,9 +226,7 @@ export function HeroVisual() {
           y1={PA.cy}
           x2={ID.cx}
           y2={ID.cy}
-          stroke={
-            linesActive ? 'rgba(255,220,0,0.45)' : 'rgba(255,255,255,0.07)'
-          }
+          stroke={paIdLine ? 'rgba(255,220,0,0.45)' : 'rgba(255,255,255,0.07)'}
           strokeWidth='1.5'
           strokeDasharray='6 5'
           style={{ transition: 'stroke 0.4s ease' }}
@@ -166,9 +236,10 @@ export function HeroVisual() {
           y1={GJ.cy}
           x2={ID.cx}
           y2={ID.cy}
-          stroke='rgba(255,255,255,0.04)'
-          strokeWidth='1'
-          strokeDasharray='4 6'
+          stroke={gjIdLine ? 'rgba(100,220,140,0.4)' : 'rgba(255,255,255,0.04)'}
+          strokeWidth='1.5'
+          strokeDasharray='6 5'
+          style={{ transition: 'stroke 0.4s ease' }}
         />
 
         {/* Bridged room label */}
@@ -182,7 +253,20 @@ export function HeroVisual() {
           🔗 coding-dev
         </text>
 
-        {/* Pulse rings on receive */}
+        {/* Pulse rings */}
+        {phase === 'sending' && (
+          <motion.circle
+            key={`ring-pa-${loopKey}`}
+            cx={PA.cx}
+            cy={PA.cy}
+            fill='none'
+            stroke='rgba(255,220,0,0.55)'
+            strokeWidth='2'
+            initial={{ r: 28, opacity: 0.9 }}
+            animate={{ r: 48, opacity: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut' }}
+          />
+        )}
         {phase === 'receiving' && (
           <>
             <motion.circle
@@ -209,18 +293,44 @@ export function HeroVisual() {
             />
           </>
         )}
-        {phase === 'sending' && (
+        {phase === 'replying' && (
           <motion.circle
-            key={`ring-pa-${loopKey}`}
-            cx={PA.cx}
-            cy={PA.cy}
+            key={`ring-gj-reply-${loopKey}`}
+            cx={GJ.cx}
+            cy={GJ.cy}
             fill='none'
-            stroke='rgba(255,220,0,0.55)'
+            stroke='rgba(100,220,140,0.55)'
             strokeWidth='2'
             initial={{ r: 28, opacity: 0.9 }}
             animate={{ r: 48, opacity: 0 }}
             transition={{ duration: 0.7, ease: 'easeOut' }}
           />
+        )}
+        {phase === 'reply-receiving' && (
+          <>
+            <motion.circle
+              key={`ring-pa-reply-${loopKey}`}
+              cx={PA.cx}
+              cy={PA.cy}
+              fill='none'
+              stroke='rgba(100,220,140,0.5)'
+              strokeWidth='2'
+              initial={{ r: 28, opacity: 0.9 }}
+              animate={{ r: 48, opacity: 0 }}
+              transition={{ duration: 0.8, ease: 'easeOut' }}
+            />
+            <motion.circle
+              key={`ring-id-reply-${loopKey}`}
+              cx={ID.cx}
+              cy={ID.cy}
+              fill='none'
+              stroke='rgba(100,220,140,0.5)'
+              strokeWidth='2'
+              initial={{ r: 28, opacity: 0.9 }}
+              animate={{ r: 48, opacity: 0 }}
+              transition={{ duration: 0.8, ease: 'easeOut', delay: 0.05 }}
+            />
+          </>
         )}
 
         {/* Server nodes */}
@@ -251,10 +361,15 @@ export function HeroVisual() {
               fontFamily='system-ui,sans-serif'>
               {n.label}
             </text>
-            {/* Notif dot */}
-            {((n === GJ && gjReceived) || (n === ID && idReceived)) && (
+            {/* Notif dots */}
+            {((n === GJ && gjReceived) ||
+              (n === ID && idReceived) ||
+              (n === PA && paReplied) ||
+              (n === ID && idReplied)) && (
               <motion.circle
-                key={`dot-${n.initials}-${loopKey}`}
+                key={`dot-${n.initials}-${
+                  n === PA ? 'reply' : 'recv'
+                }-${loopKey}`}
                 cx={n.cx + 20}
                 cy={n.cy - 16}
                 r='6'
@@ -269,7 +384,7 @@ export function HeroVisual() {
           </g>
         ))}
 
-        {/* Traveling message packets */}
+        {/* Outbound packets PA → GJ, PA → ID */}
         {packetsVisible && (
           <>
             <motion.circle
@@ -293,11 +408,34 @@ export function HeroVisual() {
           </>
         )}
 
+        {/* Reply packets GJ → PA, GJ → ID */}
+        {replyPackets && (
+          <>
+            <motion.circle
+              key={`rp1-${loopKey}`}
+              r={8}
+              fill='rgba(100,220,140,0.95)'
+              filter='url(#hv-glow)'
+              initial={{ cx: GJ.cx, cy: GJ.cy, scale: 0, opacity: 0 }}
+              animate={{ cx: rp1.cx, cy: rp1.cy, scale: 1, opacity: 1 }}
+              transition={{ duration: 0.75, ease: [0.4, 0, 0.2, 1] }}
+            />
+            <motion.circle
+              key={`rp2-${loopKey}`}
+              r={8}
+              fill='rgba(100,220,140,0.95)'
+              filter='url(#hv-glow)'
+              initial={{ cx: GJ.cx, cy: GJ.cy, scale: 0, opacity: 0 }}
+              animate={{ cx: rp2.cx, cy: rp2.cy, scale: 1, opacity: 1 }}
+              transition={{ duration: 0.85, ease: [0.4, 0, 0.2, 1] }}
+            />
+          </>
+        )}
+
         {/* Message bubbles */}
-        {/* PA sends */}
         {(phase === 'sending' || phase === 'traveling') && (
           <motion.g
-            key={`bubble-pa-${loopKey}`}
+            key={`bubble-pa-send-${loopKey}`}
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.25 }}>
@@ -322,10 +460,11 @@ export function HeroVisual() {
             </text>
           </motion.g>
         )}
-        {/* GJ receives */}
-        {(phase === 'receiving' || phase === 'pause') && (
+        {(phase === 'receiving' ||
+          phase === 'pause' ||
+          phase === 'replying') && (
           <motion.g
-            key={`bubble-gj-${loopKey}`}
+            key={`bubble-gj-recv-${loopKey}`}
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3 }}>
@@ -350,10 +489,12 @@ export function HeroVisual() {
             </text>
           </motion.g>
         )}
-        {/* ID receives */}
-        {(phase === 'receiving' || phase === 'pause') && (
+        {(phase === 'receiving' ||
+          phase === 'pause' ||
+          phase === 'replying' ||
+          phase === 'reply-traveling') && (
           <motion.g
-            key={`bubble-id-${loopKey}`}
+            key={`bubble-id-recv-${loopKey}`}
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.05 }}>
@@ -377,6 +518,87 @@ export function HeroVisual() {
               {MSG}
             </text>
           </motion.g>
+        )}
+        {(phase === 'replying' || phase === 'reply-traveling') && (
+          <motion.g
+            key={`bubble-gj-reply-${loopKey}`}
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.25 }}>
+            <rect
+              x='218'
+              y='112'
+              width='80'
+              height='22'
+              rx='6'
+              fill='rgba(100,220,140,0.18)'
+              stroke='rgba(100,220,140,0.4)'
+              strokeWidth='1'
+            />
+            <text
+              x='258'
+              y='127'
+              textAnchor='middle'
+              fill='rgba(255,255,255,0.9)'
+              fontSize='10'
+              fontFamily='system-ui,sans-serif'>
+              {REPLY}
+            </text>
+          </motion.g>
+        )}
+        {(phase === 'reply-receiving' || phase === 'reply-pause') && (
+          <>
+            <motion.g
+              key={`bubble-pa-reply-${loopKey}`}
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}>
+              <rect
+                x='88'
+                y='112'
+                width='80'
+                height='22'
+                rx='6'
+                fill='rgba(100,220,140,0.12)'
+                stroke='rgba(100,220,140,0.25)'
+                strokeWidth='1'
+              />
+              <text
+                x='128'
+                y='127'
+                textAnchor='middle'
+                fill='rgba(255,255,255,0.75)'
+                fontSize='10'
+                fontFamily='system-ui,sans-serif'>
+                {REPLY}
+              </text>
+            </motion.g>
+            <motion.g
+              key={`bubble-id-reply-${loopKey}`}
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.05 }}>
+              <rect
+                x='215'
+                y='250'
+                width='80'
+                height='22'
+                rx='6'
+                fill='rgba(100,220,140,0.12)'
+                stroke='rgba(100,220,140,0.25)'
+                strokeWidth='1'
+              />
+              <text
+                x='255'
+                y='265'
+                textAnchor='middle'
+                fill='rgba(255,255,255,0.75)'
+                fontSize='10'
+                fontFamily='system-ui,sans-serif'>
+                {REPLY}
+              </text>
+            </motion.g>
+          </>
         )}
       </svg>
     </Box>
