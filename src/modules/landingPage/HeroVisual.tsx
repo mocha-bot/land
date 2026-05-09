@@ -250,7 +250,7 @@ export function HeroVisual() {
           fill='rgba(255,220,0,0.5)'
           fontSize='10'
           fontFamily='monospace'>
-          🔗 coding-dev
+          🔗 late-night-coffee
         </text>
 
         {/* Pulse rings */}
