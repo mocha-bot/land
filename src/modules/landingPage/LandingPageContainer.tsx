@@ -23,10 +23,10 @@ export function LandingPageContainer() {
             <CrossServerCard />
           </Box>
         </AnimateOnView>
-        <HowItWorks />
         <Features />
-        <ComparisonTable />
+        <HowItWorks />
         <UseCases />
+        <ComparisonTable />
         <FAQ />
         <Invitation />
       </Container>
