@@ -6,9 +6,7 @@ type MyDocumentProps = DocumentInitialProps & {
 };
 
 class MyDocument extends Document<MyDocumentProps> {
-  static async getInitialProps(
-    ctx: DocumentContext,
-  ): Promise<MyDocumentProps> {
+  static async getInitialProps(ctx: DocumentContext): Promise<MyDocumentProps> {
     const initialProps = await Document.getInitialProps(ctx);
     return { ...initialProps, locale: ctx.locale };
   }
@@ -17,10 +15,7 @@ class MyDocument extends Document<MyDocumentProps> {
     const { locale } = this.props;
     return (
       <Html lang={locale ?? 'en'}>
-        <Head>
-          <link rel='preconnect' href='https://fonts.googleapis.com' />
-          <link rel='preconnect' href='https://fonts.gstatic.com' />
-        </Head>
+        <Head />
         <body>
           <Main />
           <NextScript />

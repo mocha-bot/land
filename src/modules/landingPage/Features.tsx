@@ -2,13 +2,17 @@ import {
   // AspectRatio,
   Box,
   Flex,
-  Image,
   SimpleGrid,
   Text,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
+import NextImage from 'next/image';
 
-import { AnimateOnView, StaggerContainer, staggerItem } from '@/components/AnimateOnView/AnimateOnView';
+import {
+  AnimateOnView,
+  StaggerContainer,
+  staggerItem,
+} from '@/components/AnimateOnView/AnimateOnView';
 
 type CardProps = {
   title: string;
@@ -26,7 +30,13 @@ function Card({ title, description, imageUrl }: CardProps) {
       justifyContent='flex-start'
       alignItems='flex-start'
       flexDirection='column'>
-      <Image src={imageUrl} alt={title} borderRadius='lg' w='full' />
+      <NextImage
+        src={imageUrl}
+        alt={title}
+        width={357}
+        height={240}
+        style={{ width: '100%', height: 'auto', borderRadius: '0.5rem' }}
+      />
       <Box py={4}>
         <Text fontWeight='bold' fontSize='xl'>
           {title}

@@ -7,7 +7,6 @@ import {
   DrawerOverlay,
   Flex,
   IconButton,
-  Image,
   Link,
   Popover,
   PopoverBody,
@@ -20,11 +19,12 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import getConfig from 'next/config';
+import NextImage from 'next/image';
 import NextLink from 'next/link';
 import { useEffect, useState } from 'react';
 
-import { SolutionCard } from '@/modules/solutions/SolutionCard';
 import { solutions } from '@/modules/solutions/data';
+import { SolutionCard } from '@/modules/solutions/SolutionCard';
 
 import Button from './Button';
 import { Container } from './Container';
@@ -88,7 +88,11 @@ function MenuItem({ label, href }: NavItem) {
 
 function SolutionsDropdownMenuItem() {
   return (
-    <Popover trigger='hover' placement='bottom-start' openDelay={50} closeDelay={100}>
+    <Popover
+      trigger='hover'
+      placement='bottom-start'
+      openDelay={50}
+      closeDelay={100}>
       <PopoverTrigger>
         <Flex
           role='group'
@@ -129,8 +133,16 @@ function SolutionsDropdownMenuItem() {
         mt={2}
         _focus={{ outline: 'none' }}>
         <PopoverBody p={4}>
-          <Flex justifyContent='space-between' alignItems='center' mb={3} px={1}>
-            <Text color='whiteAlpha.500' fontSize='xs' textTransform='uppercase' letterSpacing='wider'>
+          <Flex
+            justifyContent='space-between'
+            alignItems='center'
+            mb={3}
+            px={1}>
+            <Text
+              color='whiteAlpha.500'
+              fontSize='xs'
+              textTransform='uppercase'
+              letterSpacing='wider'>
               Solutions
             </Text>
             <Box
@@ -217,14 +229,22 @@ export function Header() {
   }, []);
 
   useEffect(() => {
-    fetch(`${publicRuntimeConfig.apiBaseUrl}/api/v1/user/me`, { credentials: 'include' })
-      .then((r) => { setIsLoggedIn(r.ok); })
-      .catch(() => { setIsLoggedIn(false); });
+    fetch(`${publicRuntimeConfig.apiBaseUrl}/api/v1/user/me`, {
+      credentials: 'include',
+    })
+      .then((r) => {
+        setIsLoggedIn(r.ok);
+      })
+      .catch(() => {
+        setIsLoggedIn(false);
+      });
   }, []);
 
   const authHref = isLoggedIn
     ? publicRuntimeConfig.dashboardUrl
-    : `${publicRuntimeConfig.ssoUrl}?redirect_to=${encodeURIComponent(publicRuntimeConfig.dashboardUrl)}`;
+    : `${publicRuntimeConfig.ssoUrl}?redirect_to=${encodeURIComponent(
+        publicRuntimeConfig.dashboardUrl,
+      )}`;
   const authLabel = isLoggedIn ? 'Dashboard' : 'Sign In';
 
   return (
@@ -235,9 +255,16 @@ export function Header() {
       left={0}
       right={0}
       zIndex={15}
-      backgroundColor={isBgTransparent ? 'transparent' : 'rgba(0, 0, 0, 0.7)'}
-      backdropFilter={isBgTransparent ? 'none' : 'blur(10px)'}
-      transition='0.3s ease'>
+      style={{ willChange: 'transform' }}>
+      {/* Isolated blur layer — keeps blur repaint off the content layer */}
+      <Box
+        position='absolute'
+        inset={0}
+        zIndex={-1}
+        backgroundColor={isBgTransparent ? 'transparent' : 'rgba(0, 0, 0, 0.7)'}
+        backdropFilter={isBgTransparent ? 'none' : 'blur(10px)'}
+        transition='background-color 0.3s ease, backdrop-filter 0.3s ease'
+      />
       <Container>
         <Flex py={{ base: 2 }} alignItems='center'>
           <Flex
@@ -246,11 +273,12 @@ export function Header() {
             alignItems='center'
             h={12}>
             <Link as={NextLink} href='/'>
-              <Image
+              <NextImage
                 src='/assets/images/mocha.png'
-                width='logo.width.md'
-                height='logo.height.md'
+                width={238}
+                height={96}
                 alt='Mocha Logo'
+                style={{ width: 119, height: 48 }}
               />
             </Link>
 
@@ -311,11 +339,12 @@ export function Header() {
                     justifyContent='space-between'
                     alignItems='center'>
                     <Link as={NextLink} href='/'>
-                      <Image
+                      <NextImage
                         src='/assets/images/mocha.png'
-                        width='logo.width.md'
-                        height='logo.height.md'
+                        width={238}
+                        height={96}
                         alt='Mocha Logo'
+                        style={{ width: 119, height: 48 }}
                       />
                     </Link>
 
@@ -371,12 +400,11 @@ export function Header() {
                   </Flex>
                 </DrawerBody>
                 {/* Flare bottom */}
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src='/assets/images/flare_3.svg'
-                  alt='flare'
-                  w='full'
-                  position='absolute'
-                  bottom={0}
+                  alt=''
+                  style={{ width: '100%', position: 'absolute', bottom: 0 }}
                 />
               </DrawerContent>
             </DrawerOverlay>

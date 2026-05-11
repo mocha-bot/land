@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { motion, useInView } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 
 type Phase =
   | 'idle'
@@ -45,8 +45,14 @@ const REPLY = 'nice! 🎉';
 export function HeroVisual() {
   const [phase, setPhase] = useState<Phase>('idle');
   const [loopKey, setLoopKey] = useState(0);
+  const containerRef = useRef(null);
+  const isInView = useInView(containerRef, { margin: '0px' });
 
   useEffect(() => {
+    if (!isInView) {
+      return;
+    }
+
     const timers: ReturnType<typeof setTimeout>[] = [];
     const t = (fn: () => void, ms: number) => {
       timers.push(setTimeout(fn, ms));
@@ -79,7 +85,7 @@ export function HeroVisual() {
     t(() => setLoopKey((k) => k + 1), offset);
 
     return () => timers.forEach(clearTimeout);
-  }, [loopKey]);
+  }, [loopKey, isInView]);
 
   // ── Derived booleans ──────────────────────────────────────────────────────────
   const paSending = phase === 'sending' || phase === 'traveling';
@@ -155,6 +161,7 @@ export function HeroVisual() {
 
   return (
     <Box
+      ref={containerRef}
       display={{ base: 'none', lg: 'flex' }}
       flexShrink={0}
       w='400px'
