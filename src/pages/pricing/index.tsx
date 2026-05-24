@@ -19,7 +19,10 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
 import { buildCanonical, ogLocaleFor } from '@/config/seo';
-import { useAddonPackages, useSubscriptionPackages } from '@/modules/pricing/pricingHook';
+import {
+  useAddonPackages,
+  useSubscriptionPackages,
+} from '@/modules/pricing/pricingHook';
 import type { Package } from '@/modules/pricing/types';
 import Button from '@/uikit/Button';
 import { Container } from '@/uikit/Container';
@@ -34,8 +37,14 @@ const cardStyle = {
   p: 8,
 };
 
-function formatPrice(cents: number, currency: string, interval: string): string {
-  if (cents === 0) { return 'Free'; }
+function formatPrice(
+  cents: number,
+  currency: string,
+  interval: string,
+): string {
+  if (cents === 0) {
+    return 'Free';
+  }
   const amount = (cents / 100).toFixed(2);
   const symbol = currency.toUpperCase() === 'USD' ? '$' : currency;
   const intervalLabel = interval ? ` / ${interval}` : '';
@@ -57,7 +66,7 @@ function PackageCard({ pkg, isAddon }: { pkg: Package; isAddon?: boolean }) {
     buttonLabel = 'Get started';
     buttonHref = 'https://dash.mocha-bot.xyz';
   } else {
-    buttonLabel = 'Get Premium →';
+    buttonLabel = 'Get Premium';
     buttonHref = checkoutUrl;
   }
 
@@ -68,7 +77,11 @@ function PackageCard({ pkg, isAddon }: { pkg: Package; isAddon?: boolean }) {
           {pkg.name}
         </Heading>
         <Text color='white' fontSize='2xl' fontWeight='bold'>
-          {formatPrice(pkg.price_cents, pkg.price_currency, pkg.billing_interval)}
+          {formatPrice(
+            pkg.price_cents,
+            pkg.price_currency,
+            pkg.billing_interval,
+          )}
         </Text>
         {pkg.description && (
           <Text color='whiteAlpha.700' fontSize='sm' fontWeight='light'>
@@ -95,6 +108,8 @@ function PackageCard({ pkg, isAddon }: { pkg: Package; isAddon?: boolean }) {
       <Button
         as={buttonHref ? 'a' : undefined}
         href={buttonHref}
+        target={buttonHref ? '_blank' : undefined}
+        rel={buttonHref ? 'noopener noreferrer' : undefined}
         variant={isFree ? 'glass-ghost' : 'glass'}
         isDisabled={!hasProviders && !isFree}
         width='full'
@@ -109,12 +124,48 @@ function PackageCardSkeleton() {
   return (
     <Box {...cardStyle}>
       <VStack alignItems='flex-start' spacing={4}>
-        <Skeleton height='24px' width='60%' borderRadius='md' startColor='whiteAlpha.100' endColor='whiteAlpha.300' />
-        <Skeleton height='32px' width='40%' borderRadius='md' startColor='whiteAlpha.100' endColor='whiteAlpha.300' />
-        <Skeleton height='16px' width='80%' borderRadius='md' startColor='whiteAlpha.100' endColor='whiteAlpha.300' />
-        <Skeleton height='16px' width='70%' borderRadius='md' startColor='whiteAlpha.100' endColor='whiteAlpha.300' />
-        <Skeleton height='16px' width='75%' borderRadius='md' startColor='whiteAlpha.100' endColor='whiteAlpha.300' />
-        <Skeleton height='44px' width='full' borderRadius='md' startColor='whiteAlpha.100' endColor='whiteAlpha.300' />
+        <Skeleton
+          height='24px'
+          width='60%'
+          borderRadius='md'
+          startColor='whiteAlpha.100'
+          endColor='whiteAlpha.300'
+        />
+        <Skeleton
+          height='32px'
+          width='40%'
+          borderRadius='md'
+          startColor='whiteAlpha.100'
+          endColor='whiteAlpha.300'
+        />
+        <Skeleton
+          height='16px'
+          width='80%'
+          borderRadius='md'
+          startColor='whiteAlpha.100'
+          endColor='whiteAlpha.300'
+        />
+        <Skeleton
+          height='16px'
+          width='70%'
+          borderRadius='md'
+          startColor='whiteAlpha.100'
+          endColor='whiteAlpha.300'
+        />
+        <Skeleton
+          height='16px'
+          width='75%'
+          borderRadius='md'
+          startColor='whiteAlpha.100'
+          endColor='whiteAlpha.300'
+        />
+        <Skeleton
+          height='44px'
+          width='full'
+          borderRadius='md'
+          startColor='whiteAlpha.100'
+          endColor='whiteAlpha.300'
+        />
       </VStack>
     </Box>
   );
@@ -128,7 +179,8 @@ function Pricing() {
   const addons = useAddonPackages();
 
   const { isLoading } = subscriptions;
-  const hasNoData = !isLoading && subscriptions.data.length === 0 && addons.data.length === 0;
+  const hasNoData =
+    !isLoading && subscriptions.data.length === 0 && addons.data.length === 0;
 
   return (
     <>
@@ -155,7 +207,6 @@ function Pricing() {
             alignItems='flex-start'
             flexDirection='column'
             gap={16}>
-
             {/* Page header */}
             <VStack alignItems='flex-start' spacing={4}>
               <Heading
@@ -176,7 +227,10 @@ function Pricing() {
 
             {/* Empty state */}
             {hasNoData && (
-              <VStack alignItems='flex-start' spacing={12} maxW={{ base: 'full', md: 'xl' }}>
+              <VStack
+                alignItems='flex-start'
+                spacing={12}
+                maxW={{ base: 'full', md: 'xl' }}>
                 <Text
                   color='white'
                   fontSize={{ base: '3xl', lg: '4xl' }}
@@ -188,7 +242,9 @@ function Pricing() {
                   fontSize={20}
                   lineHeight='short'
                   fontWeight='light'>
-                  Mocha is free to get started. Premium features for power communities are coming soon — invite the bot now and you&apos;ll have access the moment plans go live.
+                  Mocha is free to get started. Premium features for power
+                  communities are coming soon — invite the bot now and
+                  you&apos;ll have access the moment plans go live.
                 </Text>
                 <HStack flexWrap='wrap' gap={4}>
                   <Button
