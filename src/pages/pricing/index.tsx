@@ -89,9 +89,24 @@ function PackageCard({ pkg, isAddon }: { pkg: Package; isAddon?: boolean }) {
             fontSize='sm'
             fontWeight='light'
             sx={{
-              'h2,h3': { fontWeight: 'semibold', color: 'white', mt: 2, mb: 1 },
-              'ul,ol': { pl: 4 },
-              li: { mb: 0.5 },
+              p: { mb: 2, _last: { mb: 0 } },
+              h2: {
+                fontWeight: 'semibold',
+                color: 'white',
+                fontSize: 'md',
+                mt: 3,
+                mb: 1,
+              },
+              h3: {
+                fontWeight: 'semibold',
+                color: 'white',
+                fontSize: 'sm',
+                mt: 2,
+                mb: 1,
+              },
+              ul: { listStyleType: 'disc', pl: 5, mb: 2 },
+              ol: { listStyleType: 'decimal', pl: 5, mb: 2 },
+              li: { mb: 1 },
               strong: { color: 'white', fontWeight: 'semibold' },
               em: { fontStyle: 'italic' },
               code: {
@@ -102,10 +117,11 @@ function PackageCard({ pkg, isAddon }: { pkg: Package; isAddon?: boolean }) {
                 borderRadius: 'sm',
               },
               blockquote: {
-                borderLeftWidth: 2,
+                borderLeftWidth: '2px',
                 borderLeftColor: 'whiteAlpha.300',
                 pl: 3,
                 color: 'whiteAlpha.500',
+                mb: 2,
               },
             }}
             dangerouslySetInnerHTML={{ __html: pkg.description }}
