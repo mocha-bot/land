@@ -84,9 +84,32 @@ function PackageCard({ pkg, isAddon }: { pkg: Package; isAddon?: boolean }) {
           )}
         </Text>
         {pkg.description && (
-          <Text color='whiteAlpha.700' fontSize='sm' fontWeight='light'>
-            {pkg.description}
-          </Text>
+          <Box
+            color='whiteAlpha.700'
+            fontSize='sm'
+            fontWeight='light'
+            sx={{
+              'h2,h3': { fontWeight: 'semibold', color: 'white', mt: 2, mb: 1 },
+              'ul,ol': { pl: 4 },
+              li: { mb: 0.5 },
+              strong: { color: 'white', fontWeight: 'semibold' },
+              em: { fontStyle: 'italic' },
+              code: {
+                fontFamily: 'mono',
+                fontSize: 'xs',
+                bg: 'whiteAlpha.100',
+                px: 1,
+                borderRadius: 'sm',
+              },
+              blockquote: {
+                borderLeftWidth: 2,
+                borderLeftColor: 'whiteAlpha.300',
+                pl: 3,
+                color: 'whiteAlpha.500',
+              },
+            }}
+            dangerouslySetInnerHTML={{ __html: pkg.description }}
+          />
         )}
       </VStack>
 
