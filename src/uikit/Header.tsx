@@ -219,12 +219,25 @@ function ProfileButton({
   authHref,
   authLabel,
   dashboardUrl,
+  apiBaseUrl,
+  onLogout,
 }: {
   user: UserProfile | null | undefined;
   authHref: string;
   authLabel: string;
   dashboardUrl: string;
+  apiBaseUrl: string;
+  onLogout: () => void;
 }) {
+  const handleLogout = () => {
+    fetch(`${apiBaseUrl}/api/v1/auth/discord/revoke`, {
+      method: 'POST',
+      credentials: 'include',
+    }).finally(() => {
+      onLogout();
+    });
+  };
+
   if (user === undefined) {
     return <Box w={10} h={10} borderRadius='full' bg='whiteAlpha.100' />;
   }
@@ -237,9 +250,9 @@ function ProfileButton({
         openDelay={50}
         closeDelay={100}>
         <PopoverTrigger>
-          <Box as='a' href={dashboardUrl} cursor='pointer'>
+          <Box cursor='pointer'>
             <Avatar
-              size='sm'
+              size='md'
               name={user.username}
               src={user.avatar_url}
               border='2px solid rgba(255,255,255,0.2)'
@@ -279,6 +292,19 @@ function ProfileButton({
                 fontSize='sm'
                 _hover={{ bg: 'whiteAlpha.100', color: 'white' }}>
                 Dashboard
+              </Box>
+              <Box
+                as='button'
+                onClick={handleLogout}
+                px={2}
+                py={1.5}
+                borderRadius='md'
+                color='red.300'
+                fontSize='sm'
+                textAlign='left'
+                w='full'
+                _hover={{ bg: 'whiteAlpha.100', color: 'red.200' }}>
+                Sign out
               </Box>
             </Flex>
           </PopoverBody>
@@ -401,6 +427,8 @@ export function Header() {
                 authHref={authHref}
                 authLabel={authLabel}
                 dashboardUrl={publicRuntimeConfig.dashboardUrl}
+                apiBaseUrl={publicRuntimeConfig.apiBaseUrl}
+                onLogout={() => setUser(null)}
               />
             </Flex>
           )}
@@ -466,25 +494,40 @@ export function Header() {
                         Invite to server
                       </Button>
                       {isLoggedIn ? (
-                        <Flex
-                          as='a'
-                          href={publicRuntimeConfig.dashboardUrl}
-                          alignItems='center'
-                          gap={2}
-                          px={4}
-                          py={2}
-                          borderRadius='xl'
-                          border='1px solid rgba(255,255,255,0.15)'
-                          _hover={{ bg: 'whiteAlpha.100' }}>
-                          <Avatar
-                            size='xs'
-                            name={user?.username}
-                            src={user?.avatar_url}
-                          />
-                          <Text color='white' fontSize='sm'>
-                            {user?.username ?? 'Dashboard'}
-                          </Text>
-                        </Flex>
+                        <>
+                          <Flex
+                            as='a'
+                            href={publicRuntimeConfig.dashboardUrl}
+                            alignItems='center'
+                            gap={2}
+                            px={4}
+                            py={2}
+                            borderRadius='xl'
+                            border='1px solid rgba(255,255,255,0.15)'
+                            _hover={{ bg: 'whiteAlpha.100' }}>
+                            <Avatar
+                              size='xs'
+                              name={user?.username}
+                              src={user?.avatar_url}
+                            />
+                            <Text color='white' fontSize='sm'>
+                              {user?.username ?? 'Dashboard'}
+                            </Text>
+                          </Flex>
+                          <Button
+                            variant='glass-ghost'
+                            py={4}
+                            px={6}
+                            color='red.300'
+                            onClick={() => {
+                              fetch(
+                                `${publicRuntimeConfig.apiBaseUrl}/api/v1/auth/discord/revoke`,
+                                { method: 'POST', credentials: 'include' },
+                              ).finally(() => setUser(null));
+                            }}>
+                            Sign out
+                          </Button>
+                        </>
                       ) : (
                         <Button
                           as='a'
