@@ -21,8 +21,10 @@ import { useRouter } from 'next/router';
 import { buildCanonical, ogLocaleFor } from '@/config/seo';
 import {
   useAddonPackages,
+  useCurrentUser,
   useSubscriptionPackages,
 } from '@/modules/pricing/pricingHook';
+import type { CurrentUser } from '@/modules/pricing/pricingService';
 import type { Package } from '@/modules/pricing/types';
 import Button from '@/uikit/Button';
 import { Container } from '@/uikit/Container';
@@ -51,24 +53,56 @@ function formatPrice(
   return `${symbol}${amount}${intervalLabel}`;
 }
 
-function PackageCard({ pkg, isAddon }: { pkg: Package; isAddon?: boolean }) {
-  const hasProviders = pkg.providers.length > 0;
-  const checkoutUrl = hasProviders ? pkg.providers[0].checkout_url : undefined;
+function PackageCard({
+  pkg,
+  isAddon,
+  user,
+  ssoUrl,
+}: {
+  pkg: Package;
+  isAddon?: boolean;
+  user: CurrentUser | null | undefined;
+  ssoUrl: string;
+}) {
   const isFree = pkg.price_cents === 0;
+  const hasProviders = pkg.providers.length > 0;
+
+  const handlePaidClick = async () => {
+    if (!user) {
+      window.location.href = `${ssoUrl}?redirect_url=${encodeURIComponent(
+        window.location.href,
+      )}`;
+      return;
+    }
+    try {
+      const { getCheckoutURL } = await import(
+        '@/modules/pricing/pricingService'
+      );
+      const url = await getCheckoutURL(pkg.serial);
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } catch {
+      // fallback to static provider URL if checkout API fails
+      if (hasProviders) {
+        window.open(
+          pkg.providers[0].checkout_url,
+          '_blank',
+          'noopener,noreferrer',
+        );
+      }
+    }
+  };
 
   let buttonLabel: string;
-  let buttonHref: string | undefined;
 
   if (isAddon) {
-    buttonLabel = 'Add on →';
-    buttonHref = checkoutUrl;
+    buttonLabel = 'Add on';
   } else if (isFree) {
     buttonLabel = 'Get started';
-    buttonHref = 'https://dash.mocha-bot.xyz';
   } else {
     buttonLabel = 'Get Premium';
-    buttonHref = checkoutUrl;
   }
+
+  const isPaidClickable = !isFree && (hasProviders || !!user);
 
   return (
     <Box {...cardStyle} display='flex' flexDirection='column' gap={6}>
@@ -144,17 +178,25 @@ function PackageCard({ pkg, isAddon }: { pkg: Package; isAddon?: boolean }) {
         </VStack>
       )}
 
-      <Button
-        as={buttonHref ? 'a' : undefined}
-        href={buttonHref}
-        target={buttonHref ? '_blank' : undefined}
-        rel={buttonHref ? 'noopener noreferrer' : undefined}
-        variant={isFree ? 'glass-ghost' : 'glass'}
-        isDisabled={!hasProviders && !isFree}
-        width='full'
-        py={5}>
-        {buttonLabel}
-      </Button>
+      {isFree ? (
+        <Button
+          as='a'
+          href='https://dash.mocha-bot.xyz'
+          variant='glass-ghost'
+          width='full'
+          py={5}>
+          {buttonLabel}
+        </Button>
+      ) : (
+        <Button
+          onClick={handlePaidClick}
+          variant='glass'
+          isDisabled={!isPaidClickable}
+          width='full'
+          py={5}>
+          {buttonLabel}
+        </Button>
+      )}
     </Box>
   );
 }
@@ -213,9 +255,11 @@ function PackageCardSkeleton() {
 function Pricing() {
   const { locale } = useRouter();
   const canonical = buildCanonical('/pricing', locale);
+  const { publicRuntimeConfig: runtimeConfig } = getConfig();
 
   const subscriptions = useSubscriptionPackages();
   const addons = useAddonPackages();
+  const { data: currentUser } = useCurrentUser();
 
   const { isLoading } = subscriptions;
   const hasNoData =
@@ -325,7 +369,12 @@ function Pricing() {
                     gap={6}
                     w='full'>
                     {subscriptions.data.map((pkg) => (
-                      <PackageCard key={pkg.serial} pkg={pkg} />
+                      <PackageCard
+                        key={pkg.serial}
+                        pkg={pkg}
+                        user={currentUser}
+                        ssoUrl={runtimeConfig.ssoUrl}
+                      />
                     ))}
                   </SimpleGrid>
                 )}
@@ -340,7 +389,13 @@ function Pricing() {
                 </Heading>
                 <SimpleGrid columns={[1, null, 2]} gap={6} w='full'>
                   {addons.data.map((pkg) => (
-                    <PackageCard key={pkg.serial} pkg={pkg} isAddon />
+                    <PackageCard
+                      key={pkg.serial}
+                      pkg={pkg}
+                      isAddon
+                      user={currentUser}
+                      ssoUrl={runtimeConfig.ssoUrl}
+                    />
                   ))}
                 </SimpleGrid>
               </VStack>

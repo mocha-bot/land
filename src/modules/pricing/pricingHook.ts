@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getPackages } from './pricingService';
+import { getCurrentUser, getPackages } from './pricingService';
 
 export const usePackagesQuery = () => {
   return useQuery({
@@ -25,4 +25,13 @@ export const useAddonPackages = () => {
     ...query,
     data: query.data?.filter((pkg) => pkg.type === 'addon') ?? [],
   };
+};
+
+export const useCurrentUser = () => {
+  return useQuery({
+    queryKey: ['auth', 'me'],
+    queryFn: () => getCurrentUser(),
+    retry: false,
+    staleTime: 5 * 60 * 1000,
+  });
 };
