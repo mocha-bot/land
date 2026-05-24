@@ -1,5 +1,5 @@
-import { z } from 'zod';
 import getConfig from 'next/config';
+import { z } from 'zod';
 
 import { axios } from '@/lib/axios';
 
@@ -22,7 +22,10 @@ const PackageSchema = z.object({
   billing_interval: z.string().default(''),
   features: z.array(z.string()).default([]),
   sort_order: z.number().default(0),
-  providers: z.array(ProviderPlanSchema).default([]),
+  providers: z
+    .array(ProviderPlanSchema)
+    .nullish()
+    .transform((v) => v ?? []),
 });
 
 export const ApiPackagesSchema = z.object({
