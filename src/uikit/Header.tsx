@@ -1,5 +1,6 @@
 import { ChevronDownIcon, CloseIcon, HamburgerIcon } from '@chakra-ui/icons';
 import {
+  Avatar,
   Box,
   Drawer,
   DrawerBody,
@@ -28,6 +29,12 @@ import { SolutionCard } from '@/modules/solutions/SolutionCard';
 
 import Button from './Button';
 import { Container } from './Container';
+
+interface UserProfile {
+  serial: string;
+  username?: string;
+  avatar_url?: string;
+}
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -207,9 +214,89 @@ function MobileMenuButton({ isOpen, onToggle }: MobileMenuButtonProps) {
 
 const OFFSET_TOP_SCROLL = 50;
 
+function ProfileButton({
+  user,
+  authHref,
+  authLabel,
+  dashboardUrl,
+}: {
+  user: UserProfile | null | undefined;
+  authHref: string;
+  authLabel: string;
+  dashboardUrl: string;
+}) {
+  if (user === undefined) {
+    return <Box w={10} h={10} borderRadius='full' bg='whiteAlpha.100' />;
+  }
+
+  if (user) {
+    return (
+      <Popover
+        trigger='hover'
+        placement='bottom-end'
+        openDelay={50}
+        closeDelay={100}>
+        <PopoverTrigger>
+          <Box as='a' href={dashboardUrl} cursor='pointer'>
+            <Avatar
+              size='sm'
+              name={user.username}
+              src={user.avatar_url}
+              border='2px solid rgba(255,255,255,0.2)'
+              _hover={{ border: '2px solid rgba(255,255,255,0.6)' }}
+            />
+          </Box>
+        </PopoverTrigger>
+        <PopoverContent
+          bg='rgba(5, 10, 20, 0.95)'
+          border='1px solid rgba(255, 255, 255, 0.1)'
+          backdropFilter='blur(20px)'
+          borderRadius='xl'
+          boxShadow='0 20px 60px rgba(0,0,0,0.6)'
+          w='180px'
+          mt={2}
+          _focus={{ outline: 'none' }}>
+          <PopoverBody p={2}>
+            <Flex direction='column' gap={1}>
+              <Flex alignItems='center' gap={2} px={2} py={2}>
+                <Avatar size='xs' name={user.username} src={user.avatar_url} />
+                <Text
+                  color='white'
+                  fontSize='sm'
+                  fontWeight='medium'
+                  noOfLines={1}>
+                  {user.username}
+                </Text>
+              </Flex>
+              <Box h='1px' bg='whiteAlpha.100' my={1} />
+              <Box
+                as='a'
+                href={dashboardUrl}
+                px={2}
+                py={1.5}
+                borderRadius='md'
+                color='whiteAlpha.700'
+                fontSize='sm'
+                _hover={{ bg: 'whiteAlpha.100', color: 'white' }}>
+                Dashboard
+              </Box>
+            </Flex>
+          </PopoverBody>
+        </PopoverContent>
+      </Popover>
+    );
+  }
+
+  return (
+    <Button as='a' variant='glass' py={5} px={6} isAnimated href={authHref}>
+      {authLabel}
+    </Button>
+  );
+}
+
 export function Header() {
   const [isBgTransparent, setIsBgTransparent] = useState(true);
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const [user, setUser] = useState<UserProfile | null | undefined>(undefined);
   const { isOpen, onToggle, onClose } = useDisclosure();
 
   const isMobile = useBreakpointValue({ base: true, md: false, lg: false });
@@ -232,14 +319,12 @@ export function Header() {
     fetch(`${publicRuntimeConfig.apiBaseUrl}/api/v1/user/me`, {
       credentials: 'include',
     })
-      .then((r) => {
-        setIsLoggedIn(r.ok);
-      })
-      .catch(() => {
-        setIsLoggedIn(false);
-      });
+      .then((r) => (r.ok ? r.json() : null))
+      .then((json) => setUser(json?.data ?? null))
+      .catch(() => setUser(null));
   }, []);
 
+  const isLoggedIn = !!user;
   const authHref = isLoggedIn
     ? publicRuntimeConfig.dashboardUrl
     : `${publicRuntimeConfig.ssoUrl}?redirect_to=${encodeURIComponent(
@@ -311,17 +396,12 @@ export function Header() {
                 href={publicRuntimeConfig.botInvitationUrl}>
                 Invite to server
               </Button>
-              <Button
-                as='a'
-                variant='glass'
-                py={5}
-                px={6}
-                isAnimated
-                href={authHref}
-                opacity={isLoggedIn === null ? 0.5 : 1}
-                pointerEvents={isLoggedIn === null ? 'none' : 'auto'}>
-                {authLabel}
-              </Button>
+              <ProfileButton
+                user={user}
+                authHref={authHref}
+                authLabel={authLabel}
+                dashboardUrl={publicRuntimeConfig.dashboardUrl}
+              />
             </Flex>
           )}
 
@@ -385,17 +465,39 @@ export function Header() {
                         href={publicRuntimeConfig.botInvitationUrl}>
                         Invite to server
                       </Button>
-                      <Button
-                        as='a'
-                        variant='glass'
-                        py={4}
-                        px={6}
-                        isAnimated
-                        href={authHref}
-                        opacity={isLoggedIn === null ? 0.5 : 1}
-                        pointerEvents={isLoggedIn === null ? 'none' : 'auto'}>
-                        {authLabel}
-                      </Button>
+                      {isLoggedIn ? (
+                        <Flex
+                          as='a'
+                          href={publicRuntimeConfig.dashboardUrl}
+                          alignItems='center'
+                          gap={2}
+                          px={4}
+                          py={2}
+                          borderRadius='xl'
+                          border='1px solid rgba(255,255,255,0.15)'
+                          _hover={{ bg: 'whiteAlpha.100' }}>
+                          <Avatar
+                            size='xs'
+                            name={user?.username}
+                            src={user?.avatar_url}
+                          />
+                          <Text color='white' fontSize='sm'>
+                            {user?.username ?? 'Dashboard'}
+                          </Text>
+                        </Flex>
+                      ) : (
+                        <Button
+                          as='a'
+                          variant='glass'
+                          py={4}
+                          px={6}
+                          isAnimated
+                          href={authHref}
+                          opacity={user === undefined ? 0.5 : 1}
+                          pointerEvents={user === undefined ? 'none' : 'auto'}>
+                          {authLabel}
+                        </Button>
+                      )}
                     </Flex>
                   </Flex>
                 </DrawerBody>
