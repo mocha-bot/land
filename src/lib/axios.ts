@@ -22,7 +22,6 @@ export const axios: Axios = (config, schema) => {
       ...config,
       headers: {
         ...config.headers,
-        'Access-Control-Allow-Origin': '*',
       },
     })
       .then((response) => {
