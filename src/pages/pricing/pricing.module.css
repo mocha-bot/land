@@ -102,8 +102,8 @@
   height: 55%;
   background: radial-gradient(
     ellipse at center,
-    rgba(120, 80, 255, 0.35) 0%,
-    rgba(60, 20, 180, 0.15) 50%,
+    rgba(2, 173, 255, 0.3) 0%,
+    rgba(11, 52, 71, 0.15) 50%,
     transparent 75%
   );
   animation: driftA 12s ease-in-out infinite alternate;
@@ -116,8 +116,8 @@
   height: 50%;
   background: radial-gradient(
     ellipse at center,
-    rgba(80, 160, 255, 0.25) 0%,
-    rgba(20, 80, 200, 0.1) 50%,
+    rgba(143, 194, 225, 0.2) 0%,
+    rgba(2, 173, 255, 0.08) 50%,
     transparent 75%
   );
   animation: driftB 15s ease-in-out infinite alternate;
@@ -130,8 +130,8 @@
   height: 40%;
   background: radial-gradient(
     ellipse at center,
-    rgba(160, 60, 255, 0.2) 0%,
-    rgba(80, 20, 160, 0.08) 50%,
+    rgba(253, 184, 51, 0.18) 0%,
+    rgba(2, 173, 255, 0.06) 50%,
     transparent 75%
   );
   animation: driftA 18s ease-in-out infinite alternate;
@@ -173,7 +173,7 @@
     ),
     radial-gradient(
       2px 2px at 60% 15%,
-      rgba(200, 180, 255, 0.95) 0%,
+      rgba(143, 194, 225, 0.95) 0%,
       transparent 100%
     ),
     radial-gradient(
@@ -193,7 +193,7 @@
     ),
     radial-gradient(
       1.5px 1.5px at 90% 35%,
-      rgba(220, 200, 255, 0.9) 0%,
+      rgba(2, 173, 255, 0.9) 0%,
       transparent 100%
     );
   animation: sparkleAnim 4s ease-in-out infinite alternate;
