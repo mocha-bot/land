@@ -197,7 +197,7 @@ function Donut() {
                 </Flex>
               </AnimateOnView>
 
-              <StaggerContainer style={{ width: '100%' }}>
+              <StaggerContainer>
                 <SimpleGrid columns={[1, null, 3]} gap={6} w='full'>
                   {FEATURES.map((f) => (
                     <motion.div
@@ -246,7 +246,7 @@ function Donut() {
                 </Flex>
               </AnimateOnView>
 
-              <StaggerContainer style={{ width: '100%' }}>
+              <StaggerContainer>
                 <SimpleGrid columns={[1, null, 2, 4]} gap={6} w='full'>
                   {STEPS.map((s) => (
                     <motion.div key={s.step} variants={staggerItem}>
@@ -315,7 +315,7 @@ function Donut() {
                 </Flex>
               </AnimateOnView>
 
-              <StaggerContainer style={{ width: '100%' }}>
+              <StaggerContainer>
                 <SimpleGrid columns={[1, null, 2]} gap={6} w='full'>
                   {USE_CASES.map((uc) => (
                     <motion.div key={uc.title} variants={staggerItem}>
