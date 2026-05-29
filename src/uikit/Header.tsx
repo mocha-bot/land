@@ -234,6 +234,14 @@ function ProfileButton({
       method: 'POST',
       credentials: 'include',
     }).finally(() => {
+      try {
+        const ch = new BroadcastChannel('mocha-auth-logout');
+        ch.postMessage({ type: 'logout' });
+        ch.close();
+      } catch {
+        localStorage.setItem('mocha-auth-logout', String(Date.now()));
+        localStorage.removeItem('mocha-auth-logout');
+      }
       onLogout();
     });
   };
