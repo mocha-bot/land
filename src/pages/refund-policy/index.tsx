@@ -19,7 +19,7 @@ function RefundPolicy() {
         {generateNextSeo({
           title: 'Refund Policy',
           description:
-            'Mocha refund policy for premium subscriptions paid in cryptocurrency, including eligibility windows and how to request a refund.',
+            'All Mocha premium subscription and add-on purchases are final and non-refundable. Read our full refund policy.',
           canonical,
           languageAlternates: buildLanguageAlternates('/refund-policy'),
           openGraph: {
@@ -33,83 +33,56 @@ function RefundPolicy() {
         <VStack spacing={2} alignItems='flex-start'>
           <Heading>Refund Policy for Mocha</Heading>
           <Text>
-            This Refund Policy explains when and how you can request a refund
-            for premium subscriptions to Mocha. By purchasing a premium plan,
-            you acknowledge that you have read and agreed to this policy
-            alongside our Terms of Service.
+            All purchases of Mocha premium plans and add-ons are final and
+            non-refundable. By completing a purchase, you acknowledge that you
+            have read, understood, and agreed to this policy alongside our Terms
+            of Service.
           </Text>
 
-          <Heading>Overview</Heading>
+          <Heading>No Refunds</Heading>
           <Text>
-            Mocha&apos;s core features are free to use. Premium plans are
-            optional add-ons that unlock additional functionality. Because
-            premium features are delivered as a digital service, refunds are
-            handled on a case-by-case basis under the terms below.
+            We do not offer refunds, credits, or exchanges for any premium
+            subscription or add-on purchase, regardless of the reason. This
+            includes, but is not limited to: change of mind, unused subscription
+            time, accidental purchases, or dissatisfaction with the service.
           </Text>
 
-          <Heading>Cryptocurrency Payments</Heading>
+          <Heading>Digital Service Nature</Heading>
           <Text>
-            Premium subscriptions are paid in cryptocurrency. On-chain
-            transactions are irreversible by design — once a payment is
-            confirmed on the blockchain, we cannot reverse the transfer. Where
-            a refund is approved under this policy, we will issue it as
-            in-app credit, an equivalent extension of your subscription, or a
-            new on-chain transfer to a wallet you specify, at our discretion.
+            Mocha delivers premium features as a digital service that is made
+            available immediately upon purchase. Because access to the service
+            is granted instantly, all sales are considered final at the point of
+            payment.
           </Text>
 
-          <Heading>Eligibility Window</Heading>
+          <Heading>Payment Irreversibility</Heading>
           <Text>
-            You may request a refund within seven (7) days of the original
-            payment, provided that the premium features tied to that payment
-            have not been substantially used. &quot;Substantial use&quot;
-            includes, but is not limited to, exceeding free-tier limits,
-            broadcasting to additional channels, or using premium-only
-            personalization features.
+            Payments processed through our payment providers are subject to
+            their respective terms. Cryptocurrency transactions are irreversible
+            by design once confirmed on-chain. We are not able to reverse any
+            completed transaction.
           </Text>
 
-          <Heading>Non-Refundable Cases</Heading>
+          <Heading>Cancellations</Heading>
           <Text>
-            Refunds will not be issued in the following situations: (a) the
-            seven-day eligibility window has passed; (b) the premium features
-            have been substantially used; (c) the request is for a renewal of
-            a subscription that you did not cancel before it auto-renewed
-            (where applicable); (d) your account or server has been suspended
-            for a violation of our Terms of Service; or (e) the request is
-            unrelated to a service issue we can verify.
-          </Text>
-
-          <Heading>How to Request a Refund</Heading>
-          <Text>
-            To request a refund, contact us through our official Discord
-            support server or the support channels listed at{' '}
-            https://mocha-bot.xyz/. Please include: the wallet address that
-            made the payment, the transaction hash, the date of payment, the
-            Discord server ID the subscription was applied to, and a brief
-            explanation of why you are requesting the refund.
-          </Text>
-
-          <Heading>Processing Time</Heading>
-          <Text>
-            We aim to review refund requests within five (5) business days.
-            If approved, refunds are typically issued within ten (10) business
-            days from approval. Network conditions and confirmation times for
-            cryptocurrency transfers may add additional delay outside of our
-            control.
+            You may cancel a recurring subscription at any time to prevent
+            future charges. Cancellation takes effect at the end of the current
+            billing period. No refund will be issued for the remaining time on
+            an active subscription period.
           </Text>
 
           <Heading>Changes to This Policy</Heading>
           <Text>
-            We may update this Refund Policy from time to time. Material
-            changes will be reflected on this page. The policy that applies to
-            your purchase is the version in effect on the date you made the
-            payment.
+            We may update this Refund Policy from time to time. Material changes
+            will be reflected on this page with an updated effective date.
+            Continued use of the service after changes constitutes acceptance of
+            the revised policy.
           </Text>
 
           <Heading>Contact</Heading>
           <Text>
-            Questions about this Refund Policy can be directed to our official
-            Discord server or to the support channels listed on{' '}
-            https://mocha-bot.xyz/.
+            Questions about this policy can be directed to our official Discord
+            server or the support channels listed at https://mocha-bot.xyz/.
           </Text>
         </VStack>
       </Container>
