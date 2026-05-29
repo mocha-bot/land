@@ -1,0 +1,212 @@
+.bg {
+  position: relative;
+  background: #02020e;
+  overflow: hidden;
+}
+
+/* Star layers — three depths for parallax feel */
+.bg::before,
+.bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  animation: twinkle 6s ease-in-out infinite alternate;
+}
+
+.bg::before {
+  background-image: radial-gradient(
+      1px 1px at 8% 12%,
+      #fff 0%,
+      transparent 100%
+    ),
+    radial-gradient(1px 1px at 18% 35%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 28% 72%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 38% 18%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 48% 55%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 58% 88%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 68% 42%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 78% 25%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 88% 65%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 95% 10%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 3% 78%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 13% 50%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 23% 90%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 43% 38%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 53% 7%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 63% 60%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 73% 82%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 83% 15%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 92% 45%, #fff 0%, transparent 100%),
+    radial-gradient(
+      1.5px 1.5px at 33% 55%,
+      rgba(255, 255, 255, 0.9) 0%,
+      transparent 100%
+    );
+  opacity: 0.6;
+  animation-delay: 0s;
+}
+
+.bg::after {
+  background-image: radial-gradient(
+      1px 1px at 5% 25%,
+      #fff 0%,
+      transparent 100%
+    ),
+    radial-gradient(1px 1px at 15% 60%, #fff 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 25% 4%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 48%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 45% 80%, #fff 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 55% 30%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 65% 70%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 75% 5%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 50%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 97% 85%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 7% 95%, #fff 0%, transparent 100%),
+    radial-gradient(
+      2px 2px at 50% 50%,
+      rgba(255, 255, 255, 0.5) 0%,
+      transparent 100%
+    ),
+    radial-gradient(1px 1px at 20% 15%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 38%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 28%, #fff 0%, transparent 100%);
+  opacity: 0.4;
+  animation-delay: 3s;
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0.4;
+  }
+}
+
+/* Flares */
+.flare {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+}
+
+.flareTopLeft {
+  top: -15%;
+  left: -10%;
+  width: 55%;
+  height: 55%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(120, 80, 255, 0.35) 0%,
+    rgba(60, 20, 180, 0.15) 50%,
+    transparent 75%
+  );
+  animation: driftA 12s ease-in-out infinite alternate;
+}
+
+.flareTopRight {
+  top: 5%;
+  right: -15%;
+  width: 50%;
+  height: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(80, 160, 255, 0.25) 0%,
+    rgba(20, 80, 200, 0.1) 50%,
+    transparent 75%
+  );
+  animation: driftB 15s ease-in-out infinite alternate;
+}
+
+.flareBottomCenter {
+  bottom: -10%;
+  left: 25%;
+  width: 50%;
+  height: 40%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(160, 60, 255, 0.2) 0%,
+    rgba(80, 20, 160, 0.08) 50%,
+    transparent 75%
+  );
+  animation: driftA 18s ease-in-out infinite alternate;
+  animation-delay: 2s;
+}
+
+@keyframes driftA {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(3%, 5%) scale(1.08);
+  }
+}
+
+@keyframes driftB {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(-4%, 3%) scale(1.05);
+  }
+}
+
+/* Sparkle dots — brighter, slightly larger stars scattered on top */
+.sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+      2px 2px at 15% 20%,
+      rgba(255, 255, 255, 0.95) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      2px 2px at 40% 65%,
+      rgba(255, 255, 255, 0.9) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      2px 2px at 60% 15%,
+      rgba(200, 180, 255, 0.95) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      2px 2px at 80% 75%,
+      rgba(255, 255, 255, 0.85) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      1.5px 1.5px at 55% 45%,
+      rgba(200, 220, 255, 0.9) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      2px 2px at 25% 85%,
+      rgba(255, 255, 255, 0.8) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      1.5px 1.5px at 90% 35%,
+      rgba(220, 200, 255, 0.9) 0%,
+      transparent 100%
+    );
+  animation: sparkleAnim 4s ease-in-out infinite alternate;
+}
+
+@keyframes sparkleAnim {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
