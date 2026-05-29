@@ -106,6 +106,11 @@ type LayoutProps = {
 export function Layout({ children, containerProps }: LayoutProps) {
   return (
     <Box className={styles.bg} {...containerProps}>
+      {/* Planets */}
+      <div className={`${styles.planet} ${styles.planetLarge}`} />
+      <div className={`${styles.planet} ${styles.planetSmall}`} />
+      <div className={`${styles.planet} ${styles.planetTiny}`} />
+
       {/* Flares */}
       <div className={`${styles.flare} ${styles.flareTopLeft}`} />
       <div className={`${styles.flare} ${styles.flareTopRight}`} />

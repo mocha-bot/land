@@ -194,6 +194,134 @@
   }
 }
 
+/* ── Planets ────────────────────────────────────────────── */
+.planet {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* Large ringed gas giant — top-right corner */
+.planetLarge {
+  top: 6%;
+  right: -6%;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(
+    circle at 35% 35%,
+    #4a9eff 0%,
+    #1a5cb8 30%,
+    #0b3447 65%,
+    #040e1a 100%
+  );
+  box-shadow: inset -18px -18px 40px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(2, 173, 255, 0.15), 0 0 120px rgba(2, 173, 255, 0.06);
+  animation: floatA 22s ease-in-out infinite alternate;
+}
+
+/* Ring around the large planet */
+.planetLarge::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  height: 80px;
+  margin-top: -40px;
+  margin-left: -160px;
+  border-radius: 50%;
+  border: 10px solid transparent;
+  border-top-color: rgba(143, 194, 225, 0.25);
+  border-bottom-color: rgba(2, 173, 255, 0.12);
+  transform: rotateX(72deg) rotateZ(-15deg);
+  box-shadow: 0 0 20px rgba(2, 173, 255, 0.1);
+}
+
+/* Atmosphere glow on large planet */
+.planetLarge::after {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    transparent 60%,
+    rgba(2, 173, 255, 0.12) 80%,
+    rgba(2, 173, 255, 0.04) 100%
+  );
+}
+
+/* Small warm planet — bottom-left */
+.planetSmall {
+  bottom: 12%;
+  left: -3%;
+  width: 110px;
+  height: 110px;
+  background: radial-gradient(
+    circle at 38% 32%,
+    #fde08a 0%,
+    #f4a93a 25%,
+    #c96b1a 55%,
+    #5a2808 85%,
+    #1a0a02 100%
+  );
+  box-shadow: inset -10px -10px 24px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(253, 184, 51, 0.12), 0 0 70px rgba(253, 184, 51, 0.05);
+  animation: floatB 18s ease-in-out infinite alternate;
+}
+
+.planetSmall::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 38% 32%,
+    transparent 55%,
+    rgba(253, 184, 51, 0.1) 80%,
+    transparent 100%
+  );
+}
+
+/* Tiny distant planet — mid-left */
+.planetTiny {
+  top: 42%;
+  left: 4%;
+  width: 44px;
+  height: 44px;
+  background: radial-gradient(
+    circle at 40% 36%,
+    #8fc2e1 0%,
+    #3a7fa8 40%,
+    #0b3447 75%,
+    #02080f 100%
+  );
+  box-shadow: inset -4px -4px 10px rgba(0, 0, 0, 0.5),
+    0 0 16px rgba(143, 194, 225, 0.1);
+  animation: floatA 26s ease-in-out infinite alternate;
+  animation-delay: 5s;
+}
+
+@keyframes floatA {
+  0% {
+    transform: translateZ(0) translateY(0px);
+  }
+  100% {
+    transform: translateZ(0) translateY(-14px);
+  }
+}
+
+@keyframes floatB {
+  0% {
+    transform: translateZ(0) translateY(0px);
+  }
+  100% {
+    transform: translateZ(0) translateY(10px);
+  }
+}
+
 /* ── Respect reduced-motion preference ──────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .bg::before,
@@ -202,7 +330,11 @@
   .flare,
   .flareTopLeft,
   .flareTopRight,
-  .flareBottomCenter {
+  .flareBottomCenter,
+  .planet,
+  .planetLarge,
+  .planetSmall,
+  .planetTiny {
     animation: none;
   }
 }
