@@ -6,6 +6,7 @@ import { Layout } from '@/uikit/Layout';
 
 import { ComparisonTable } from './ComparisonTable';
 import { CrossServerCard } from './CrossServerCard';
+import { DonutSection } from './DonutSection';
 import { FAQ } from './FAQ';
 import { Features } from './Features';
 import { Hero } from './Hero';
@@ -24,6 +25,7 @@ export function LandingPageContainer() {
           </Box>
         </AnimateOnView>
         <Features />
+        <DonutSection />
         <HowItWorks />
         <UseCases />
         <ComparisonTable />

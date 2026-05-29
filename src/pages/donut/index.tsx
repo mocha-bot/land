@@ -18,6 +18,8 @@ import Button from '@/uikit/Button';
 import { Container } from '@/uikit/Container';
 import { Layout } from '@/uikit/Layout';
 
+import styles from './donut.module.css';
+
 const { publicRuntimeConfig } = getConfig();
 
 const cardStyle = {
@@ -35,22 +37,19 @@ const cardStyle = {
 
 const FEATURES = [
   {
-    emoji: '🎯',
     title: 'Smart Auto-Pairing',
     description:
-      'Start a match and Donut pairs all registered members instantly. Odd numbers are handled automatically with 3-way pairs — nobody left out.',
+      'Start a match and Donut pairs all registered members instantly. Odd numbers get 3-way pairs, so nobody is left out.',
   },
   {
-    emoji: '🔄',
     title: 'Flexible Match Lifecycle',
     description:
       'Create, start, stop, and query any match session. Each participant is tracked individually from pending to finished.',
   },
   {
-    emoji: '🌐',
     title: 'Works Any Use Case',
     description:
-      'Speed dating, gaming brackets, mentor matching — one feature, unlimited event types. Bring your own logic, Donut handles the pairs.',
+      'Speed dating, gaming brackets, mentor matching. One feature, unlimited event types. Bring your own logic, Donut handles the pairs.',
   },
 ];
 
@@ -69,7 +68,7 @@ const STEPS = [
   },
   {
     step: 3,
-    title: 'Start — pairing runs automatically',
+    title: 'Start: pairing runs automatically',
     description:
       'Donut shuffles and pairs everyone instantly. 3-way groups handle odd numbers.',
   },
@@ -83,25 +82,21 @@ const STEPS = [
 
 const USE_CASES = [
   {
-    emoji: '💘',
     title: 'Speed Dating',
     description:
       'Rotate members through timed 1-on-1 chats. Keep your community buzzing with spontaneous connections.',
   },
   {
-    emoji: '🎓',
     title: 'Mentorship Circles',
     description:
       'Match newcomers with experienced members. Build structured growth programs inside your Discord server.',
   },
   {
-    emoji: '🎮',
     title: 'Gaming Brackets',
     description:
-      'Auto-bracket players into match pairs for tournaments, scrims, or casual 1v1s — no manual seeding.',
+      'Auto-bracket players into match pairs for tournaments, scrims, or casual 1v1s. No manual seeding.',
   },
   {
-    emoji: '🤝',
     title: 'Community Icebreakers',
     description:
       'Randomly pair members for warm-up chats. Great for onboarding new members or reviving quiet servers.',
@@ -117,9 +112,9 @@ function Donut() {
     <>
       <Head>
         {generateNextSeo({
-          title: 'Donut — Community Matchmaking',
+          title: 'Donut: Community Matchmaking',
           description:
-            'Automatically pair your Discord community members for 1-on-1 or small-group interactions. Events, mentorship, icebreakers — Donut handles the pairing.',
+            'Automatically pair your Discord community members for 1-on-1 or small-group interactions. Events, mentorship, icebreakers. Donut handles the pairing.',
           canonical,
           openGraph: {
             type: 'website',
@@ -128,7 +123,11 @@ function Donut() {
           },
         })}
       </Head>
-      <Layout>
+      <Layout containerProps={{ className: styles.bg }}>
+        <div className={`${styles.flare} ${styles.flareTopRight}`} />
+        <div className={`${styles.flare} ${styles.flareMiddleLeft}`} />
+        <div className={`${styles.flare} ${styles.flareBottomRight}`} />
+        <div className={styles.sparkles} />
         <Container>
           <Flex
             w='full'
@@ -163,7 +162,7 @@ function Donut() {
                   lineHeight='tall'
                   fontWeight='light'>
                   Automatically pair your members for 1-on-1 or small-group
-                  interactions. Events, mentorship, icebreakers — Donut handles
+                  interactions. Events, mentorship, icebreakers. Donut handles
                   the pairing.
                 </Text>
                 <Button
@@ -206,7 +205,6 @@ function Donut() {
                       style={{ height: '100%' }}>
                       <Box {...cardStyle}>
                         <VStack alignItems='flex-start' spacing={3}>
-                          <Text fontSize='3xl'>{f.emoji}</Text>
                           <Text
                             fontSize='lg'
                             fontWeight='semibold'
@@ -310,7 +308,7 @@ function Donut() {
                     maxW='xl'
                     lineHeight='tall'>
                     Whether you run a gaming clan, a study group, or a
-                    professional network — Donut adapts to your event format.
+                    professional network. Donut adapts to your event format.
                   </Text>
                 </Flex>
               </AnimateOnView>
@@ -321,7 +319,6 @@ function Donut() {
                     <motion.div key={uc.title} variants={staggerItem}>
                       <Box {...cardStyle}>
                         <VStack alignItems='flex-start' spacing={3}>
-                          <Text fontSize='3xl'>{uc.emoji}</Text>
                           <Text
                             fontSize='lg'
                             fontWeight='semibold'

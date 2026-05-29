@@ -1,0 +1,209 @@
+.bg {
+  position: relative;
+  background: #02020e;
+  overflow: hidden;
+}
+
+.bg::before,
+.bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  animation: twinkle 7s ease-in-out infinite alternate;
+}
+
+.bg::before {
+  background-image: radial-gradient(
+      1px 1px at 6% 18%,
+      #fff 0%,
+      transparent 100%
+    ),
+    radial-gradient(1px 1px at 22% 42%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 31% 68%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 44% 12%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 52% 58%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 61% 85%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 72% 38%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 81% 22%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 89% 62%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 96% 8%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 4% 82%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 16% 55%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 27% 93%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 47% 33%, #fff 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 57% 5%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 66% 75%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 76% 48%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 86% 18%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 93% 44%, #fff 0%, transparent 100%),
+    radial-gradient(
+      1.5px 1.5px at 37% 28%,
+      rgba(255, 255, 255, 0.9) 0%,
+      transparent 100%
+    );
+  opacity: 0.55;
+  animation-delay: 0s;
+}
+
+.bg::after {
+  background-image: radial-gradient(
+      1px 1px at 9% 30%,
+      #fff 0%,
+      transparent 100%
+    ),
+    radial-gradient(1px 1px at 19% 65%, #fff 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 29% 8%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 39% 52%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 49% 78%, #fff 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 59% 25%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 69% 72%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 79% 14%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 87% 55%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 98% 88%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 11% 97%, #fff 0%, transparent 100%),
+    radial-gradient(
+      2px 2px at 54% 44%,
+      rgba(255, 255, 255, 0.5) 0%,
+      transparent 100%
+    ),
+    radial-gradient(1px 1px at 24% 20%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 74% 35%, #fff 0%, transparent 100%),
+    radial-gradient(1px 1px at 91% 26%, #fff 0%, transparent 100%);
+  opacity: 0.35;
+  animation-delay: 3.5s;
+}
+
+@keyframes twinkle {
+  0% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.65;
+  }
+  100% {
+    opacity: 0.35;
+  }
+}
+
+.flare {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(80px);
+}
+
+.flareTopRight {
+  top: -10%;
+  right: -12%;
+  width: 55%;
+  height: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(2, 173, 255, 0.28) 0%,
+    rgba(11, 52, 71, 0.12) 50%,
+    transparent 75%
+  );
+  animation: driftB 14s ease-in-out infinite alternate;
+}
+
+.flareMiddleLeft {
+  top: 30%;
+  left: -15%;
+  width: 50%;
+  height: 55%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(143, 194, 225, 0.18) 0%,
+    rgba(2, 173, 255, 0.07) 50%,
+    transparent 75%
+  );
+  animation: driftA 16s ease-in-out infinite alternate;
+}
+
+.flareBottomRight {
+  bottom: -8%;
+  right: 10%;
+  width: 45%;
+  height: 38%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(253, 184, 51, 0.15) 0%,
+    rgba(2, 173, 255, 0.05) 50%,
+    transparent 75%
+  );
+  animation: driftB 20s ease-in-out infinite alternate;
+  animation-delay: 1.5s;
+}
+
+@keyframes driftA {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(4%, 6%) scale(1.07);
+  }
+}
+
+@keyframes driftB {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(-3%, 4%) scale(1.06);
+  }
+}
+
+.sparkles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+      2px 2px at 12% 28%,
+      rgba(255, 255, 255, 0.95) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      2px 2px at 35% 72%,
+      rgba(255, 255, 255, 0.9) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      2px 2px at 58% 18%,
+      rgba(143, 194, 225, 0.95) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      2px 2px at 78% 68%,
+      rgba(255, 255, 255, 0.85) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      1.5px 1.5px at 48% 42%,
+      rgba(200, 220, 255, 0.9) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      2px 2px at 22% 88%,
+      rgba(255, 255, 255, 0.8) 0%,
+      transparent 100%
+    ),
+    radial-gradient(
+      1.5px 1.5px at 88% 32%,
+      rgba(2, 173, 255, 0.9) 0%,
+      transparent 100%
+    );
+  animation: sparkleAnim 5s ease-in-out infinite alternate;
+}
+
+@keyframes sparkleAnim {
+  0% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.55;
+  }
+}
