@@ -2,6 +2,8 @@
   position: relative;
   background: #02020e;
   overflow: hidden;
+  /* Isolate animation layer from scroll — prevents repaints triggering on scroll */
+  isolation: isolate;
 }
 
 /* ── Star field ─────────────────────────────────────────── */
@@ -131,6 +133,7 @@
   will-change: transform;
   transform: translateZ(0);
   filter: blur(80px);
+  contain: layout paint;
 }
 
 .flareTopLeft {
@@ -201,6 +204,7 @@
   pointer-events: none;
   will-change: transform;
   transform: translateZ(0);
+  contain: layout paint;
 }
 
 /* Large ringed gas giant — top-right corner */

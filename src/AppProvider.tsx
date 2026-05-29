@@ -33,13 +33,21 @@ function SessionWatcher() {
       window.location.origin,
     )}`;
 
+    // Only redirect if user was previously authenticated (session expiry),
+    // not if they were never logged in (unauthenticated visitor).
+    let wasAuthenticated = false;
+
     async function checkSession() {
-      if (document.hidden) {return;}
+      if (document.hidden) {
+        return;
+      }
       try {
         const resp = await fetch(`${apiBaseUrl}/api/v1/user/me`, {
           credentials: 'include',
         });
-        if (resp.status === 401) {
+        if (resp.ok) {
+          wasAuthenticated = true;
+        } else if (resp.status === 401 && wasAuthenticated) {
           broadcastLogout();
           window.location.replace(ssoRedirect);
         }
@@ -55,14 +63,18 @@ function SessionWatcher() {
     try {
       ch = new BroadcastChannel(LOGOUT_CHANNEL);
       ch.onmessage = (e) => {
-        if (e.data?.type === 'logout') {window.location.replace(ssoRedirect);}
+        if (e.data?.type === 'logout') {
+          window.location.replace(ssoRedirect);
+        }
       };
     } catch {
       // no BroadcastChannel support
     }
 
     const onStorage = (e: StorageEvent) => {
-      if (e.key === LOGOUT_CHANNEL) {window.location.replace(ssoRedirect);}
+      if (e.key === LOGOUT_CHANNEL) {
+        window.location.replace(ssoRedirect);
+      }
     };
     window.addEventListener('storage', onStorage);
 
