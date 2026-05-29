@@ -49,6 +49,8 @@ function formatPrice(
   }
   const amount = (cents / 100).toFixed(2);
   const symbol = currency.toUpperCase() === 'USD' ? '$' : currency;
+  if (interval === 'one_time') {return `${symbol}${amount} one-time`;}
+  if (interval === 'lifetime') {return `${symbol}${amount} lifetime`;}
   const intervalLabel = interval ? ` / ${interval}` : '';
   return `${symbol}${amount}${intervalLabel}`;
 }
