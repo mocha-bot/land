@@ -14,6 +14,7 @@ import {
   staggerItem,
 } from '@/components/AnimateOnView/AnimateOnView';
 import { buildCanonical, ogLocaleFor } from '@/config/seo';
+import { DonutMatchCard } from '@/modules/donut/DonutMatchCard';
 import Button from '@/uikit/Button';
 import { Container } from '@/uikit/Container';
 import { Layout } from '@/uikit/Layout';
@@ -169,6 +170,11 @@ function Donut() {
                   Invite to server
                 </Button>
               </VStack>
+            </AnimateOnView>
+
+            {/* Demo */}
+            <AnimateOnView variant='fadeUp'>
+              <DonutMatchCard />
             </AnimateOnView>
 
             {/* Features */}
