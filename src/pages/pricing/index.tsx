@@ -61,12 +61,10 @@ function formatPrice(
 
 function PackageCard({
   pkg,
-  isAddon,
   user,
   ssoUrl,
 }: {
   pkg: Package;
-  isAddon?: boolean;
   user: CurrentUser | null | undefined;
   ssoUrl: string;
 }) {
@@ -100,9 +98,7 @@ function PackageCard({
 
   let buttonLabel: string;
 
-  if (isAddon) {
-    buttonLabel = 'Buy';
-  } else if (isFree) {
+  if (isFree) {
     buttonLabel = 'Get started';
   } else {
     buttonLabel = 'Subscribe';
@@ -286,7 +282,75 @@ function Pricing() {
           },
         })}
       </Head>
-      <Layout bgImage='/assets/images/background_desktop.svg'>
+      <Layout
+        containerProps={{
+          position: 'relative',
+          overflow: 'hidden',
+          bg: '#000010',
+          _before: {
+            content: '""',
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `
+              radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.9) 0%, transparent 100%),
+              radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.7) 0%, transparent 100%),
+              radial-gradient(1.5px 1.5px at 40% 8%, rgba(255,255,255,0.8) 0%, transparent 100%),
+              radial-gradient(1px 1px at 55% 30%, rgba(255,255,255,0.6) 0%, transparent 100%),
+              radial-gradient(1px 1px at 70% 55%, rgba(255,255,255,0.9) 0%, transparent 100%),
+              radial-gradient(1.5px 1.5px at 80% 20%, rgba(255,255,255,0.7) 0%, transparent 100%),
+              radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.8) 0%, transparent 100%),
+              radial-gradient(1px 1px at 15% 65%, rgba(255,255,255,0.6) 0%, transparent 100%),
+              radial-gradient(1px 1px at 35% 80%, rgba(255,255,255,0.5) 0%, transparent 100%),
+              radial-gradient(1.5px 1.5px at 60% 90%, rgba(255,255,255,0.7) 0%, transparent 100%),
+              radial-gradient(1px 1px at 75% 45%, rgba(255,255,255,0.6) 0%, transparent 100%),
+              radial-gradient(1px 1px at 5% 90%, rgba(255,255,255,0.8) 0%, transparent 100%),
+              radial-gradient(2px 2px at 48% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
+              radial-gradient(1px 1px at 88% 88%, rgba(255,255,255,0.7) 0%, transparent 100%),
+              radial-gradient(1px 1px at 20% 25%, rgba(255,255,255,0.5) 0%, transparent 100%)
+            `,
+            zIndex: 0,
+            pointerEvents: 'none',
+          },
+        }}>
+        <Box
+          position='absolute'
+          top='-10%'
+          left='-5%'
+          w='50%'
+          h='60%'
+          backgroundImage="url('/assets/images/flare_1.svg')"
+          backgroundRepeat='no-repeat'
+          backgroundSize='contain'
+          opacity={0.5}
+          pointerEvents='none'
+          zIndex={1}
+        />
+        <Box
+          position='absolute'
+          top='20%'
+          right='-10%'
+          w='45%'
+          h='55%'
+          backgroundImage="url('/assets/images/flare_3.svg')"
+          backgroundRepeat='no-repeat'
+          backgroundSize='contain'
+          opacity={0.35}
+          pointerEvents='none'
+          zIndex={1}
+        />
+        <Box
+          position='absolute'
+          bottom='-5%'
+          left='30%'
+          w='40%'
+          h='40%'
+          backgroundImage="url('/assets/images/flare_2.svg')"
+          backgroundRepeat='no-repeat'
+          backgroundSize='contain'
+          opacity={0.3}
+          pointerEvents='none'
+          zIndex={1}
+        />
         <Container>
           <Flex
             w='full'
@@ -395,7 +459,6 @@ function Pricing() {
                     <PackageCard
                       key={pkg.serial}
                       pkg={pkg}
-                      isAddon
                       user={currentUser}
                       ssoUrl={runtimeConfig.ssoUrl}
                     />
