@@ -49,8 +49,12 @@ function formatPrice(
   }
   const amount = (cents / 100).toFixed(2);
   const symbol = currency.toUpperCase() === 'USD' ? '$' : currency;
-  if (interval === 'one_time') {return `${symbol}${amount} one-time`;}
-  if (interval === 'lifetime') {return `${symbol}${amount} lifetime`;}
+  if (interval === 'one_time') {
+    return `${symbol}${amount} one-time`;
+  }
+  if (interval === 'lifetime') {
+    return `${symbol}${amount} lifetime`;
+  }
   const intervalLabel = interval ? ` / ${interval}` : '';
   return `${symbol}${amount}${intervalLabel}`;
 }
@@ -97,11 +101,11 @@ function PackageCard({
   let buttonLabel: string;
 
   if (isAddon) {
-    buttonLabel = 'Add on';
+    buttonLabel = 'Buy';
   } else if (isFree) {
     buttonLabel = 'Get started';
   } else {
-    buttonLabel = 'Get Premium';
+    buttonLabel = 'Subscribe';
   }
 
   const isPaidClickable = !isFree && (hasProviders || !!user);
@@ -366,10 +370,7 @@ function Pricing() {
                     <PackageCardSkeleton />
                   </SimpleGrid>
                 ) : (
-                  <SimpleGrid
-                    columns={[1, null, subscriptions.data.length]}
-                    gap={6}
-                    w='full'>
+                  <SimpleGrid columns={[1, null, 2]} gap={6} w='full'>
                     {subscriptions.data.map((pkg) => (
                       <PackageCard
                         key={pkg.serial}
