@@ -48,6 +48,7 @@ interface NavItem {
 const menu: Array<NavItem> = [
   { label: 'features', href: '/#features' },
   { label: 'solutions', href: '/solutions', isDropdown: true },
+  { label: 'donut', href: '/donut' },
   { label: 'discover', href: '/search' },
   { label: 'pricing', href: '/pricing' },
   { label: 'docs', href: publicRuntimeConfig.docsUrl },
