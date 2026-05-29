@@ -77,17 +77,7 @@ export function RoomDetailContainer(props: Props) {
   };
 
   return (
-    <Layout
-      containerProps={{
-        bgSize: {
-          base: 'cover',
-          md: 'contain',
-        },
-        bgImage: {
-          base: '/assets/images/search-room-background-image-mobile.svg',
-          md: '/assets/images/detail-room-background-image.svg',
-        },
-      }}>
+    <Layout>
       <Container pt={6} minH='100vh'>
         <NextLink href='/search'>
           <HStack spacing={2} color='white' marginBottom={6}>

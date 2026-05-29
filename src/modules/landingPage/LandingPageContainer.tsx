@@ -16,7 +16,7 @@ import { UseCases } from './UseCases';
 
 export function LandingPageContainer() {
   return (
-    <Layout bgImage='/assets/images/background_desktop.svg'>
+    <Layout>
       <Container>
         <Hero />
         <AnimateOnView delay={0.3}>

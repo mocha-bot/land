@@ -18,8 +18,6 @@ import Button from '@/uikit/Button';
 import { Container } from '@/uikit/Container';
 import { Layout } from '@/uikit/Layout';
 
-import styles from './donut.module.css';
-
 const { publicRuntimeConfig } = getConfig();
 
 const cardStyle = {
@@ -123,11 +121,7 @@ function Donut() {
           },
         })}
       </Head>
-      <Layout containerProps={{ className: styles.bg }}>
-        <div className={`${styles.flare} ${styles.flareTopRight}`} />
-        <div className={`${styles.flare} ${styles.flareMiddleLeft}`} />
-        <div className={`${styles.flare} ${styles.flareBottomRight}`} />
-        <div className={styles.sparkles} />
+      <Layout>
         <Container>
           <Flex
             w='full'

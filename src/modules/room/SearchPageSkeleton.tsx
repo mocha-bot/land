@@ -49,14 +49,7 @@ function RoomCardSkeleton() {
 
 export function SearchPageSkeleton() {
   return (
-    <Layout
-      containerProps={{
-        bgSize: 'contain',
-        bgImage: {
-          base: '/assets/images/search-room-background-image-mobile.svg',
-          md: '/assets/images/search-room-background-image-desktop.svg',
-        },
-      }}>
+    <Layout>
       <Container pt={6} minH='100vh'>
         <NextLink href='/'>
           <HStack spacing={2} color='white'>

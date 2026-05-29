@@ -30,8 +30,6 @@ import Button from '@/uikit/Button';
 import { Container } from '@/uikit/Container';
 import { Layout } from '@/uikit/Layout';
 
-import styles from './pricing.module.css';
-
 const { publicRuntimeConfig } = getConfig();
 
 const cardStyle = {
@@ -284,11 +282,7 @@ function Pricing() {
           },
         })}
       </Head>
-      <Layout containerProps={{ className: styles.bg }}>
-        <div className={`${styles.flare} ${styles.flareTopLeft}`} />
-        <div className={`${styles.flare} ${styles.flareTopRight}`} />
-        <div className={`${styles.flare} ${styles.flareBottomCenter}`} />
-        <div className={styles.sparkles} />
+      <Layout>
         <Container>
           <Flex
             w='full'

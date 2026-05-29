@@ -7,9 +7,9 @@ import Button from '@/uikit/Button';
 import { Container } from '@/uikit/Container';
 import { Layout } from '@/uikit/Layout';
 
-import { SolutionCard } from './SolutionCard';
 import type { Solution } from './data';
 import { getRelatedSolutions } from './data';
+import { SolutionCard } from './SolutionCard';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -34,7 +34,11 @@ function FeatureRow({ title, body, index }: FeatureRowProps) {
           <Text color='whiteAlpha.400' fontSize='sm' fontWeight='medium'>
             0{index + 1}
           </Text>
-          <Text color='white' fontSize={{ base: '22px', md: '28px' }} fontWeight='semibold' lineHeight='1.3'>
+          <Text
+            color='white'
+            fontSize={{ base: '22px', md: '28px' }}
+            fontWeight='semibold'
+            lineHeight='1.3'>
             {title}
           </Text>
           <Text color='whiteAlpha.600' fontSize='md' lineHeight='tall'>
@@ -54,9 +58,17 @@ function FeatureRow({ title, body, index }: FeatureRowProps) {
           flexDirection='column'
           gap={3}>
           {/* Mock channel header */}
-          <Flex alignItems='center' gap={2} pb={3} borderBottom='1px solid rgba(255,255,255,0.06)'>
-            <Text color='whiteAlpha.400' fontSize='sm'>#</Text>
-            <Text color='whiteAlpha.700' fontSize='sm' fontWeight='medium'>mocha-room</Text>
+          <Flex
+            alignItems='center'
+            gap={2}
+            pb={3}
+            borderBottom='1px solid rgba(255,255,255,0.06)'>
+            <Text color='whiteAlpha.400' fontSize='sm'>
+              #
+            </Text>
+            <Text color='whiteAlpha.700' fontSize='sm' fontWeight='medium'>
+              mocha-room
+            </Text>
             <Box
               ml='auto'
               px={2}
@@ -64,12 +76,17 @@ function FeatureRow({ title, body, index }: FeatureRowProps) {
               borderRadius='full'
               backgroundColor='rgba(2, 173, 255, 0.15)'
               border='1px solid rgba(2, 173, 255, 0.3)'>
-              <Text color='blue.300' fontSize='xs'>🔗 3 servers</Text>
+              <Text color='blue.300' fontSize='xs'>
+                🔗 3 servers
+              </Text>
             </Box>
           </Flex>
           {/* Mock messages */}
           {[
-            { server: 'Server A', msg: 'Anyone available for a quick session?' },
+            {
+              server: 'Server A',
+              msg: 'Anyone available for a quick session?',
+            },
             { server: 'Server B', msg: '👋 I\'m in! Let\'s go' },
             { server: 'Server C', msg: 'Count me in too' },
           ].map(({ server, msg }) => (
@@ -83,11 +100,17 @@ function FeatureRow({ title, body, index }: FeatureRowProps) {
                 display='flex'
                 alignItems='center'
                 justifyContent='center'>
-                <Text fontSize='9px' color='whiteAlpha.600'>{server[7]}</Text>
+                <Text fontSize='9px' color='whiteAlpha.600'>
+                  {server[7]}
+                </Text>
               </Box>
               <Box>
-                <Text fontSize='xs' color='whiteAlpha.400' mb={0.5}>{server}</Text>
-                <Text fontSize='sm' color='whiteAlpha.800'>{msg}</Text>
+                <Text fontSize='xs' color='whiteAlpha.400' mb={0.5}>
+                  {server}
+                </Text>
+                <Text fontSize='sm' color='whiteAlpha.800'>
+                  {msg}
+                </Text>
               </Box>
             </Flex>
           ))}
@@ -101,14 +124,15 @@ type SolutionDetailContainerProps = {
   solution: Solution;
 };
 
-export function SolutionDetailContainer({ solution }: SolutionDetailContainerProps) {
+export function SolutionDetailContainer({
+  solution,
+}: SolutionDetailContainerProps) {
   const related = getRelatedSolutions(solution.relatedSlugs);
 
   return (
-    <Layout bgImage='/assets/images/background_desktop.svg'>
+    <Layout>
       <Container>
         <Flex w='full' flexDirection='column' color='white'>
-
           {/* Hero */}
           <AnimateOnView>
             <Flex
@@ -132,7 +156,10 @@ export function SolutionDetailContainer({ solution }: SolutionDetailContainerPro
                   fontWeight='medium'>
                   {solution.title}
                 </Text>
-                <Text color='whiteAlpha.600' fontSize={{ base: 'md', md: 'lg' }} lineHeight='tall'>
+                <Text
+                  color='whiteAlpha.600'
+                  fontSize={{ base: 'md', md: 'lg' }}
+                  lineHeight='tall'>
                   {solution.tagline}
                 </Text>
               </Flex>
@@ -168,7 +195,11 @@ export function SolutionDetailContainer({ solution }: SolutionDetailContainerPro
               maxW='3xl'
               mx='auto'
               mb={{ base: 12, md: 20 }}>
-              <Text color='whiteAlpha.700' fontSize={{ base: 'md', md: 'lg' }} lineHeight='tall' textAlign='center'>
+              <Text
+                color='whiteAlpha.700'
+                fontSize={{ base: 'md', md: 'lg' }}
+                lineHeight='tall'
+                textAlign='center'>
                 {solution.description}
               </Text>
             </Box>
@@ -177,7 +208,12 @@ export function SolutionDetailContainer({ solution }: SolutionDetailContainerPro
           {/* Features */}
           <Flex flexDirection='column' gap={0} mb={{ base: 16, md: 24 }}>
             {solution.features.map((feature, i) => (
-              <FeatureRow key={feature.title} title={feature.title} body={feature.body} index={i} />
+              <FeatureRow
+                key={feature.title}
+                title={feature.title}
+                body={feature.body}
+                index={i}
+              />
             ))}
           </Flex>
 
@@ -194,11 +230,19 @@ export function SolutionDetailContainer({ solution }: SolutionDetailContainerPro
               backgroundColor='rgba(2, 173, 255, 0.06)'
               border='1px solid rgba(2, 173, 255, 0.15)'
               textAlign='center'>
-              <Text fontSize={{ base: '24px', md: '36px' }} fontWeight='medium' maxW='xl'>
+              <Text
+                fontSize={{ base: '24px', md: '36px' }}
+                fontWeight='medium'
+                maxW='xl'>
                 Ready to connect your communities?
               </Text>
-              <Text color='whiteAlpha.600' fontSize='md' maxW='lg' lineHeight='tall'>
-                Add Mocha to your server in seconds. No data migration, no server merging — just rooms that connect.
+              <Text
+                color='whiteAlpha.600'
+                fontSize='md'
+                maxW='lg'
+                lineHeight='tall'>
+                Add Mocha to your server in seconds. No data migration, no
+                server merging — just rooms that connect.
               </Text>
               <Button
                 as='a'
@@ -217,7 +261,9 @@ export function SolutionDetailContainer({ solution }: SolutionDetailContainerPro
             <AnimateOnView delay={0.1}>
               <Flex flexDirection='column' gap={6} mb={{ base: 16, md: 24 }}>
                 <Flex alignItems='center' justifyContent='space-between'>
-                  <Text fontSize='xl' fontWeight='semibold'>Related solutions</Text>
+                  <Text fontSize='xl' fontWeight='semibold'>
+                    Related solutions
+                  </Text>
                   <Box
                     as={NextLink}
                     href='/solutions'
