@@ -48,9 +48,9 @@ export default function SolutionDetailPage({ solution, locale }: Props) {
             images: [
               {
                 url: DEFAULT_OG_IMAGE,
-                width: 512,
-                height: 512,
-                alt: 'Mocha Bot logo',
+                width: 1200,
+                height: 630,
+                alt: 'Mocha Bot Banner',
               },
             ],
           },

@@ -3,7 +3,12 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { generateNextSeo } from 'next-seo/pages';
 import Head from 'next/head';
 
-import { DEFAULT_OG_IMAGE, buildCanonical, buildLanguageAlternates, ogLocaleFor } from '@/config/seo';
+import {
+  buildCanonical,
+  buildLanguageAlternates,
+  DEFAULT_OG_IMAGE,
+  ogLocaleFor,
+} from '@/config/seo';
 import { SolutionsContainer } from '@/modules/solutions/SolutionsContainer';
 
 type Props = {
@@ -31,7 +36,14 @@ export default function SolutionsPage({ locale }: Props) {
             locale: ogLocaleFor(locale),
             title: TITLE,
             description: DESCRIPTION,
-            images: [{ url: DEFAULT_OG_IMAGE, width: 512, height: 512, alt: 'Mocha Bot logo' }],
+            images: [
+              {
+                url: DEFAULT_OG_IMAGE,
+                width: 1200,
+                height: 630,
+                alt: 'Mocha Bot Banner',
+              },
+            ],
           },
         })}
       </Head>
