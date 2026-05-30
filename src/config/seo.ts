@@ -9,12 +9,12 @@ export const SITE_NAME = 'Mocha Bot';
 export const SITE_DESCRIPTION =
   'Mocha is a Discord bot for multi-chat cross-server messaging. Create public or private rooms, connect communities, and send messages to multiple channels at once.';
 
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/images/logo-mocha.png`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/images/mocha-banner-og.png`;
 
 export const SUPPORTED_LOCALES = ['en', 'id'] as const;
 export const DEFAULT_LOCALE = 'en';
 
-export type SupportedLocale = (typeof SUPPORTED_LOCALES)[number];
+export type SupportedLocale = typeof SUPPORTED_LOCALES[number];
 
 const OG_LOCALE_BY_LOCALE: Record<SupportedLocale, string> = {
   en: 'en_US',
@@ -62,7 +62,7 @@ export const ogLocaleFor = (locale?: string): string => {
 
 const defaultLinkTags: LinkTag[] = [
   { rel: 'icon', href: '/favicon.ico' },
-  { rel: 'apple-touch-icon', href: '/assets/images/logo-mocha.png' },
+  { rel: 'apple-touch-icon', href: '/assets/images/mocha-banner-og.png' },
   { rel: 'manifest', href: '/site.webmanifest' },
 ];
 
