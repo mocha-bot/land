@@ -27,9 +27,12 @@ import { buildCanonical, ogLocaleFor } from '@/config/seo';
 import {
   useAddonPackages,
   useCurrentUser,
+  useGuildAddons,
   useGuildPackages,
+  useRoomAddons,
   useRoomPackages,
   useSubscriptionPackages,
+  useUserAddons,
   useUserPackages,
 } from '@/modules/pricing/pricingHook';
 import type { CurrentUser } from '@/modules/pricing/pricingService';
@@ -237,12 +240,14 @@ function PackageCard({
 
 function TabPlanContent({
   pkgs,
+  addons,
   isLoading,
   emptyText,
   user,
   ssoUrl,
 }: {
   pkgs: Package[];
+  addons: Package[];
   isLoading: boolean;
   emptyText: string;
   user: CurrentUser | null | undefined;
@@ -250,26 +255,56 @@ function TabPlanContent({
 }) {
   if (isLoading) {
     return (
-      <SimpleGrid columns={[1, null, 3]} gap={6} w='full'>
-        <PackageCardSkeleton />
-        <PackageCardSkeleton />
-        <PackageCardSkeleton />
-      </SimpleGrid>
-    );
-  }
-  if (pkgs.length === 0) {
-    return (
-      <Text color='whiteAlpha.500' fontSize='sm'>
-        {emptyText}
-      </Text>
+      <VStack alignItems='flex-start' spacing={8} w='full'>
+        <SimpleGrid columns={[1, null, 3]} gap={6} w='full'>
+          <PackageCardSkeleton />
+          <PackageCardSkeleton />
+          <PackageCardSkeleton />
+        </SimpleGrid>
+      </VStack>
     );
   }
   return (
-    <SimpleGrid columns={[1, null, 2]} gap={6} w='full'>
-      {pkgs.map((pkg) => (
-        <PackageCard key={pkg.serial} pkg={pkg} user={user} ssoUrl={ssoUrl} />
-      ))}
-    </SimpleGrid>
+    <VStack alignItems='flex-start' spacing={10} w='full'>
+      {pkgs.length === 0 ? (
+        <Text color='whiteAlpha.500' fontSize='sm'>
+          {emptyText}
+        </Text>
+      ) : (
+        <SimpleGrid columns={[1, null, 2]} gap={6} w='full'>
+          {pkgs.map((pkg) => (
+            <PackageCard
+              key={pkg.serial}
+              pkg={pkg}
+              user={user}
+              ssoUrl={ssoUrl}
+            />
+          ))}
+        </SimpleGrid>
+      )}
+      {addons.length > 0 && (
+        <VStack alignItems='flex-start' spacing={4} w='full'>
+          <Text
+            color='whiteAlpha.600'
+            fontSize='sm'
+            fontWeight='semibold'
+            textTransform='uppercase'
+            letterSpacing='wider'>
+            Add-ons
+          </Text>
+          <SimpleGrid columns={[1, null, 2]} gap={6} w='full'>
+            {addons.map((pkg) => (
+              <PackageCard
+                key={pkg.serial}
+                pkg={pkg}
+                user={user}
+                ssoUrl={ssoUrl}
+              />
+            ))}
+          </SimpleGrid>
+        </VStack>
+      )}
+    </VStack>
   );
 }
 
@@ -335,6 +370,9 @@ function Pricing() {
   const userPkgs = useUserPackages();
   const guildPkgs = useGuildPackages();
   const roomPkgs = useRoomPackages();
+  const userAddons = useUserAddons();
+  const guildAddons = useGuildAddons();
+  const roomAddons = useRoomAddons();
 
   const { isLoading } = subscriptions;
   const hasNoData =
@@ -458,6 +496,7 @@ function Pricing() {
                     <TabPanel p={0}>
                       <TabPlanContent
                         pkgs={userPkgs.data}
+                        addons={userAddons.data}
                         isLoading={isLoading}
                         emptyText='No user plans available yet.'
                         user={currentUser}
@@ -467,6 +506,7 @@ function Pricing() {
                     <TabPanel p={0}>
                       <TabPlanContent
                         pkgs={guildPkgs.data}
+                        addons={guildAddons.data}
                         isLoading={isLoading}
                         emptyText='No guild plans available yet.'
                         user={currentUser}
@@ -476,6 +516,7 @@ function Pricing() {
                     <TabPanel p={0}>
                       <TabPlanContent
                         pkgs={roomPkgs.data}
+                        addons={roomAddons.data}
                         isLoading={isLoading}
                         emptyText='No room plans available yet.'
                         user={currentUser}
@@ -484,25 +525,6 @@ function Pricing() {
                     </TabPanel>
                   </TabPanels>
                 </Tabs>
-              </VStack>
-            )}
-
-            {/* Add-ons */}
-            {!isLoading && addons.data.length > 0 && (
-              <VStack alignItems='flex-start' spacing={8} w='full'>
-                <Heading as='h2' size='lg' color='white'>
-                  Add-ons
-                </Heading>
-                <SimpleGrid columns={[1, null, 2]} gap={6} w='full'>
-                  {addons.data.map((pkg) => (
-                    <PackageCard
-                      key={pkg.serial}
-                      pkg={pkg}
-                      user={currentUser}
-                      ssoUrl={runtimeConfig.ssoUrl}
-                    />
-                  ))}
-                </SimpleGrid>
               </VStack>
             )}
 

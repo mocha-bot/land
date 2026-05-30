@@ -60,6 +60,42 @@ export const useRoomPackages = () => {
   };
 };
 
+export const useUserAddons = () => {
+  const query = usePackagesQuery();
+  return {
+    ...query,
+    data:
+      query.data?.filter(
+        (p) =>
+          p.type === 'addon' && (p.binding_type === 'user' || !p.binding_type),
+      ) ?? [],
+  };
+};
+
+export const useGuildAddons = () => {
+  const query = usePackagesQuery();
+  return {
+    ...query,
+    data:
+      query.data?.filter(
+        (p) =>
+          p.type === 'addon' && (p.binding_type === 'guild' || !p.binding_type),
+      ) ?? [],
+  };
+};
+
+export const useRoomAddons = () => {
+  const query = usePackagesQuery();
+  return {
+    ...query,
+    data:
+      query.data?.filter(
+        (p) =>
+          p.type === 'addon' && (p.binding_type === 'room' || !p.binding_type),
+      ) ?? [],
+  };
+};
+
 export const useCurrentUser = () => {
   return useQuery({
     queryKey: ['auth', 'me'],
