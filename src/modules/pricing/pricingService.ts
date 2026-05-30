@@ -36,8 +36,15 @@ const CheckoutSchema = z.object({
 
 export const getCheckoutURL = async (
   packageSerial: string,
+  opts?: { bindingType?: string; bindingRef?: string },
 ): Promise<string> => {
-  const url = `${publicRuntimeConfig.apiBaseUrl}/api/v1/payment/checkout/${packageSerial}`;
+  const params = new URLSearchParams();
+  if (opts?.bindingType) {params.set('binding_type', opts.bindingType);}
+  if (opts?.bindingRef) {params.set('binding_ref', opts.bindingRef);}
+  const qs = params.toString();
+  const url = `${
+    publicRuntimeConfig.apiBaseUrl
+  }/api/v1/payment/checkout/${packageSerial}${qs ? `?${qs}` : ''}`;
   const response = await axios(
     { method: 'GET', url, withCredentials: true },
     CheckoutSchema,
@@ -64,6 +71,7 @@ const PackageSchema = z.object({
     .array(ProviderPlanSchema)
     .nullish()
     .transform((v) => v ?? []),
+  binding_type: z.enum(['user', 'guild', 'room']).default('user'),
 });
 
 export const ApiPackagesSchema = z.object({

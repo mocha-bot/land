@@ -6,6 +6,11 @@ import {
   Link,
   SimpleGrid,
   Skeleton,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
   Text,
   VStack,
 } from '@chakra-ui/react';
@@ -22,7 +27,10 @@ import { buildCanonical, ogLocaleFor } from '@/config/seo';
 import {
   useAddonPackages,
   useCurrentUser,
+  useGuildPackages,
+  useRoomPackages,
   useSubscriptionPackages,
+  useUserPackages,
 } from '@/modules/pricing/pricingHook';
 import type { CurrentUser } from '@/modules/pricing/pricingService';
 import type { Package } from '@/modules/pricing/types';
@@ -57,6 +65,29 @@ function formatPrice(
   }
   const intervalLabel = interval ? ` / ${interval}` : '';
   return `${symbol}${amount}${intervalLabel}`;
+}
+
+const DESTINATION_LABELS: Record<string, { label: string; color: string }> = {
+  user: { label: 'For Users', color: 'blue.300' },
+  guild: { label: 'For Guilds', color: 'purple.300' },
+  room: { label: 'For Rooms', color: 'green.300' },
+};
+
+function DestinationBadge({ bindingType }: { bindingType: string }) {
+  const d = DESTINATION_LABELS[bindingType] ?? {
+    label: bindingType,
+    color: 'gray.400',
+  };
+  return (
+    <Text
+      fontSize='xs'
+      color={d.color}
+      fontWeight='semibold'
+      textTransform='uppercase'
+      letterSpacing='wider'>
+      {d.label}
+    </Text>
+  );
 }
 
 function PackageCard({
@@ -109,6 +140,7 @@ function PackageCard({
   return (
     <Box {...cardStyle} display='flex' flexDirection='column' gap={6}>
       <VStack alignItems='flex-start' spacing={2}>
+        <DestinationBadge bindingType={pkg.binding_type} />
         <Heading as='h3' size='md' color='white'>
           {pkg.name}
         </Heading>
@@ -203,6 +235,44 @@ function PackageCard({
   );
 }
 
+function TabPlanContent({
+  pkgs,
+  isLoading,
+  emptyText,
+  user,
+  ssoUrl,
+}: {
+  pkgs: Package[];
+  isLoading: boolean;
+  emptyText: string;
+  user: CurrentUser | null | undefined;
+  ssoUrl: string;
+}) {
+  if (isLoading) {
+    return (
+      <SimpleGrid columns={[1, null, 3]} gap={6} w='full'>
+        <PackageCardSkeleton />
+        <PackageCardSkeleton />
+        <PackageCardSkeleton />
+      </SimpleGrid>
+    );
+  }
+  if (pkgs.length === 0) {
+    return (
+      <Text color='whiteAlpha.500' fontSize='sm'>
+        {emptyText}
+      </Text>
+    );
+  }
+  return (
+    <SimpleGrid columns={[1, null, 2]} gap={6} w='full'>
+      {pkgs.map((pkg) => (
+        <PackageCard key={pkg.serial} pkg={pkg} user={user} ssoUrl={ssoUrl} />
+      ))}
+    </SimpleGrid>
+  );
+}
+
 function PackageCardSkeleton() {
   return (
     <Box {...cardStyle}>
@@ -262,6 +332,9 @@ function Pricing() {
   const subscriptions = useSubscriptionPackages();
   const addons = useAddonPackages();
   const { data: currentUser } = useCurrentUser();
+  const userPkgs = useUserPackages();
+  const guildPkgs = useGuildPackages();
+  const roomPkgs = useRoomPackages();
 
   const { isLoading } = subscriptions;
   const hasNoData =
@@ -359,24 +432,58 @@ function Pricing() {
                 <Heading as='h2' size='lg' color='white'>
                   Subscription Plans
                 </Heading>
-                {isLoading ? (
-                  <SimpleGrid columns={[1, null, 3]} gap={6} w='full'>
-                    <PackageCardSkeleton />
-                    <PackageCardSkeleton />
-                    <PackageCardSkeleton />
-                  </SimpleGrid>
-                ) : (
-                  <SimpleGrid columns={[1, null, 2]} gap={6} w='full'>
-                    {subscriptions.data.map((pkg) => (
-                      <PackageCard
-                        key={pkg.serial}
-                        pkg={pkg}
+                <Tabs variant='soft-rounded' colorScheme='whiteAlpha' w='full'>
+                  <TabList gap={2} flexWrap='wrap'>
+                    <Tab
+                      color='whiteAlpha.700'
+                      _selected={{ bg: 'whiteAlpha.200', color: 'white' }}>
+                      Users{' '}
+                      {userPkgs.data.length > 0 && `(${userPkgs.data.length})`}
+                    </Tab>
+                    <Tab
+                      color='whiteAlpha.700'
+                      _selected={{ bg: 'whiteAlpha.200', color: 'white' }}>
+                      Guilds{' '}
+                      {guildPkgs.data.length > 0 &&
+                        `(${guildPkgs.data.length})`}
+                    </Tab>
+                    <Tab
+                      color='whiteAlpha.700'
+                      _selected={{ bg: 'whiteAlpha.200', color: 'white' }}>
+                      Rooms{' '}
+                      {roomPkgs.data.length > 0 && `(${roomPkgs.data.length})`}
+                    </Tab>
+                  </TabList>
+                  <TabPanels mt={6}>
+                    <TabPanel p={0}>
+                      <TabPlanContent
+                        pkgs={userPkgs.data}
+                        isLoading={isLoading}
+                        emptyText='No user plans available yet.'
                         user={currentUser}
                         ssoUrl={runtimeConfig.ssoUrl}
                       />
-                    ))}
-                  </SimpleGrid>
-                )}
+                    </TabPanel>
+                    <TabPanel p={0}>
+                      <TabPlanContent
+                        pkgs={guildPkgs.data}
+                        isLoading={isLoading}
+                        emptyText='No guild plans available yet.'
+                        user={currentUser}
+                        ssoUrl={runtimeConfig.ssoUrl}
+                      />
+                    </TabPanel>
+                    <TabPanel p={0}>
+                      <TabPlanContent
+                        pkgs={roomPkgs.data}
+                        isLoading={isLoading}
+                        emptyText='No room plans available yet.'
+                        user={currentUser}
+                        ssoUrl={runtimeConfig.ssoUrl}
+                      />
+                    </TabPanel>
+                  </TabPanels>
+                </Tabs>
               </VStack>
             )}
 

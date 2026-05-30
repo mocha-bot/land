@@ -1,5 +1,7 @@
 export type PackageType = 'subscription' | 'addon';
 
+export type BindingDestination = 'user' | 'guild' | 'room';
+
 export interface ProviderPlan {
   provider: string;
   checkout_url: string;
@@ -16,4 +18,5 @@ export interface Package {
   features: string[];
   sort_order: number;
   providers: ProviderPlan[];
+  binding_type: BindingDestination;
 }

@@ -27,6 +27,39 @@ export const useAddonPackages = () => {
   };
 };
 
+export const useUserPackages = () => {
+  const query = usePackagesQuery();
+  return {
+    ...query,
+    data:
+      query.data?.filter(
+        (p) => p.type === 'subscription' && p.binding_type === 'user',
+      ) ?? [],
+  };
+};
+
+export const useGuildPackages = () => {
+  const query = usePackagesQuery();
+  return {
+    ...query,
+    data:
+      query.data?.filter(
+        (p) => p.type === 'subscription' && p.binding_type === 'guild',
+      ) ?? [],
+  };
+};
+
+export const useRoomPackages = () => {
+  const query = usePackagesQuery();
+  return {
+    ...query,
+    data:
+      query.data?.filter(
+        (p) => p.type === 'subscription' && p.binding_type === 'room',
+      ) ?? [],
+  };
+};
+
 export const useCurrentUser = () => {
   return useQuery({
     queryKey: ['auth', 'me'],
