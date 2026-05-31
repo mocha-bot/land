@@ -6,12 +6,13 @@ const { publicRuntimeConfig } = getConfig();
 
 const productItems: FooterInformationItem[] = [
   { title: 'Solutions', href: '/solutions' },
-  { title: 'Search Rooms', href: '/search' },
+  { title: 'Discovery', href: '/search' },
   { title: 'Pricing', href: '/pricing' },
-  { title: 'Documentation', href: publicRuntimeConfig.docsUrl },
+  { title: 'Donut Call', href: '/donut' },
 ];
 
 const resourceItems: FooterInformationItem[] = [
+  { title: 'Documentation', href: publicRuntimeConfig.docsUrl },
   { title: 'Support Us', href: publicRuntimeConfig.supportUrl },
   { title: 'Invite Bot', href: publicRuntimeConfig.botInvitationUrl },
 ];
