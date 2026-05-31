@@ -19,7 +19,7 @@ function PrivacyPolicy() {
         {generateNextSeo({
           title: 'Privacy Policy',
           description:
-            'Read how Mocha collects, uses, and protects your information. Details on log files, cookies, third-party advertisers, and children information.',
+            'Read how Mocha collects, uses, and protects your information. Details on data collection, third-party services, GDPR rights, and children\'s privacy.',
           canonical,
           languageAlternates: buildLanguageAlternates('/privacy-policy'),
           openGraph: {
@@ -32,90 +32,152 @@ function PrivacyPolicy() {
       <Container maxW='3xl'>
         <VStack spacing={2} alignItems='flex-start'>
           <Heading>Privacy Policy for Mocha</Heading>
+          <Text>Last updated: June 2026</Text>
           <Text>
-            At Mocha, accessible from https://mocha-bot.xyz/, one of our main
-            priorities is the privacy of our visitors. This Privacy Policy
-            document contains types of information that is collected and
-            recorded by Mocha and how we use it.
+            This Privacy Policy explains how Mocha (&quot;we&quot;,
+            &quot;us&quot;, &quot;our&quot;), accessible at
+            https://mocha-bot.xyz/, collects, uses, stores, and protects your
+            information when you use the Service.
+          </Text>
+
+          <Heading>What Data We Collect</Heading>
+          <Text>
+            When you use Mocha, we may collect and store the following:
           </Text>
           <Text>
-            If you have additional questions or require more information about
-            our Privacy Policy, do not hesitate to contact us.
-          </Text>
-          <Heading>Log Files</Heading>
-          <Text>
-            Mocha follows a standard procedure of using log files. These files
-            log visitors when they visit websites. All hosting companies do this
-            and a part of hosting services analytics. The information collected
-            by log files include internet protocol (IP) addresses, browser type,
-            Internet Service Provider (ISP), date and time stamp, referring/exit
-            pages, and possibly the number of clicks. These are not linked to
-            any information that is personally identifiable. The purpose of the
-            information is for analyzing trends, administering the site,
-            tracking users movement on the website, and gathering demographic
-            information. Our Privacy Policy was created with the help of the{' '}
-            <a href='https://www.privacypolicyonline.com/privacy-policy-generator/'>
-              Privacy Policy Generator
-            </a>
-            .
-          </Text>
-          <Heading>Privacy Policies</Heading>
-          <Text>
-            You may consult this list to find the Privacy Policy for each of the
-            advertising partners of Mocha.
+            — Discord user IDs, usernames, and display names — used to identify
+            users across rooms and sessions
           </Text>
           <Text>
-            Third-party ad servers or ad networks uses technologies like
-            cookies, JavaScript, or Web Beacons that are used in their
-            respective advertisements and links that appear on Mocha, which are
-            sent directly to users browser. They automatically receive your IP
-            address when this occurs. These technologies are used to measure the
-            effectiveness of their advertising campaigns and/or to personalize
-            the advertising content that you see on websites that you visit.
+            — Discord guild (server) IDs and names — used to associate guilds
+            with rooms and subscriptions
           </Text>
           <Text>
-            Note that Mocha has no access to or control over these cookies that
-            are used by third-party advertisers.
-          </Text>
-          <Heading>Third Party Privacy Policies</Heading>
-          <Text>
-            Mocha Privacy Policy does not apply to other advertisers or
-            websites. Thus, we are advising you to consult the respective
-            Privacy Policies of these third-party ad servers for more detailed
-            information. It may include their practices and instructions about
-            how to opt-out of certain options.{' '}
+            — Discord channel IDs — used to manage room-channel connections
           </Text>
           <Text>
-            You can choose to disable cookies through your individual browser
-            options. To know more detailed information about cookie management
-            with specific web browsers, it can be found at the browsers
-            respective websites. What Are Cookies?
-          </Text>
-          <Heading>Children Information</Heading>
-          <Text>
-            Another part of our priority is adding protection for children while
-            using the internet. We encourage parents and guardians to observe,
-            participate in, and/or monitor and guide their online activity.
+            — Message metadata (sender ID, channel ID, timestamp) — used to
+            relay messages between connected servers. We do not store message
+            content beyond what is necessary for delivery.
           </Text>
           <Text>
-            Mocha does not knowingly collect any Personal Identifiable
-            Information from children under the age of 13. If you think that
-            your child provided this kind of information on our website, we
-            strongly encourage you to contact us immediately and we will do our
-            best efforts to promptly remove such information from our records.
+            — Subscription and entitlement data — plan type, binding reference,
+            billing status, sourced from Whop
           </Text>
-          <Heading>Online Privacy Policy Only</Heading>
           <Text>
-            This Privacy Policy applies only to our online activities and is
-            valid for visitors to our website with regards to the information
-            that they shared and/or collect in Mocha. This policy is not
-            applicable to any information collected offline or via channels
-            other than this website.
+            — Invitation link usage — hash, alias, usage count, and expiry
           </Text>
-          <Heading>Consent</Heading>
           <Text>
-            By using our website, you here by consent to our Privacy Policy and
-            agree to its Terms and Conditions.
+            — Moderation records — room bans, mutes, moderator assignments, and
+            audit logs
+          </Text>
+          <Text>
+            — Log files — IP addresses, browser type, timestamps, and referring
+            pages for security and analytics
+          </Text>
+
+          <Heading>How We Use Your Data</Heading>
+          <Text>We use the data collected to:</Text>
+          <Text>
+            — Operate and deliver the Service, including cross-server room
+            relay, invitations, Donut matchmaking, and moderation
+          </Text>
+          <Text>— Manage subscriptions and entitlements</Text>
+          <Text>
+            — Enforce our Terms of Service and Acceptable Use policies
+          </Text>
+          <Text>— Improve the reliability and performance of the Service</Text>
+          <Text>— Respond to support requests</Text>
+
+          <Heading>Third-Party Services</Heading>
+          <Text>
+            We share data with the following third parties only to the extent
+            necessary to operate the Service:
+          </Text>
+          <Text>
+            — Discord — the platform through which the bot operates.
+            Discord&apos;s Privacy Policy applies to data Discord collects
+            directly.
+          </Text>
+          <Text>
+            — Whop (whop.com) — our payment processor. Whop handles all payment
+            data. We do not store credit card or payment details. Whop&apos;s
+            Privacy Policy applies to payment data.
+          </Text>
+          <Text>
+            We do not sell, rent, or share your data with advertisers or
+            unrelated third parties.
+          </Text>
+
+          <Heading>Cookies</Heading>
+          <Text>
+            The Mocha website may use session cookies for authentication (login
+            state) and analytics. You can disable cookies through your browser
+            settings, though this may affect site functionality.
+          </Text>
+
+          <Heading>Data Retention</Heading>
+          <Text>
+            We retain your data for as long as your account or subscription is
+            active, or as long as necessary to provide the Service. Moderation
+            records (bans, audit logs) are retained for the lifetime of the room
+            they belong to. You may request deletion of your data by contacting
+            us — see the Contact section below.
+          </Text>
+
+          <Heading>Your Rights (EU/EEA Users — GDPR)</Heading>
+          <Text>
+            If you are located in the European Union or EEA, you have the
+            following rights under the General Data Protection Regulation
+            (GDPR):
+          </Text>
+          <Text>
+            — Right of access — request a copy of the data we hold about you
+          </Text>
+          <Text>
+            — Right to rectification — request correction of inaccurate data
+          </Text>
+          <Text>
+            — Right to erasure — request deletion of your data (&quot;right to
+            be forgotten&quot;)
+          </Text>
+          <Text>
+            — Right to data portability — request your data in a
+            machine-readable format
+          </Text>
+          <Text>
+            — Right to object — object to processing of your data in certain
+            circumstances
+          </Text>
+          <Text>
+            — Right to restrict processing — request that we limit how we use
+            your data
+          </Text>
+          <Text>
+            To exercise any of these rights, contact us through our official
+            Discord server or the support channels listed at
+            https://mocha-bot.xyz/. We will respond within 30 days.
+          </Text>
+
+          <Heading>Children</Heading>
+          <Text>
+            Mocha does not knowingly collect personal information from children
+            under the age of 13. If you believe a child has provided personal
+            information, contact us immediately and we will remove it promptly.
+          </Text>
+
+          <Heading>Changes to This Policy</Heading>
+          <Text>
+            We may update this Privacy Policy from time to time. Material
+            changes will be communicated through the Service or on this page
+            with an updated effective date.
+          </Text>
+
+          <Heading>Contact</Heading>
+          <Text>
+            For privacy-related questions or to exercise your rights, contact us
+            through our official Discord server or the support channels listed
+            at https://mocha-bot.xyz/.
           </Text>
         </VStack>
       </Container>

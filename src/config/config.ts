@@ -27,6 +27,7 @@ const legalItems: FooterInformationItem[] = [
   { title: 'Terms of Service', href: '/terms-of-service' },
   { title: 'Privacy Policy', href: '/privacy-policy' },
   { title: 'Refund Policy', href: '/refund-policy' },
+  { title: 'EULA', href: '/eula' },
 ];
 
 const informations: FooterInformation[] = [

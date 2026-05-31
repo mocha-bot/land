@@ -32,9 +32,10 @@ function TermsOfService() {
       <Container maxW='3xl'>
         <VStack spacing={2} alignItems='flex-start'>
           <Heading>Terms of Service for Mocha</Heading>
+          <Text>Last updated: June 2026</Text>
           <Text>
             These Terms of Service (&quot;Terms&quot;) govern your access to and
-            use of Mocha, a Discord bot and accompanying website available at{' '}
+            use of Mocha, a Discord bot and accompanying platform available at
             https://mocha-bot.xyz/ (collectively, the &quot;Service&quot;). By
             using the Service, you agree to be bound by these Terms. If you do
             not agree, do not use the Service.
@@ -52,106 +53,123 @@ function TermsOfService() {
 
           <Heading>Description of Service</Heading>
           <Text>
-            Mocha is a Discord bot that connects communities through
-            cross-server &quot;rooms&quot;, enabling shared channels,
-            broadcasts, and other community features. Some functionality is
-            available for free; additional features may be offered as part of a
-            paid premium plan.
+            Mocha is a Discord bot and platform that connects communities
+            through cross-server &quot;rooms&quot; — shared community hubs that
+            multiple Discord servers can join simultaneously. Features include
+            cross-server channels, invitation links, Donut matchmaking
+            (automated member pairing), room moderation, welcome messages, and
+            personalization. Some functionality is available for free;
+            additional features require a paid subscription.
           </Text>
 
           <Heading>Eligibility</Heading>
           <Text>
             You must be at least 13 years old (or the minimum age required in
             your jurisdiction to use Discord) to use Mocha. By using the
-            Service, you also agree to comply with the{' '}
-            <a href='https://discord.com/terms'>Discord Terms of Service</a>{' '}
-            and{' '}
-            <a href='https://discord.com/guidelines'>
-              Discord Community Guidelines
-            </a>
-            .
+            Service, you also agree to comply with the Discord Terms of Service
+            and Discord Community Guidelines.
+          </Text>
+
+          <Heading>Subscriptions and Payments</Heading>
+          <Text>
+            Premium features are offered as paid subscriptions processed through
+            Whop (whop.com), our third-party payment provider. Subscriptions are
+            bound to a specific binding — a room, a Discord guild (server), or
+            an individual user account — as selected at the time of purchase. A
+            room subscription applies only to that room; a guild subscription
+            applies only to that Discord server. Subscriptions renew
+            automatically at the end of each billing period unless cancelled.
+            You may cancel at any time through your Whop account or via the
+            /subscribe command in Discord. Cancellation takes effect at the end
+            of the current billing period, after which your binding reverts to
+            the free tier. Refund eligibility is governed by our Refund Policy.
+          </Text>
+
+          <Heading>EU Right of Withdrawal</Heading>
+          <Text>
+            If you are located in the European Union, you have the right to
+            withdraw from a purchase within 14 days without giving any reason
+            (the &quot;cooling-off period&quot;). However, by completing a
+            purchase and requesting immediate access to the premium features,
+            you explicitly consent to the immediate performance of the contract
+            and acknowledge that you lose your right of withdrawal once the
+            service has been fully performed or access has been granted. If you
+            do not wish to waive this right, do not use the premium features
+            until the 14-day cooling-off period has expired.
           </Text>
 
           <Heading>Account and Server Responsibilities</Heading>
           <Text>
             You are responsible for the configuration of Mocha on any Discord
             server you administer, including the permissions you grant the bot
-            and the content moderation policies you enforce. You are
-            responsible for the conduct of members within your server and for
-            ensuring that your use of Mocha complies with applicable laws.
+            and the content moderation policies you enforce. Room owners and
+            moderators are responsible for moderation actions taken within their
+            rooms, including cross-server bans and mutes executed through
+            Mocha&apos;s moderation tools.
           </Text>
 
           <Heading>Acceptable Use</Heading>
           <Text>
-            You agree not to use the Service to: (a) violate any law or third
-            party rights; (b) send spam, harass, abuse, or harm other users;
-            (c) distribute malware or attempt to disrupt the Service; (d)
+            You agree not to use the Service to: (a) violate any law or
+            third-party rights; (b) send spam, harass, abuse, or harm other
+            users; (c) distribute malware or attempt to disrupt the Service; (d)
             reverse-engineer, scrape, or otherwise misuse the Service; or (e)
             share content that is illegal, sexually explicit involving minors,
-            or that incites violence. We may suspend or terminate access for
-            any user or server that violates these rules.
-          </Text>
-
-          <Heading>Subscriptions and Payments</Heading>
-          <Text>
-            Premium features are offered as paid subscriptions. Payments are
-            processed in cryptocurrencies as described on our pricing page.
-            Subscriptions begin when payment is confirmed on-chain and continue
-            for the period purchased. Refund eligibility is governed by our
-            Refund Policy.
+            or that incites violence. We may suspend or terminate access for any
+            user, room, or server that violates these rules.
           </Text>
 
           <Heading>Intellectual Property</Heading>
           <Text>
-            Mocha, including the bot, website, and related branding, is owned
-            by us and is protected by intellectual property laws. We grant you
-            a limited, non-exclusive, non-transferable, revocable license to
+            Mocha, including the bot, platform, website, and related branding,
+            is owned by us and protected by intellectual property laws. We grant
+            you a limited, non-exclusive, non-transferable, revocable license to
             use the Service for its intended purpose. You retain ownership of
             content you create within your servers; by using the Service, you
-            grant us the technical permissions necessary to deliver and
-            operate it.
+            grant us the technical permissions necessary to deliver and operate
+            it.
           </Text>
 
           <Heading>Disclaimers and Limitation of Liability</Heading>
           <Text>
             The Service is provided &quot;as is&quot; and &quot;as
-            available&quot; without warranties of any kind, express or
-            implied. To the maximum extent permitted by law, we are not liable
-            for any indirect, incidental, special, consequential, or
-            exemplary damages arising from your use of the Service, including
-            loss of data, server outages, or interruptions caused by
-            third-party platforms such as Discord.
+            available&quot; without warranties of any kind, express or implied.
+            To the maximum extent permitted by law, we are not liable for any
+            indirect, incidental, special, consequential, or exemplary damages
+            arising from your use of the Service, including loss of data, server
+            outages, or interruptions caused by third-party platforms such as
+            Discord or Whop.
           </Text>
 
           <Heading>Termination</Heading>
           <Text>
             You may stop using the Service at any time by removing Mocha from
-            your Discord server. We may suspend or terminate your access to
-            the Service, in whole or in part, at any time and without notice
-            if we believe you have violated these Terms or pose a risk to the
-            Service or its users.
+            your Discord server. We may suspend or terminate your access to the
+            Service, in whole or in part, at any time and without notice if we
+            believe you have violated these Terms or pose a risk to the Service
+            or its users.
           </Text>
 
           <Heading>Changes to These Terms</Heading>
           <Text>
-            We may update these Terms from time to time. When we do, we will
-            update the &quot;last updated&quot; reference within the Service or
-            on this page. Continued use of the Service after changes take
-            effect constitutes acceptance of the updated Terms.
+            We may update these Terms from time to time. Continued use of the
+            Service after changes take effect constitutes acceptance of the
+            updated Terms.
           </Text>
 
           <Heading>Governing Law</Heading>
           <Text>
-            These Terms are governed by the laws of the jurisdiction in which
-            Mocha is operated, without regard to conflict-of-law principles.
-            Any disputes will be resolved in the competent courts of that
-            jurisdiction unless otherwise required by applicable law.
+            If you are located in the European Union, these Terms are subject to
+            the mandatory consumer protection laws of your country of residence.
+            For all other users, these Terms are governed by the laws of the
+            jurisdiction in which Mocha is operated. Any disputes will be
+            resolved in the competent courts of the applicable jurisdiction.
           </Text>
 
           <Heading>Contact</Heading>
           <Text>
-            If you have questions about these Terms, please contact us through
-            our official Discord server or the support channels listed on{' '}
+            If you have questions about these Terms, contact us through our
+            official Discord server or the support channels listed at
             https://mocha-bot.xyz/.
           </Text>
         </VStack>
