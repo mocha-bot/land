@@ -115,7 +115,8 @@ function Features() {
       py={{ base: 10, md: 24 }}
       justifyContent='center'
       alignItems='center'
-      id='features'>
+      id='features'
+      scrollMarginTop='80px'>
       <Flex
         w='full'
         h='full'
