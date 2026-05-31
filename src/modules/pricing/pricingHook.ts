@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getCurrentUser, getPackages } from './pricingService';
+import { getCurrentUser, getPackages, getSubscription } from './pricingService';
 
 export const usePackagesQuery = () => {
   return useQuery({
@@ -94,6 +94,15 @@ export const useRoomAddons = () => {
           p.type === 'addon' && (p.binding_type === 'room' || !p.binding_type),
       ) ?? [],
   };
+};
+
+export const useUserSubscription = (userSerial: string | undefined) => {
+  return useQuery({
+    queryKey: ['pricing', 'subscription', 'user', userSerial],
+    queryFn: () => getSubscription('user', userSerial!),
+    enabled: !!userSerial,
+    staleTime: 60 * 1000,
+  });
 };
 
 export const useCurrentUser = () => {

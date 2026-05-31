@@ -39,8 +39,12 @@ export const getCheckoutURL = async (
   opts?: { bindingType?: string; bindingRef?: string },
 ): Promise<string> => {
   const params = new URLSearchParams();
-  if (opts?.bindingType) {params.set('binding_type', opts.bindingType);}
-  if (opts?.bindingRef) {params.set('binding_ref', opts.bindingRef);}
+  if (opts?.bindingType) {
+    params.set('binding_type', opts.bindingType);
+  }
+  if (opts?.bindingRef) {
+    params.set('binding_ref', opts.bindingRef);
+  }
   const qs = params.toString();
   const url = `${
     publicRuntimeConfig.apiBaseUrl
@@ -77,6 +81,40 @@ const PackageSchema = z.object({
 export const ApiPackagesSchema = z.object({
   data: z.array(PackageSchema),
 });
+
+const SubscriptionSchema = z.object({
+  data: z
+    .object({
+      serial: z.string(),
+      status: z.string(),
+      package_serial: z.string(),
+    })
+    .nullable(),
+});
+
+export const getSubscription = async (
+  bindingType: string,
+  bindingRef: string,
+): Promise<{
+  serial: string;
+  status: string;
+  package_serial: string;
+} | null> => {
+  try {
+    const url = `${
+      publicRuntimeConfig.apiBaseUrl
+    }/api/v1/payment/subscription?binding_type=${bindingType}&binding_ref=${encodeURIComponent(
+      bindingRef,
+    )}`;
+    const response = await axios(
+      { method: 'GET', url, withCredentials: true },
+      SubscriptionSchema,
+    );
+    return response.data;
+  } catch {
+    return null;
+  }
+};
 
 export const getPackages = async (): Promise<Package[]> => {
   const url = `${publicRuntimeConfig.apiBaseUrl}/api/v1/payment/packages`;

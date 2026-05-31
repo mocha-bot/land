@@ -34,6 +34,7 @@ import {
   useSubscriptionPackages,
   useUserAddons,
   useUserPackages,
+  useUserSubscription,
 } from '@/modules/pricing/pricingHook';
 import type { CurrentUser } from '@/modules/pricing/pricingService';
 import type { Package } from '@/modules/pricing/types';
@@ -97,15 +98,33 @@ function PackageCard({
   pkg,
   user,
   ssoUrl,
+  dashboardUrl,
+  hasActiveSubscription,
 }: {
   pkg: Package;
   user: CurrentUser | null | undefined;
   ssoUrl: string;
+  dashboardUrl: string;
+  hasActiveSubscription?: boolean;
 }) {
   const isFree = pkg.price_cents === 0;
   const hasProviders = pkg.providers.length > 0;
+  // guild/room packages — send user to dash to pick specific entity
+  const needsDashRedirect = pkg.binding_type !== 'user' && !isFree;
 
   const handlePaidClick = async () => {
+    if (needsDashRedirect) {
+      const dashTarget = `${dashboardUrl}/subscription?binding_type=${pkg.binding_type}&package_serial=${pkg.serial}`;
+      if (!user) {
+        // After SSO login, land on dash/subscription with binding + package pre-selected
+        window.location.href = `${ssoUrl}?redirect_url=${encodeURIComponent(
+          dashTarget,
+        )}`;
+      } else {
+        window.location.href = dashTarget;
+      }
+      return;
+    }
     if (!user) {
       window.location.href = `${ssoUrl}?redirect_url=${encodeURIComponent(
         window.location.href,
@@ -134,11 +153,20 @@ function PackageCard({
 
   if (isFree) {
     buttonLabel = 'Get started';
+  } else if (hasActiveSubscription && pkg.binding_type === 'user') {
+    buttonLabel = 'Already subscribed';
+  } else if (needsDashRedirect) {
+    buttonLabel = 'Subscribe on Dashboard';
   } else {
     buttonLabel = 'Subscribe';
   }
 
-  const isPaidClickable = !isFree && (hasProviders || !!user);
+  const isAlreadySubscribed =
+    hasActiveSubscription && pkg.binding_type === 'user' && !isFree;
+  const isPaidClickable =
+    !isFree &&
+    !isAlreadySubscribed &&
+    (hasProviders || !!user || needsDashRedirect);
 
   return (
     <Box {...cardStyle} display='flex' flexDirection='column' gap={6}>
@@ -226,7 +254,7 @@ function PackageCard({
         </Button>
       ) : (
         <Button
-          onClick={handlePaidClick}
+          onClick={isAlreadySubscribed ? undefined : handlePaidClick}
           variant='glass'
           isDisabled={!isPaidClickable}
           width='full'
@@ -245,6 +273,8 @@ function TabPlanContent({
   emptyText,
   user,
   ssoUrl,
+  dashboardUrl,
+  hasActiveSubscription,
 }: {
   pkgs: Package[];
   addons: Package[];
@@ -252,6 +282,8 @@ function TabPlanContent({
   emptyText: string;
   user: CurrentUser | null | undefined;
   ssoUrl: string;
+  dashboardUrl: string;
+  hasActiveSubscription?: boolean;
 }) {
   if (isLoading) {
     return (
@@ -278,6 +310,8 @@ function TabPlanContent({
               pkg={pkg}
               user={user}
               ssoUrl={ssoUrl}
+              dashboardUrl={dashboardUrl}
+              hasActiveSubscription={hasActiveSubscription}
             />
           ))}
         </SimpleGrid>
@@ -299,6 +333,8 @@ function TabPlanContent({
                 pkg={pkg}
                 user={user}
                 ssoUrl={ssoUrl}
+                dashboardUrl={dashboardUrl}
+                hasActiveSubscription={hasActiveSubscription}
               />
             ))}
           </SimpleGrid>
@@ -367,12 +403,16 @@ function Pricing() {
   const subscriptions = useSubscriptionPackages();
   const addons = useAddonPackages();
   const { data: currentUser } = useCurrentUser();
+  const { data: userSubscription } = useUserSubscription(currentUser?.serial);
   const userPkgs = useUserPackages();
   const guildPkgs = useGuildPackages();
   const roomPkgs = useRoomPackages();
   const userAddons = useUserAddons();
   const guildAddons = useGuildAddons();
   const roomAddons = useRoomAddons();
+
+  const hasUserSubscription =
+    !!userSubscription && userSubscription.status === 'active';
 
   const { isLoading } = subscriptions;
   const hasNoData =
@@ -501,6 +541,8 @@ function Pricing() {
                         emptyText='No user plans available yet.'
                         user={currentUser}
                         ssoUrl={runtimeConfig.ssoUrl}
+                        dashboardUrl={runtimeConfig.dashboardUrl}
+                        hasActiveSubscription={hasUserSubscription}
                       />
                     </TabPanel>
                     <TabPanel p={0}>
@@ -511,6 +553,7 @@ function Pricing() {
                         emptyText='No guild plans available yet.'
                         user={currentUser}
                         ssoUrl={runtimeConfig.ssoUrl}
+                        dashboardUrl={runtimeConfig.dashboardUrl}
                       />
                     </TabPanel>
                     <TabPanel p={0}>
@@ -521,6 +564,7 @@ function Pricing() {
                         emptyText='No room plans available yet.'
                         user={currentUser}
                         ssoUrl={runtimeConfig.ssoUrl}
+                        dashboardUrl={runtimeConfig.dashboardUrl}
                       />
                     </TabPanel>
                   </TabPanels>
