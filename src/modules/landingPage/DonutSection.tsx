@@ -70,6 +70,15 @@ export function DonutSection() {
               interactions. Events, mentorship, icebreakers. Donut handles the
               pairing.
             </Text>
+            <Text
+              color='whiteAlpha.400'
+              fontSize='xs'
+              maxW='lg'
+              lineHeight='tall'
+              mt={1}>
+              Runs on the same cross-server infrastructure as Rooms — members
+              from every connected server join the same matchmaking pool.
+            </Text>
           </Flex>
           <Box flexShrink={0}>
             <Button

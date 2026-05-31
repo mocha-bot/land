@@ -12,6 +12,7 @@ import { Features } from './Features';
 import { Hero } from './Hero';
 import { HowItWorks } from './HowItWorks';
 import { Invitation } from './Invitation';
+import { StatsBar } from './StatsBar';
 import { UseCases } from './UseCases';
 
 export function LandingPageContainer() {
@@ -19,16 +20,23 @@ export function LandingPageContainer() {
     <Layout>
       <Container>
         <Hero />
+        {/* Quick reassurance: numbers right after the pitch */}
+        <Box py={6}>
+          <StatsBar />
+        </Box>
         <AnimateOnView delay={0.3}>
-          <Box py={24}>
+          <Box py={16}>
             <CrossServerCard />
           </Box>
         </AnimateOnView>
-        <Features />
-        <DonutSection />
+        {/* HowItWorks early: visitors see setup steps before scrolling deep */}
         <HowItWorks />
-        <UseCases />
+        {/* Comparison early: value prop visible before feature deep-dive */}
         <ComparisonTable />
+        <Features />
+        {/* Donut after Rooms features — bridge text inside DonutSection explains the link */}
+        <DonutSection />
+        <UseCases />
         <FAQ />
         <Invitation />
       </Container>
