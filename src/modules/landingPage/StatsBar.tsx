@@ -80,7 +80,7 @@ function StatItem({
         {!stat.loading && stat.numericTarget !== undefined && (
           <AnimatedNumber target={stat.numericTarget} suffix={stat.suffix} />
         )}
-        {!stat.loading && stat.numericTarget === undefined && (
+        {!stat.loading && stat.displayValue && (
           <Text
             fontSize={{ base: '3xl', md: '4xl' }}
             fontWeight='bold'
@@ -154,13 +154,13 @@ export function StatsBar() {
 
   const stats: StatConfig[] = [
     {
-      numericTarget: isLoading ? undefined : guildStat.target,
+      numericTarget: data ? guildStat.target : undefined,
       suffix: guildStat.suffix,
       label: 'Servers connected',
       loading: isLoading,
     },
     {
-      numericTarget: isLoading ? undefined : roomStat.target,
+      numericTarget: data ? roomStat.target : undefined,
       suffix: roomStat.suffix,
       label: 'Rooms created',
       loading: isLoading,
