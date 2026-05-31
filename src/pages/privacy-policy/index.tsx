@@ -19,7 +19,7 @@ function PrivacyPolicy() {
         {generateNextSeo({
           title: 'Privacy Policy',
           description:
-            'Read how Mocha collects, uses, and protects your information. Details on data collection, third-party services, GDPR rights, and children\'s privacy.',
+            'Read how Mocha collects, uses, and protects your information. Details on data collection, third-party services, and children\'s privacy.',
           canonical,
           languageAlternates: buildLanguageAlternates('/privacy-policy'),
           openGraph: {
@@ -125,40 +125,6 @@ function PrivacyPolicy() {
             us — see the Contact section below.
           </Text>
 
-          <Heading>Your Rights (EU/EEA Users — GDPR)</Heading>
-          <Text>
-            If you are located in the European Union or EEA, you have the
-            following rights under the General Data Protection Regulation
-            (GDPR):
-          </Text>
-          <Text>
-            — Right of access — request a copy of the data we hold about you
-          </Text>
-          <Text>
-            — Right to rectification — request correction of inaccurate data
-          </Text>
-          <Text>
-            — Right to erasure — request deletion of your data (&quot;right to
-            be forgotten&quot;)
-          </Text>
-          <Text>
-            — Right to data portability — request your data in a
-            machine-readable format
-          </Text>
-          <Text>
-            — Right to object — object to processing of your data in certain
-            circumstances
-          </Text>
-          <Text>
-            — Right to restrict processing — request that we limit how we use
-            your data
-          </Text>
-          <Text>
-            To exercise any of these rights, contact us through our official
-            Discord server or the support channels listed at
-            https://mocha-bot.xyz/. We will respond within 30 days.
-          </Text>
-
           <Heading>Children</Heading>
           <Text>
             Mocha does not knowingly collect personal information from children
@@ -175,7 +141,7 @@ function PrivacyPolicy() {
 
           <Heading>Contact</Heading>
           <Text>
-            For privacy-related questions or to exercise your rights, contact us
+            For privacy-related questions or data deletion requests, contact us
             through our official Discord server or the support channels listed
             at https://mocha-bot.xyz/.
           </Text>

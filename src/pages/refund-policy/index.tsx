@@ -42,10 +42,11 @@ function RefundPolicy() {
 
           <Heading>No Refunds</Heading>
           <Text>
-            We do not offer refunds, credits, or exchanges for any premium
-            subscription purchase, regardless of the reason. This includes but
-            is not limited to: change of mind, unused subscription time,
-            accidental purchases, or dissatisfaction with the service.
+            All purchases are final and non-refundable. We do not offer refunds,
+            credits, or exchanges for any premium subscription purchase,
+            regardless of the reason. This includes but is not limited to:
+            change of mind, unused subscription time, accidental purchases, or
+            dissatisfaction with the service.
           </Text>
 
           <Heading>Digital Service — Immediate Access</Heading>
@@ -58,9 +59,13 @@ function RefundPolicy() {
           <Heading>Payments via Whop</Heading>
           <Text>
             Payments are processed by Whop (whop.com) and are subject to
-            Whop&apos;s payment terms. Mocha does not store your payment
-            details. For payment disputes or issues with a specific transaction,
-            contact Whop support directly at whop.com.
+            Whop&apos;s payment terms. Applicable taxes and platform fees are
+            collected by Whop at the time of purchase and are non-recoverable by
+            us. Mocha does not store your payment details. For payment disputes
+            or issues with a specific transaction, contact Whop support directly
+            at whop.com. In the event a refund is granted at our sole
+            discretion, it will be limited to the net amount received by us
+            after Whop&apos;s fees and taxes are deducted.
           </Text>
 
           <Heading>Cancellations</Heading>
@@ -71,17 +76,6 @@ function RefundPolicy() {
             Your room, guild, or user will retain premium features until the
             period ends, after which it reverts to the free tier. No refund will
             be issued for remaining time on an active subscription period.
-          </Text>
-
-          <Heading>EU Statutory Rights</Heading>
-          <Text>
-            If you are located in the European Union, your statutory consumer
-            rights under applicable EU law are not affected by this policy. In
-            particular, if you did not explicitly waive your right of withdrawal
-            at the time of purchase (as described in our Terms of Service), you
-            may be entitled to a refund within 14 days of purchase. To exercise
-            this right, contact us through our official Discord server before
-            using any premium features.
           </Text>
 
           <Heading>Vouchers and Promotional Codes</Heading>

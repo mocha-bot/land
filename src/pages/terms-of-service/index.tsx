@@ -85,19 +85,6 @@ function TermsOfService() {
             the free tier. Refund eligibility is governed by our Refund Policy.
           </Text>
 
-          <Heading>EU Right of Withdrawal</Heading>
-          <Text>
-            If you are located in the European Union, you have the right to
-            withdraw from a purchase within 14 days without giving any reason
-            (the &quot;cooling-off period&quot;). However, by completing a
-            purchase and requesting immediate access to the premium features,
-            you explicitly consent to the immediate performance of the contract
-            and acknowledge that you lose your right of withdrawal once the
-            service has been fully performed or access has been granted. If you
-            do not wish to waive this right, do not use the premium features
-            until the 14-day cooling-off period has expired.
-          </Text>
-
           <Heading>Account and Server Responsibilities</Heading>
           <Text>
             You are responsible for the configuration of Mocha on any Discord
@@ -159,11 +146,10 @@ function TermsOfService() {
 
           <Heading>Governing Law</Heading>
           <Text>
-            If you are located in the European Union, these Terms are subject to
-            the mandatory consumer protection laws of your country of residence.
-            For all other users, these Terms are governed by the laws of the
-            jurisdiction in which Mocha is operated. Any disputes will be
-            resolved in the competent courts of the applicable jurisdiction.
+            These Terms are governed by the laws of the jurisdiction in which
+            Mocha is operated, without regard to conflict-of-law principles. Any
+            disputes will be resolved in the competent courts of that
+            jurisdiction.
           </Text>
 
           <Heading>Contact</Heading>
