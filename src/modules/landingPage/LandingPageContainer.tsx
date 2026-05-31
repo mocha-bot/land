@@ -20,15 +20,14 @@ export function LandingPageContainer() {
     <Layout>
       <Container>
         <Hero />
-        {/* Quick reassurance: numbers right after the pitch */}
-        <Box py={6}>
-          <StatsBar />
-        </Box>
         <AnimateOnView delay={0.3}>
           <Box py={16}>
             <CrossServerCard />
           </Box>
         </AnimateOnView>
+        <Box pb={6}>
+          <StatsBar />
+        </Box>
         {/* HowItWorks early: visitors see setup steps before scrolling deep */}
         <HowItWorks />
         {/* Comparison early: value prop visible before feature deep-dive */}

@@ -13,6 +13,7 @@ import getConfig from 'next/config';
 
 import { AnimateOnView } from '@/components/AnimateOnView/AnimateOnView';
 import Button from '@/uikit/Button';
+
 import { HeroVisual } from './HeroVisual';
 
 const { publicRuntimeConfig } = getConfig();
@@ -41,8 +42,11 @@ export function Hero() {
   return (
     <Flex
       w='full'
+      minH='100vh'
       pt={{ base: 8, md: 12, lg: 44 }}
+      pb={{ base: 12, md: 16 }}
       flexDirection='column'
+      justifyContent='center'
       gap={32}
       id='about-us'>
       <Flex
@@ -51,47 +55,62 @@ export function Hero() {
         align={{ base: 'flex-start', lg: 'center' }}
         justify='space-between'
         gap={{ base: 16, lg: 12 }}>
-      <VStack
-        alignItems='flex-start'
-        spacing={12}
-        flex={1}
-        as={motion.div}
-        initial={{ opacity: 0, y: 32 }}
-        animate={{ opacity: 1, y: 0 }}
-        // @ts-expect-error framer types
-        transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}>
-        <Flex
-          display='inline-flex'
-          alignItems='center'
-          gap={2}
-          px={4}
-          py={2}
-          borderRadius='full'
-          border='1px solid rgba(255, 255, 255, 0.15)'
-          backgroundColor='rgba(255, 255, 255, 0.06)'
-          backdropFilter='blur(8px)'>
-          <Text fontSize='xs' color='yellow.300' fontWeight='bold' letterSpacing='wider' textTransform='uppercase'>
-            ✦ For Discord
+        <VStack
+          alignItems='flex-start'
+          spacing={12}
+          flex={1}
+          as={motion.div}
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          // @ts-expect-error framer types
+          transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}>
+          <Flex
+            display='inline-flex'
+            alignItems='center'
+            gap={2}
+            px={4}
+            py={2}
+            borderRadius='full'
+            border='1px solid rgba(255, 255, 255, 0.15)'
+            backgroundColor='rgba(255, 255, 255, 0.06)'
+            backdropFilter='blur(8px)'>
+            <Text
+              fontSize='xs'
+              color='yellow.300'
+              fontWeight='bold'
+              letterSpacing='wider'
+              textTransform='uppercase'>
+              ✦ For Discord
+            </Text>
+            <Text fontSize='xs' color='whiteAlpha.400'>
+              ·
+            </Text>
+            <Text fontSize='xs' color='whiteAlpha.700' fontWeight='medium'>
+              Like Slack Connect, but built for communities
+            </Text>
+          </Flex>
+          <Text
+            color='white'
+            fontSize={{ base: '5xl', lg: '6xl' }}
+            lineHeight='none'>
+            Cross-server chat for Discord communities
           </Text>
-          <Text fontSize='xs' color='whiteAlpha.400'>·</Text>
-          <Text fontSize='xs' color='whiteAlpha.700' fontWeight='medium'>
-            Like Slack Connect, but built for communities
+          <Text
+            color='white'
+            fontSize={20}
+            lineHeight='none'
+            fontWeight='light'>
+            Mocha is a Discord bot that lets communities create shared rooms —
+            one message reaches every connected server at once. No more jumping
+            between servers to stay in the loop.
           </Text>
-        </Flex>
-        <Text
-          color='white'
-          fontSize={{ base: '5xl', lg: '6xl' }}
-          lineHeight='none'>
-          Cross-server chat for Discord communities
-        </Text>
-        <Text color='white' fontSize={20} lineHeight='none' fontWeight='light'>
-          Mocha is a Discord bot that lets communities create shared rooms — one message reaches every connected server at once. No more jumping between servers to stay in the loop.
-        </Text>
-      </VStack>
-      <HeroVisual />
+        </VStack>
+        <HeroVisual />
       </Flex>
       <AnimateOnView delay={0.3}>
-        <HStack w='full' justifyContent={{ base: 'center', md: 'space-between' }}>
+        <HStack
+          w='full'
+          justifyContent={{ base: 'center', md: 'space-between' }}>
           <HStack w='full'>
             <Button
               as='a'
