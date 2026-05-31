@@ -80,6 +80,18 @@ function StatItem({
         {!stat.loading && stat.numericTarget !== undefined && (
           <AnimatedNumber target={stat.numericTarget} suffix={stat.suffix} />
         )}
+        {!stat.loading &&
+          stat.numericTarget === undefined &&
+          !stat.displayValue && (
+            <Text
+              fontSize={{ base: '3xl', md: '4xl' }}
+              fontWeight='bold'
+              letterSpacing='tight'
+              lineHeight={1}
+              color='whiteAlpha.300'>
+              &mdash;
+            </Text>
+          )}
         {!stat.loading && stat.displayValue && (
           <Text
             fontSize={{ base: '3xl', md: '4xl' }}
