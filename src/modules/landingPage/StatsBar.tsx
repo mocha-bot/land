@@ -9,7 +9,6 @@ type StatConfig = {
   displayValue?: string;
   suffix: string;
   label: string;
-  icon: string;
   loading?: boolean;
 };
 
@@ -26,7 +25,9 @@ function AnimatedNumber({
   const [display, setDisplay] = useState('0');
 
   useEffect(() => {
-    if (!inView) {return;}
+    if (!inView) {
+      return;
+    }
     const controls = animate(count, target, {
       duration: 1.8,
       ease: 'easeOut',
@@ -42,7 +43,7 @@ function AnimatedNumber({
       fontWeight='bold'
       letterSpacing='tight'
       lineHeight={1}
-      bgGradient='linear(to-br, yellow.200, white)'
+      bgGradient='linear(to-br, blue.200, white)'
       bgClip='text'>
       {display}
       {suffix}
@@ -67,16 +68,6 @@ function StatItem({
         px={{ base: 2, md: 6 }}
         py={2}
         position='relative'>
-        {/* Glow dot */}
-        <Box
-          w={2}
-          h={2}
-          borderRadius='full'
-          bg='yellow.300'
-          boxShadow='0 0 8px 2px rgba(255,220,0,0.6)'
-          flexShrink={0}
-        />
-
         {stat.loading && (
           <Skeleton
             h='44px'
@@ -95,25 +86,23 @@ function StatItem({
             fontWeight='bold'
             letterSpacing='tight'
             lineHeight={1}
-            bgGradient='linear(to-br, yellow.200, white)'
+            bgGradient='linear(to-br, blue.200, white)'
             bgClip='text'>
             {stat.displayValue}
           </Text>
         )}
 
-        <Flex flexDirection='column' alignItems='center' gap={1}>
-          <Text
-            color='whiteAlpha.400'
-            fontSize='xs'
-            textTransform='uppercase'
-            letterSpacing='wider'
-            textAlign='center'
-            lineHeight='short'>
-            {stat.label}
-          </Text>
-        </Flex>
+        <Text
+          color='whiteAlpha.400'
+          fontSize='xs'
+          textTransform='uppercase'
+          letterSpacing='wider'
+          textAlign='center'
+          lineHeight='short'>
+          {stat.label}
+        </Text>
 
-        {/* Subtle radial glow behind number */}
+        {/* Radial ambient glow */}
         <Box
           position='absolute'
           top='50%'
@@ -122,7 +111,7 @@ function StatItem({
           w='120px'
           h='80px'
           borderRadius='full'
-          bg='radial-gradient(ellipse, rgba(255,220,0,0.06) 0%, transparent 70%)'
+          bg='radial-gradient(ellipse, rgba(2,173,255,0.08) 0%, transparent 70%)'
           pointerEvents='none'
           zIndex={0}
         />
@@ -144,8 +133,12 @@ function StatItem({
 const MotionBox = motion(Box);
 
 function formatTarget(n: number): { target: number; suffix: string } {
-  if (n >= 1000) {return { target: Math.floor(n / 1000), suffix: 'k+' };}
-  if (n > 0) {return { target: n, suffix: '+' };}
+  if (n >= 1000) {
+    return { target: Math.floor(n / 1000), suffix: 'k+' };
+  }
+  if (n > 0) {
+    return { target: n, suffix: '+' };
+  }
   return { target: 0, suffix: '' };
 }
 
@@ -162,26 +155,20 @@ export function StatsBar() {
   const stats: StatConfig[] = [
     {
       numericTarget: isLoading ? undefined : guildStat.target,
-      displayValue: undefined,
       suffix: guildStat.suffix,
       label: 'Servers connected',
-      icon: '🏛️',
       loading: isLoading,
     },
     {
       numericTarget: isLoading ? undefined : roomStat.target,
-      displayValue: undefined,
       suffix: roomStat.suffix,
       label: 'Rooms created',
-      icon: '🚪',
       loading: isLoading,
     },
     {
-      numericTarget: undefined,
       displayValue: 'Free',
       suffix: '',
       label: 'To get started',
-      icon: '✦',
     },
   ];
 
@@ -196,7 +183,7 @@ export function StatsBar() {
       }}
       p='1px'
       borderRadius='2xl'
-      bgGradient='linear(135deg, rgba(255,220,0,0.25), rgba(255,255,255,0.06) 50%, rgba(255,220,0,0.15))'
+      bgGradient='linear(135deg, rgba(2,173,255,0.3), rgba(255,255,255,0.06) 50%, rgba(2,173,255,0.15))'
       w='full'>
       <Flex
         borderRadius='2xl'
@@ -207,14 +194,14 @@ export function StatsBar() {
         w='full'
         overflow='hidden'
         position='relative'>
-        {/* Subtle top shimmer line */}
+        {/* Top shimmer line */}
         <Box
           position='absolute'
           top={0}
           left='10%'
           right='10%'
           h='1px'
-          bgGradient='linear(to-r, transparent, rgba(255,220,0,0.4), transparent)'
+          bgGradient='linear(to-r, transparent, rgba(2,173,255,0.5), transparent)'
           pointerEvents='none'
         />
 
