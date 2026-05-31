@@ -43,7 +43,7 @@ function AnimatedNumber({
       fontWeight='bold'
       letterSpacing='tight'
       lineHeight={1}
-      bgGradient='linear(to-br, blue.200, white)'
+      bgGradient='linear(to-br, yellow.200, white)'
       bgClip='text'>
       {display}
       {suffix}
@@ -98,7 +98,7 @@ function StatItem({
             fontWeight='bold'
             letterSpacing='tight'
             lineHeight={1}
-            bgGradient='linear(to-br, blue.200, white)'
+            bgGradient='linear(to-br, yellow.200, white)'
             bgClip='text'>
             {stat.displayValue}
           </Text>
@@ -123,7 +123,7 @@ function StatItem({
           w='120px'
           h='80px'
           borderRadius='full'
-          bg='radial-gradient(ellipse, rgba(2,173,255,0.08) 0%, transparent 70%)'
+          bg='radial-gradient(ellipse, rgba(255,220,0,0.08) 0%, transparent 70%)'
           pointerEvents='none'
           zIndex={0}
         />
@@ -195,7 +195,7 @@ export function StatsBar() {
       }}
       p='1px'
       borderRadius='2xl'
-      bgGradient='linear(135deg, rgba(2,173,255,0.3), rgba(255,255,255,0.06) 50%, rgba(2,173,255,0.15))'
+      bgGradient='linear(135deg, rgba(255,220,0,0.3), rgba(255,255,255,0.06) 50%, rgba(255,220,0,0.15))'
       w='full'>
       <Flex
         borderRadius='2xl'
@@ -213,7 +213,7 @@ export function StatsBar() {
           left='10%'
           right='10%'
           h='1px'
-          bgGradient='linear(to-r, transparent, rgba(2,173,255,0.5), transparent)'
+          bgGradient='linear(to-r, transparent, rgba(255,220,0,0.5), transparent)'
           pointerEvents='none'
         />
 
