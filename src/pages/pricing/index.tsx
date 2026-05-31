@@ -344,6 +344,96 @@ function TabPlanContent({
   );
 }
 
+function SectionLabel({ label }: { label: string }) {
+  return (
+    <Text
+      color='whiteAlpha.500'
+      fontSize='xs'
+      fontWeight='semibold'
+      textTransform='uppercase'
+      letterSpacing='wider'
+      mb={2}>
+      {label}
+    </Text>
+  );
+}
+
+function AllPlanContent({
+  roomPkgs,
+  roomAddons,
+  guildPkgs,
+  guildAddons,
+  userPkgs,
+  userAddons,
+  isLoading,
+  user,
+  ssoUrl,
+  dashboardUrl,
+  hasActiveSubscription,
+}: {
+  roomPkgs: Package[];
+  roomAddons: Package[];
+  guildPkgs: Package[];
+  guildAddons: Package[];
+  userPkgs: Package[];
+  userAddons: Package[];
+  isLoading: boolean;
+  user: CurrentUser | null | undefined;
+  ssoUrl: string;
+  dashboardUrl: string;
+  hasActiveSubscription?: boolean;
+}) {
+  const sections: Array<{
+    label: string;
+    pkgs: Package[];
+    addons: Package[];
+    emptyText: string;
+  }> = [
+    {
+      label: 'Rooms',
+      pkgs: roomPkgs,
+      addons: roomAddons,
+      emptyText: 'No room plans yet.',
+    },
+    {
+      label: 'Guilds',
+      pkgs: guildPkgs,
+      addons: guildAddons,
+      emptyText: 'No guild plans yet.',
+    },
+    {
+      label: 'Users',
+      pkgs: userPkgs,
+      addons: userAddons,
+      emptyText: 'No user plans yet.',
+    },
+  ];
+
+  return (
+    <VStack alignItems='flex-start' spacing={12} w='full'>
+      {sections.map((section) => (
+        <VStack
+          key={section.label}
+          alignItems='flex-start'
+          spacing={4}
+          w='full'>
+          <SectionLabel label={section.label} />
+          <TabPlanContent
+            pkgs={section.pkgs}
+            addons={section.addons}
+            isLoading={isLoading}
+            emptyText={section.emptyText}
+            user={user}
+            ssoUrl={ssoUrl}
+            dashboardUrl={dashboardUrl}
+            hasActiveSubscription={hasActiveSubscription}
+          />
+        </VStack>
+      ))}
+    </VStack>
+  );
+}
+
 function PackageCardSkeleton() {
   return (
     <Box {...cardStyle}>
@@ -510,8 +600,25 @@ function Pricing() {
                 <Heading as='h2' size='lg' color='white'>
                   Subscription Plans
                 </Heading>
-                <Tabs variant='soft-rounded' colorScheme='whiteAlpha' w='full'>
+                <Tabs
+                  variant='soft-rounded'
+                  colorScheme='whiteAlpha'
+                  w='full'
+                  defaultIndex={0}>
                   <TabList gap={2} flexWrap='wrap'>
+                    <Tab
+                      color='whiteAlpha.700'
+                      _selected={{ bg: 'whiteAlpha.200', color: 'white' }}>
+                      All{' '}
+                      {!isLoading &&
+                        (() => {
+                          const total =
+                            userPkgs.data.length +
+                            guildPkgs.data.length +
+                            roomPkgs.data.length;
+                          return total > 0 ? `(${total})` : '';
+                        })()}
+                    </Tab>
                     <Tab
                       color='whiteAlpha.700'
                       _selected={{ bg: 'whiteAlpha.200', color: 'white' }}>
@@ -533,6 +640,21 @@ function Pricing() {
                     </Tab>
                   </TabList>
                   <TabPanels mt={6}>
+                    <TabPanel p={0}>
+                      <AllPlanContent
+                        roomPkgs={roomPkgs.data}
+                        roomAddons={roomAddons.data}
+                        guildPkgs={guildPkgs.data}
+                        guildAddons={guildAddons.data}
+                        userPkgs={userPkgs.data}
+                        userAddons={userAddons.data}
+                        isLoading={isLoading}
+                        user={currentUser}
+                        ssoUrl={runtimeConfig.ssoUrl}
+                        dashboardUrl={runtimeConfig.dashboardUrl}
+                        hasActiveSubscription={hasUserSubscription}
+                      />
+                    </TabPanel>
                     <TabPanel p={0}>
                       <TabPlanContent
                         pkgs={userPkgs.data}
