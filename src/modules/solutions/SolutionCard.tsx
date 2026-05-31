@@ -79,8 +79,8 @@ export function SolutionCard({
       <Text color='whiteAlpha.600' fontSize='sm' lineHeight='tall' flex={1}>
         {solution.description}
       </Text>
-      <Text color='blue.300' fontSize='sm' fontWeight='medium'>
-        Learn more →
+      <Text color='yellow.300' fontSize='sm' fontWeight='medium'>
+        Learn more
       </Text>
     </Box>
   );
