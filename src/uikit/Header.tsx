@@ -552,13 +552,6 @@ export function Header() {
                     </Flex>
                   </Flex>
                 </DrawerBody>
-                {/* Flare bottom */}
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src='/assets/images/flare_3.svg'
-                  alt=''
-                  style={{ width: '100%', position: 'absolute', bottom: 0 }}
-                />
               </DrawerContent>
             </DrawerOverlay>
           </Drawer>
