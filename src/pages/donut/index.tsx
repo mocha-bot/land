@@ -21,19 +21,6 @@ import { Layout } from '@/uikit/Layout';
 
 const { publicRuntimeConfig } = getConfig();
 
-const cardStyle = {
-  bg: 'rgba(0, 0, 0, 0.3)',
-  border: '1px solid rgba(255, 255, 255, 0.08)',
-  borderRadius: 'xl',
-  p: 6,
-  h: 'full',
-  _hover: {
-    borderColor: 'rgba(255, 255, 255, 0.16)',
-    bg: 'rgba(0, 0, 0, 0.45)',
-  },
-  transition: 'all 0.2s',
-};
-
 const FEATURES = [
   {
     title: 'Smart Auto-Pairing',
@@ -203,21 +190,30 @@ function Donut() {
                       key={f.title}
                       variants={staggerItem}
                       style={{ height: '100%' }}>
-                      <Box {...cardStyle}>
-                        <VStack alignItems='flex-start' spacing={3}>
-                          <Text
-                            fontSize='lg'
-                            fontWeight='semibold'
-                            color='white'>
-                            {f.title}
-                          </Text>
-                          <Text
-                            color='whiteAlpha.700'
-                            fontSize='sm'
-                            lineHeight='tall'>
-                            {f.description}
-                          </Text>
-                        </VStack>
+                      <Box
+                        display='flex'
+                        flexDirection='column'
+                        gap={4}
+                        p={6}
+                        borderRadius='xl'
+                        backgroundColor='rgba(0, 0, 0, 0.3)'
+                        border='1px solid rgba(255, 255, 255, 0.08)'
+                        h='full'
+                        _hover={{
+                          borderColor: 'rgba(255, 255, 255, 0.16)',
+                          backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                        }}
+                        transition='all 0.2s'>
+                        <Text fontSize='lg' fontWeight='semibold' color='white'>
+                          {f.title}
+                        </Text>
+                        <Text
+                          color='whiteAlpha.600'
+                          fontSize='sm'
+                          lineHeight='tall'
+                          flex={1}>
+                          {f.description}
+                        </Text>
                       </Box>
                     </motion.div>
                   ))}
@@ -248,7 +244,18 @@ function Donut() {
                 <SimpleGrid columns={[1, null, 2, 4]} gap={6} w='full'>
                   {STEPS.map((s) => (
                     <motion.div key={s.step} variants={staggerItem}>
-                      <Box {...cardStyle} position='relative'>
+                      <Box
+                        bg='rgba(0, 0, 0, 0.3)'
+                        border='1px solid rgba(255, 255, 255, 0.08)'
+                        borderRadius='xl'
+                        p={6}
+                        h='full'
+                        _hover={{
+                          borderColor: 'rgba(255, 255, 255, 0.16)',
+                          bg: 'rgba(0, 0, 0, 0.45)',
+                        }}
+                        transition='all 0.2s'
+                        position='relative'>
                         <VStack alignItems='flex-start' spacing={3}>
                           <Box
                             w={8}
@@ -316,22 +323,34 @@ function Donut() {
               <StaggerContainer>
                 <SimpleGrid columns={[1, null, 2]} gap={6} w='full'>
                   {USE_CASES.map((uc) => (
-                    <motion.div key={uc.title} variants={staggerItem}>
-                      <Box {...cardStyle}>
-                        <VStack alignItems='flex-start' spacing={3}>
-                          <Text
-                            fontSize='lg'
-                            fontWeight='semibold'
-                            color='white'>
-                            {uc.title}
-                          </Text>
-                          <Text
-                            color='whiteAlpha.700'
-                            fontSize='sm'
-                            lineHeight='tall'>
-                            {uc.description}
-                          </Text>
-                        </VStack>
+                    <motion.div
+                      key={uc.title}
+                      variants={staggerItem}
+                      style={{ height: '100%' }}>
+                      <Box
+                        display='flex'
+                        flexDirection='column'
+                        gap={4}
+                        p={6}
+                        borderRadius='xl'
+                        backgroundColor='rgba(0, 0, 0, 0.3)'
+                        border='1px solid rgba(255, 255, 255, 0.08)'
+                        h='full'
+                        _hover={{
+                          borderColor: 'rgba(255, 255, 255, 0.16)',
+                          backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                        }}
+                        transition='all 0.2s'>
+                        <Text fontSize='lg' fontWeight='semibold' color='white'>
+                          {uc.title}
+                        </Text>
+                        <Text
+                          color='whiteAlpha.600'
+                          fontSize='sm'
+                          lineHeight='tall'
+                          flex={1}>
+                          {uc.description}
+                        </Text>
                       </Box>
                     </motion.div>
                   ))}
