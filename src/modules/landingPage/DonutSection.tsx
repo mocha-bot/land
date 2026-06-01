@@ -1,4 +1,4 @@
-import { Box, Flex, SimpleGrid, Text, VStack } from '@chakra-ui/react';
+import { Box, Flex, SimpleGrid, Text } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import NextLink from 'next/link';
 
@@ -27,19 +27,6 @@ const USE_CASES = [
     description: 'Randomly pair members for warm-up chats.',
   },
 ];
-
-const cardStyle = {
-  bg: 'rgba(0, 0, 0, 0.3)',
-  border: '1px solid rgba(255, 255, 255, 0.08)',
-  borderRadius: 'xl',
-  p: 5,
-  h: 'full',
-  _hover: {
-    borderColor: 'rgba(255, 255, 255, 0.16)',
-    bg: 'rgba(0, 0, 0, 0.45)',
-  },
-  transition: 'all 0.2s',
-};
 
 export function DonutSection() {
   return (
@@ -96,16 +83,34 @@ export function DonutSection() {
       <StaggerContainer>
         <SimpleGrid columns={[1, 2, 4]} gap={4} w='full'>
           {USE_CASES.map((uc) => (
-            <motion.div key={uc.title} variants={staggerItem}>
-              <Box {...cardStyle}>
-                <VStack alignItems='flex-start' spacing={2}>
-                  <Text fontSize='sm' fontWeight='semibold' color='white'>
-                    {uc.title}
-                  </Text>
-                  <Text color='whiteAlpha.600' fontSize='xs' lineHeight='tall'>
-                    {uc.description}
-                  </Text>
-                </VStack>
+            <motion.div
+              key={uc.title}
+              variants={staggerItem}
+              style={{ height: '100%' }}>
+              <Box
+                display='flex'
+                flexDirection='column'
+                gap={4}
+                p={6}
+                borderRadius='xl'
+                backgroundColor='rgba(0, 0, 0, 0.3)'
+                border='1px solid rgba(255, 255, 255, 0.08)'
+                h='full'
+                _hover={{
+                  borderColor: 'rgba(255, 255, 255, 0.16)',
+                  backgroundColor: 'rgba(0, 0, 0, 0.45)',
+                }}
+                transition='all 0.2s'>
+                <Text fontSize='lg' fontWeight='semibold' color='white'>
+                  {uc.title}
+                </Text>
+                <Text
+                  color='whiteAlpha.600'
+                  fontSize='sm'
+                  lineHeight='tall'
+                  flex={1}>
+                  {uc.description}
+                </Text>
               </Box>
             </motion.div>
           ))}
