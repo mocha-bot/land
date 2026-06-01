@@ -447,7 +447,7 @@ export function Header() {
             placement='right'
             onClose={onClose}
             size='full'>
-            <DrawerOverlay backdropFilter='blur(10px)' transition='all 0.7s'>
+            <DrawerOverlay bg='transparent' transition='all 0.7s'>
               <DrawerContent bg='#02020e'>
                 <DrawerBody w='full' overflow='hidden' zIndex={10}>
                   <Flex
