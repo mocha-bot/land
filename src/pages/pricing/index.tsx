@@ -107,7 +107,14 @@ function PackageCard({
   dashboardUrl: string;
   hasActiveSubscription?: boolean;
 }) {
-  const isFree = pkg.price_cents === 0;
+  // renewal_price_cents=0 means "same as initial"
+  const renewalCents =
+    pkg.renewal_price_cents > 0 ? pkg.renewal_price_cents : pkg.price_cents;
+  const isFree = pkg.price_cents === 0 && renewalCents === 0;
+  const hasDifferentInitial =
+    pkg.price_cents > 0 &&
+    pkg.renewal_price_cents > 0 &&
+    pkg.price_cents !== pkg.renewal_price_cents;
   const hasProviders = pkg.providers.length > 0;
   // guild/room packages — send user to dash to pick specific entity
   const needsDashRedirect = pkg.binding_type !== 'user' && !isFree;
@@ -170,18 +177,24 @@ function PackageCard({
 
   return (
     <Box {...cardStyle} display='flex' flexDirection='column' gap={6}>
-      <VStack alignItems='flex-start' spacing={2}>
+      <VStack alignItems='flex-start' spacing={2} flex={1}>
         <DestinationBadge bindingType={pkg.binding_type} />
         <Heading as='h3' size='md' color='white'>
           {pkg.name}
         </Heading>
         <Text color='white' fontSize='2xl' fontWeight='bold'>
-          {formatPrice(
-            pkg.price_cents,
-            pkg.price_currency,
-            pkg.billing_interval,
-          )}
+          {formatPrice(renewalCents, pkg.price_currency, pkg.billing_interval)}
         </Text>
+        {hasDifferentInitial && (
+          <Text color='whiteAlpha.600' fontSize='sm'>
+            First payment:{' '}
+            {formatPrice(
+              pkg.price_cents,
+              pkg.price_currency,
+              'one_time',
+            ).replace(' one-time', '')}
+          </Text>
+        )}
         {pkg.description && (
           <Box
             color='whiteAlpha.700'
@@ -249,6 +262,7 @@ function PackageCard({
           href='https://dash.mocha-bot.xyz'
           variant='glass-ghost'
           width='full'
+          mt='auto'
           py={5}>
           {buttonLabel}
         </Button>
@@ -258,6 +272,7 @@ function PackageCard({
           variant='glass'
           isDisabled={!isPaidClickable}
           width='full'
+          mt='auto'
           py={5}>
           {buttonLabel}
         </Button>

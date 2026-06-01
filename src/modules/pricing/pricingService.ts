@@ -67,6 +67,7 @@ const PackageSchema = z.object({
   name: z.string().default(''),
   description: z.string().default(''),
   price_cents: z.number().default(0),
+  renewal_price_cents: z.number().default(0),
   price_currency: z.string().default('USD'),
   billing_interval: z.string().default(''),
   features: z.array(z.string()).default([]),

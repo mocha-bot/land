@@ -13,6 +13,7 @@ export interface Package {
   name: string;
   description: string;
   price_cents: number;
+  renewal_price_cents: number;
   price_currency: string;
   billing_interval: string;
   features: string[];
