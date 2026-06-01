@@ -177,7 +177,7 @@ function PackageCard({
 
   return (
     <Box {...cardStyle} display='flex' flexDirection='column' gap={6}>
-      <VStack alignItems='flex-start' spacing={2} flex={1}>
+      <VStack alignItems='flex-start' spacing={2}>
         <DestinationBadge bindingType={pkg.binding_type} />
         <Heading as='h3' size='md' color='white'>
           {pkg.name}
@@ -242,7 +242,7 @@ function PackageCard({
       </VStack>
 
       {pkg.features.length > 0 && (
-        <VStack alignItems='flex-start' spacing={2} flex={1}>
+        <VStack alignItems='flex-start' spacing={2}>
           {pkg.features.map((feature) => (
             <HStack key={feature} spacing={2} alignItems='flex-start'>
               <Text color='yellow.300' fontSize='sm' flexShrink={0}>
