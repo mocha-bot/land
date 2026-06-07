@@ -4,6 +4,11 @@ import {
   Heading,
   HStack,
   Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalOverlay,
   SimpleGrid,
   Skeleton,
   Tab,
@@ -12,8 +17,10 @@ import {
   TabPanels,
   Tabs,
   Text,
+  useDisclosure,
   VStack,
 } from '@chakra-ui/react';
+import { WhopCheckoutEmbed } from '@whop/checkout/react';
 import type { GetStaticPropsContext } from 'next';
 import { i18n } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -119,6 +126,15 @@ function PackageCard({
   // guild/room packages — send user to dash to pick specific entity
   const needsDashRedirect = pkg.binding_type !== 'user' && !isFree;
 
+  // Whop plan to render in the embedded checkout (promo codes are entered inside it).
+  const whopPlanId =
+    pkg.providers?.find((p) => p.provider === 'whop' && p.is_active)
+      ?.provider_plan_id ??
+    pkg.providers?.find((p) => p.provider === 'whop')?.provider_plan_id ??
+    '';
+
+  const checkoutModal = useDisclosure();
+
   const handlePaidClick = async () => {
     if (needsDashRedirect) {
       const dashTarget = `${dashboardUrl}/subscription?binding_type=${pkg.binding_type}&package_serial=${pkg.serial}`;
@@ -136,6 +152,11 @@ function PackageCard({
       window.location.href = `${ssoUrl}?redirect_url=${encodeURIComponent(
         window.location.href,
       )}`;
+      return;
+    }
+    // Logged-in user package → open the Whop embedded checkout (with promo input).
+    if (whopPlanId) {
+      checkoutModal.onOpen();
       return;
     }
     try {
@@ -277,6 +298,28 @@ function PackageCard({
           {buttonLabel}
         </Button>
       )}
+
+      <Modal
+        isOpen={checkoutModal.isOpen}
+        onClose={checkoutModal.onClose}
+        size='lg'
+        isCentered>
+        <ModalOverlay />
+        <ModalContent bg='gray.900'>
+          <ModalCloseButton color='white' />
+          <ModalBody py={8}>
+            {whopPlanId && (
+              <WhopCheckoutEmbed
+                planId={whopPlanId}
+                theme='dark'
+                onComplete={() => {
+                  window.location.href = `${dashboardUrl}/subscription`;
+                }}
+              />
+            )}
+          </ModalBody>
+        </ModalContent>
+      </Modal>
     </Box>
   );
 }

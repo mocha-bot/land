@@ -4,7 +4,9 @@ export type BindingDestination = 'user' | 'guild' | 'room';
 
 export interface ProviderPlan {
   provider: string;
+  provider_plan_id?: string;
   checkout_url: string;
+  is_active?: boolean;
 }
 
 export interface Package {
