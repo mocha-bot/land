@@ -503,25 +503,23 @@ export function Header() {
                       </Button>
                       {isLoggedIn ? (
                         <>
-                          <Flex
+                          <Button
                             as='a'
                             href={publicRuntimeConfig.dashboardUrl}
-                            alignItems='center'
-                            gap={2}
-                            px={4}
-                            py={2}
-                            borderRadius='xl'
-                            border='1px solid rgba(255,255,255,0.15)'
-                            _hover={{ bg: 'whiteAlpha.100' }}>
-                            <Avatar
-                              size='xs'
-                              name={user?.username}
-                              src={user?.avatar_url}
-                            />
-                            <Text color='white' fontSize='sm'>
-                              {user?.username ?? 'Dashboard'}
-                            </Text>
-                          </Flex>
+                            variant='glass-ghost'
+                            py={4}
+                            px={6}>
+                            <Flex alignItems='center' gap={2}>
+                              <Avatar
+                                size='xs'
+                                name={user?.username}
+                                src={user?.avatar_url}
+                              />
+                              <Text color='white' fontSize='sm'>
+                                {user?.username ?? 'Dashboard'}
+                              </Text>
+                            </Flex>
+                          </Button>
                           <Button
                             variant='glass-ghost'
                             py={4}
