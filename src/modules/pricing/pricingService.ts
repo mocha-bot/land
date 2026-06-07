@@ -12,6 +12,7 @@ const UserSchema = z.object({
     serial: z.string(),
     username: z.string().optional(),
     display_name: z.string().optional(),
+    email: z.string().optional(),
   }),
 });
 

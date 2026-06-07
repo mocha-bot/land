@@ -302,21 +302,107 @@ function PackageCard({
       <Modal
         isOpen={checkoutModal.isOpen}
         onClose={checkoutModal.onClose}
-        size='lg'
+        size={{ base: 'md', md: '4xl' }}
         isCentered>
         <ModalOverlay />
         <ModalContent bg='gray.900'>
           <ModalCloseButton color='white' />
           <ModalBody py={8}>
-            {whopPlanId && (
-              <WhopCheckoutEmbed
-                planId={whopPlanId}
-                theme='dark'
-                onComplete={() => {
-                  window.location.href = `${dashboardUrl}/subscription`;
-                }}
-              />
-            )}
+            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
+              {/* Left — detail in our app */}
+              <VStack alignItems='flex-start' spacing={4}>
+                <DestinationBadge bindingType={pkg.binding_type} />
+                <Heading as='h3' size='md' color='white'>
+                  {pkg.name}
+                </Heading>
+                <Text color='white' fontSize='2xl' fontWeight='bold'>
+                  {formatPrice(
+                    renewalCents,
+                    pkg.price_currency,
+                    pkg.billing_interval,
+                  )}
+                </Text>
+                {hasDifferentInitial && (
+                  <Text color='whiteAlpha.600' fontSize='sm'>
+                    First payment:{' '}
+                    {formatPrice(
+                      pkg.price_cents,
+                      pkg.price_currency,
+                      'one_time',
+                    ).replace(' one-time', '')}
+                  </Text>
+                )}
+                {pkg.description && (
+                  <Box
+                    color='whiteAlpha.700'
+                    fontSize='sm'
+                    fontWeight='light'
+                    sx={{
+                      p: { mb: 2, _last: { mb: 0 } },
+                      h2: {
+                        fontWeight: 'semibold',
+                        color: 'white',
+                        fontSize: 'md',
+                        mt: 3,
+                        mb: 1,
+                      },
+                      h3: {
+                        fontWeight: 'semibold',
+                        color: 'white',
+                        fontSize: 'sm',
+                        mt: 2,
+                        mb: 1,
+                      },
+                      ul: { listStyleType: 'disc', pl: 5, mb: 2 },
+                      ol: { listStyleType: 'decimal', pl: 5, mb: 2 },
+                      li: { mb: 1 },
+                      strong: { color: 'white', fontWeight: 'semibold' },
+                      em: { fontStyle: 'italic' },
+                    }}
+                    dangerouslySetInnerHTML={{ __html: pkg.description }}
+                  />
+                )}
+                {pkg.features.length > 0 && (
+                  <VStack alignItems='flex-start' spacing={2}>
+                    {pkg.features.map((feature) => (
+                      <HStack key={feature} spacing={2} alignItems='flex-start'>
+                        <Text color='yellow.300' fontSize='sm' flexShrink={0}>
+                          ✓
+                        </Text>
+                        <Text color='whiteAlpha.900' fontSize='sm'>
+                          {feature}
+                        </Text>
+                      </HStack>
+                    ))}
+                  </VStack>
+                )}
+                <Text
+                  color='whiteAlpha.500'
+                  fontSize='xs'
+                  pt={2}
+                  borderTopWidth='1px'
+                  borderColor='whiteAlpha.200'
+                  w='full'>
+                  Billing for:{' '}
+                  {DESTINATION_LABELS[pkg.binding_type]?.label ??
+                    pkg.binding_type}
+                </Text>
+              </VStack>
+
+              {/* Right — Whop checkout */}
+              <Box>
+                {whopPlanId && (
+                  <WhopCheckoutEmbed
+                    planId={whopPlanId}
+                    theme='dark'
+                    prefill={user?.email ? { email: user.email } : undefined}
+                    onComplete={() => {
+                      window.location.href = `${dashboardUrl}/subscription`;
+                    }}
+                  />
+                )}
+              </Box>
+            </SimpleGrid>
           </ModalBody>
         </ModalContent>
       </Modal>
