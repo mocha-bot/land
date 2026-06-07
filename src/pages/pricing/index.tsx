@@ -745,7 +745,7 @@ function Pricing() {
             {!hasNoData && !isLoading && (
               <VStack alignItems='flex-start' spacing={2}>
                 <Text color='whiteAlpha.500' fontSize='sm' fontWeight='light'>
-                  Powered by multiple payment providers for reliability.
+                  Payments powered by Whop.
                 </Text>
                 <Text color='subtitle' fontSize='sm' fontWeight='light'>
                   Curious about refunds?{' '}
