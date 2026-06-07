@@ -402,20 +402,6 @@ function TabPlanContent({
   );
 }
 
-function SectionLabel({ label }: { label: string }) {
-  return (
-    <Text
-      color='whiteAlpha.500'
-      fontSize='xs'
-      fontWeight='semibold'
-      textTransform='uppercase'
-      letterSpacing='wider'
-      mb={2}>
-      {label}
-    </Text>
-  );
-}
-
 function AllPlanContent({
   roomPkgs,
   roomAddons,
@@ -467,28 +453,31 @@ function AllPlanContent({
     },
   ];
 
+  const allPkgs = sections.flatMap((s) => [...s.pkgs, ...s.addons]);
+
+  if (isLoading) {
+    return (
+      <SimpleGrid columns={[1, null, 3]} gap={6} w='full'>
+        <PackageCardSkeleton />
+        <PackageCardSkeleton />
+        <PackageCardSkeleton />
+      </SimpleGrid>
+    );
+  }
+
   return (
-    <VStack alignItems='flex-start' spacing={12} w='full'>
-      {sections.map((section) => (
-        <VStack
-          key={section.label}
-          alignItems='flex-start'
-          spacing={4}
-          w='full'>
-          <SectionLabel label={section.label} />
-          <TabPlanContent
-            pkgs={section.pkgs}
-            addons={section.addons}
-            isLoading={isLoading}
-            emptyText={section.emptyText}
-            user={user}
-            ssoUrl={ssoUrl}
-            dashboardUrl={dashboardUrl}
-            hasActiveSubscription={hasActiveSubscription}
-          />
-        </VStack>
+    <SimpleGrid columns={[1, null, 3]} gap={6} w='full'>
+      {allPkgs.map((pkg) => (
+        <PackageCard
+          key={pkg.serial}
+          pkg={pkg}
+          user={user}
+          ssoUrl={ssoUrl}
+          dashboardUrl={dashboardUrl}
+          hasActiveSubscription={hasActiveSubscription}
+        />
       ))}
-    </VStack>
+    </SimpleGrid>
   );
 }
 
