@@ -303,9 +303,9 @@ function PackageCard({
         isOpen={checkoutModal.isOpen}
         onClose={checkoutModal.onClose}
         size={{ base: 'md', md: '4xl' }}
-        isCentered>
+        scrollBehavior='outside'>
         <ModalOverlay />
-        <ModalContent bg='gray.900'>
+        <ModalContent bg='gray.900' my={8}>
           <ModalCloseButton color='white' />
           <ModalBody py={8}>
             <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
