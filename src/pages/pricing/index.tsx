@@ -1,14 +1,11 @@
 import {
   Box,
+  CloseButton,
   Flex,
   Heading,
   HStack,
   Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalOverlay,
+  Portal,
   SimpleGrid,
   Skeleton,
   Tab,
@@ -148,15 +145,18 @@ function PackageCard({
       }
       return;
     }
+    // User-binding paid plan with a Whop plan → open the checkout modal directly.
+    // Don't gate on login: the Whop embed collects the email itself (we prefill it
+    // when the account is known), and login detection is unreliable on the public
+    // marketing domain, so an SSO gate here just traps already-logged-in users.
+    if (whopPlanId) {
+      checkoutModal.onOpen();
+      return;
+    }
     if (!user) {
       window.location.href = `${ssoUrl}?redirect_url=${encodeURIComponent(
         window.location.href,
       )}`;
-      return;
-    }
-    // Logged-in user package → open the Whop embedded checkout (with promo input).
-    if (whopPlanId) {
-      checkoutModal.onOpen();
       return;
     }
     try {
@@ -299,113 +299,150 @@ function PackageCard({
         </Button>
       )}
 
-      <Modal
-        isOpen={checkoutModal.isOpen}
-        onClose={checkoutModal.onClose}
-        size={{ base: 'md', md: '4xl' }}
-        scrollBehavior='outside'>
-        <ModalOverlay />
-        <ModalContent bg='gray.900' my={8}>
-          <ModalCloseButton color='white' />
-          <ModalBody py={8}>
-            <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
-              {/* Left — detail in our app */}
-              <VStack alignItems='flex-start' spacing={4}>
-                <DestinationBadge bindingType={pkg.binding_type} />
-                <Heading as='h3' size='md' color='white'>
-                  {pkg.name}
-                </Heading>
-                <Text color='white' fontSize='2xl' fontWeight='bold'>
-                  {formatPrice(
-                    renewalCents,
-                    pkg.price_currency,
-                    pkg.billing_interval,
-                  )}
-                </Text>
-                {hasDifferentInitial && (
-                  <Text color='whiteAlpha.600' fontSize='sm'>
-                    First payment:{' '}
+      {checkoutModal.isOpen && (
+        <Portal>
+          {/* Backdrop — fixed so it covers the viewport regardless of page scroll. */}
+          <Box
+            position='fixed'
+            inset={0}
+            bg='blackAlpha.800'
+            backdropFilter='blur(4px)'
+            zIndex='modal'
+            onClick={checkoutModal.onClose}
+          />
+          {/* Content layer flows in document order so the ROOT document scrolls.
+              Chrome only scroll-chains wheel events from the cross-origin Whop iframe
+              to the root scroller, not to a fixed overflow container — so this keeps
+              the checkout column scrollable. */}
+          <Box
+            position='relative'
+            zIndex='modal'
+            minH='100vh'
+            display='flex'
+            alignItems='flex-start'
+            justifyContent='center'
+            p={4}
+            onClick={checkoutModal.onClose}>
+            <Box
+              onClick={(e) => e.stopPropagation()}
+              position='relative'
+              bg='gray.900'
+              borderRadius='xl'
+              borderWidth='1px'
+              borderColor='whiteAlpha.200'
+              w='full'
+              maxW='4xl'
+              my={8}
+              p={8}>
+              <CloseButton
+                position='absolute'
+                right={3}
+                top={3}
+                color='white'
+                onClick={checkoutModal.onClose}
+              />
+              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
+                {/* Left — detail in our app */}
+                <VStack alignItems='flex-start' spacing={4}>
+                  <DestinationBadge bindingType={pkg.binding_type} />
+                  <Heading as='h3' size='md' color='white'>
+                    {pkg.name}
+                  </Heading>
+                  <Text color='white' fontSize='2xl' fontWeight='bold'>
                     {formatPrice(
-                      pkg.price_cents,
+                      renewalCents,
                       pkg.price_currency,
-                      'one_time',
-                    ).replace(' one-time', '')}
+                      pkg.billing_interval,
+                    )}
                   </Text>
-                )}
-                {pkg.description && (
-                  <Box
-                    color='whiteAlpha.700'
-                    fontSize='sm'
-                    fontWeight='light'
-                    sx={{
-                      p: { mb: 2, _last: { mb: 0 } },
-                      h2: {
-                        fontWeight: 'semibold',
-                        color: 'white',
-                        fontSize: 'md',
-                        mt: 3,
-                        mb: 1,
-                      },
-                      h3: {
-                        fontWeight: 'semibold',
-                        color: 'white',
-                        fontSize: 'sm',
-                        mt: 2,
-                        mb: 1,
-                      },
-                      ul: { listStyleType: 'disc', pl: 5, mb: 2 },
-                      ol: { listStyleType: 'decimal', pl: 5, mb: 2 },
-                      li: { mb: 1 },
-                      strong: { color: 'white', fontWeight: 'semibold' },
-                      em: { fontStyle: 'italic' },
-                    }}
-                    dangerouslySetInnerHTML={{ __html: pkg.description }}
-                  />
-                )}
-                {pkg.features.length > 0 && (
-                  <VStack alignItems='flex-start' spacing={2}>
-                    {pkg.features.map((feature) => (
-                      <HStack key={feature} spacing={2} alignItems='flex-start'>
-                        <Text color='yellow.300' fontSize='sm' flexShrink={0}>
-                          ✓
-                        </Text>
-                        <Text color='whiteAlpha.900' fontSize='sm'>
-                          {feature}
-                        </Text>
-                      </HStack>
-                    ))}
-                  </VStack>
-                )}
-                <Text
-                  color='whiteAlpha.500'
-                  fontSize='xs'
-                  pt={2}
-                  borderTopWidth='1px'
-                  borderColor='whiteAlpha.200'
-                  w='full'>
-                  Billing for:{' '}
-                  {DESTINATION_LABELS[pkg.binding_type]?.label ??
-                    pkg.binding_type}
-                </Text>
-              </VStack>
+                  {hasDifferentInitial && (
+                    <Text color='whiteAlpha.600' fontSize='sm'>
+                      First payment:{' '}
+                      {formatPrice(
+                        pkg.price_cents,
+                        pkg.price_currency,
+                        'one_time',
+                      ).replace(' one-time', '')}
+                    </Text>
+                  )}
+                  {pkg.description && (
+                    <Box
+                      color='whiteAlpha.700'
+                      fontSize='sm'
+                      fontWeight='light'
+                      sx={{
+                        p: { mb: 2, _last: { mb: 0 } },
+                        h2: {
+                          fontWeight: 'semibold',
+                          color: 'white',
+                          fontSize: 'md',
+                          mt: 3,
+                          mb: 1,
+                        },
+                        h3: {
+                          fontWeight: 'semibold',
+                          color: 'white',
+                          fontSize: 'sm',
+                          mt: 2,
+                          mb: 1,
+                        },
+                        ul: { listStyleType: 'disc', pl: 5, mb: 2 },
+                        ol: { listStyleType: 'decimal', pl: 5, mb: 2 },
+                        li: { mb: 1 },
+                        strong: { color: 'white', fontWeight: 'semibold' },
+                        em: { fontStyle: 'italic' },
+                      }}
+                      dangerouslySetInnerHTML={{ __html: pkg.description }}
+                    />
+                  )}
+                  {pkg.features.length > 0 && (
+                    <VStack alignItems='flex-start' spacing={2}>
+                      {pkg.features.map((feature) => (
+                        <HStack
+                          key={feature}
+                          spacing={2}
+                          alignItems='flex-start'>
+                          <Text color='yellow.300' fontSize='sm' flexShrink={0}>
+                            ✓
+                          </Text>
+                          <Text color='whiteAlpha.900' fontSize='sm'>
+                            {feature}
+                          </Text>
+                        </HStack>
+                      ))}
+                    </VStack>
+                  )}
+                  <Text
+                    color='whiteAlpha.500'
+                    fontSize='xs'
+                    pt={2}
+                    borderTopWidth='1px'
+                    borderColor='whiteAlpha.200'
+                    w='full'>
+                    Billing for:{' '}
+                    {DESTINATION_LABELS[pkg.binding_type]?.label ??
+                      pkg.binding_type}
+                  </Text>
+                </VStack>
 
-              {/* Right — Whop checkout */}
-              <Box>
-                {whopPlanId && (
-                  <WhopCheckoutEmbed
-                    planId={whopPlanId}
-                    theme='dark'
-                    prefill={user?.email ? { email: user.email } : undefined}
-                    onComplete={() => {
-                      window.location.href = `${dashboardUrl}/subscription`;
-                    }}
-                  />
-                )}
-              </Box>
-            </SimpleGrid>
-          </ModalBody>
-        </ModalContent>
-      </Modal>
+                {/* Right — Whop checkout */}
+                <Box>
+                  {whopPlanId && (
+                    <WhopCheckoutEmbed
+                      planId={whopPlanId}
+                      theme='dark'
+                      prefill={user?.email ? { email: user.email } : undefined}
+                      onComplete={() => {
+                        window.location.href = `${dashboardUrl}/subscription`;
+                      }}
+                    />
+                  )}
+                </Box>
+              </SimpleGrid>
+            </Box>
+          </Box>
+        </Portal>
+      )}
     </Box>
   );
 }
