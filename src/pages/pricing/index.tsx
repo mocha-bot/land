@@ -55,6 +55,24 @@ const cardStyle = {
   p: 8,
 };
 
+// Slim, theme-matched scrollbar for the checkout modal scroll containers.
+const scrollSx = {
+  scrollbarWidth: 'thin',
+  scrollbarColor: 'rgba(255, 255, 255, 0.18) transparent',
+  '&::-webkit-scrollbar': { width: '8px', height: '8px' },
+  '&::-webkit-scrollbar-track': { background: 'transparent' },
+  '&::-webkit-scrollbar-thumb': {
+    background: 'rgba(255, 255, 255, 0.16)',
+    borderRadius: '9999px',
+    border: '2px solid transparent',
+    backgroundClip: 'padding-box',
+  },
+  '&::-webkit-scrollbar-thumb:hover': {
+    background: 'rgba(255, 255, 255, 0.3)',
+    backgroundClip: 'padding-box',
+  },
+};
+
 function formatPrice(
   cents: number,
   currency: string,
@@ -334,7 +352,8 @@ function PackageCard({
               maxH='90vh'
               display='flex'
               flexDirection={{ base: 'column', md: 'row' }}
-              overflowY={{ base: 'auto', md: 'hidden' }}>
+              overflowY={{ base: 'auto', md: 'hidden' }}
+              sx={scrollSx}>
               <CloseButton
                 position='absolute'
                 right={3}
@@ -355,7 +374,8 @@ function PackageCard({
               <Box
                 w={{ base: 'full', md: '50%' }}
                 p={8}
-                overflowY={{ base: 'visible', md: 'auto' }}>
+                overflowY={{ base: 'visible', md: 'auto' }}
+                sx={scrollSx}>
                 <VStack alignItems='flex-start' spacing={4}>
                   <DestinationBadge bindingType={pkg.binding_type} />
                   <Heading as='h3' size='md' color='white'>
@@ -447,7 +467,8 @@ function PackageCard({
                 overflowY={{ base: 'visible', md: 'auto' }}
                 borderTopWidth={{ base: '1px', md: 0 }}
                 borderLeftWidth={{ base: 0, md: '1px' }}
-                borderColor='whiteAlpha.200'>
+                borderColor='whiteAlpha.200'
+                sx={scrollSx}>
                 {whopPlanId && (
                   <WhopCheckoutEmbed
                     planId={whopPlanId}
