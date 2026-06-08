@@ -325,6 +325,7 @@ function PackageCard({
               onClick={(e) => e.stopPropagation()}
               position='relative'
               bg='gray.900'
+              bgImage='radial-gradient(circle at 12% 0%, rgba(253, 184, 51, 0.14), transparent 55%), radial-gradient(circle at 88% 100%, rgba(2, 173, 255, 0.14), transparent 55%)'
               borderRadius='xl'
               borderWidth='1px'
               borderColor='whiteAlpha.200'
@@ -339,7 +340,15 @@ function PackageCard({
                 right={3}
                 top={3}
                 zIndex={1}
-                color='white'
+                size='md'
+                borderRadius='full'
+                color='whiteAlpha.700'
+                transition='all 0.2s'
+                _hover={{
+                  color: 'white',
+                  bg: 'whiteAlpha.200',
+                  transform: 'rotate(90deg)',
+                }}
                 onClick={checkoutModal.onClose}
               />
               {/* Left — detail in our app (static) */}
@@ -434,6 +443,7 @@ function PackageCard({
               <Box
                 w={{ base: 'full', md: '50%' }}
                 p={8}
+                pb={12}
                 overflowY={{ base: 'visible', md: 'auto' }}
                 borderTopWidth={{ base: '1px', md: 0 }}
                 borderLeftWidth={{ base: 0, md: '1px' }}
