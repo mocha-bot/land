@@ -310,14 +310,14 @@ function PackageCard({
             zIndex='modal'
             onClick={checkoutModal.onClose}
           />
-          {/* Content layer flows in document order so the ROOT document scrolls.
-              Chrome only scroll-chains wheel events from the cross-origin Whop iframe
-              to the root scroller, not to a fixed overflow container — so this keeps
-              the checkout column scrollable. */}
+          {/* Fixed scroll container — the only scroller, top-aligned so the panel
+              top stays reachable when the Whop embed makes it taller than the
+              viewport. */}
           <Box
-            position='relative'
+            position='fixed'
+            inset={0}
             zIndex='modal'
-            minH='100vh'
+            overflowY='auto'
             display='flex'
             alignItems='flex-start'
             justifyContent='center'
