@@ -310,16 +310,14 @@ function PackageCard({
             zIndex='modal'
             onClick={checkoutModal.onClose}
           />
-          {/* Fixed scroll container — the only scroller, top-aligned so the panel
-              top stays reachable when the Whop embed makes it taller than the
-              viewport. */}
+          {/* Centered, non-scrolling overlay; the panel owns its height and only the
+              right (checkout) column scrolls. */}
           <Box
             position='fixed'
             inset={0}
             zIndex='modal'
-            overflowY='auto'
             display='flex'
-            alignItems='flex-start'
+            alignItems='center'
             justifyContent='center'
             p={4}
             onClick={checkoutModal.onClose}>
@@ -332,17 +330,23 @@ function PackageCard({
               borderColor='whiteAlpha.200'
               w='full'
               maxW='4xl'
-              my={8}
-              p={8}>
+              maxH='90vh'
+              display='flex'
+              flexDirection={{ base: 'column', md: 'row' }}
+              overflowY={{ base: 'auto', md: 'hidden' }}>
               <CloseButton
                 position='absolute'
                 right={3}
                 top={3}
+                zIndex={1}
                 color='white'
                 onClick={checkoutModal.onClose}
               />
-              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={8}>
-                {/* Left — detail in our app */}
+              {/* Left — detail in our app (static) */}
+              <Box
+                w={{ base: 'full', md: '50%' }}
+                p={8}
+                overflowY={{ base: 'visible', md: 'auto' }}>
                 <VStack alignItems='flex-start' spacing={4}>
                   <DestinationBadge bindingType={pkg.binding_type} />
                   <Heading as='h3' size='md' color='white'>
@@ -424,21 +428,27 @@ function PackageCard({
                       pkg.binding_type}
                   </Text>
                 </VStack>
+              </Box>
 
-                {/* Right — Whop checkout */}
-                <Box>
-                  {whopPlanId && (
-                    <WhopCheckoutEmbed
-                      planId={whopPlanId}
-                      theme='dark'
-                      prefill={user?.email ? { email: user.email } : undefined}
-                      onComplete={() => {
-                        window.location.href = `${dashboardUrl}/subscription`;
-                      }}
-                    />
-                  )}
-                </Box>
-              </SimpleGrid>
+              {/* Right — Whop checkout (scrollable) */}
+              <Box
+                w={{ base: 'full', md: '50%' }}
+                p={8}
+                overflowY={{ base: 'visible', md: 'auto' }}
+                borderTopWidth={{ base: '1px', md: 0 }}
+                borderLeftWidth={{ base: 0, md: '1px' }}
+                borderColor='whiteAlpha.200'>
+                {whopPlanId && (
+                  <WhopCheckoutEmbed
+                    planId={whopPlanId}
+                    theme='dark'
+                    prefill={user?.email ? { email: user.email } : undefined}
+                    onComplete={() => {
+                      window.location.href = `${dashboardUrl}/subscription`;
+                    }}
+                  />
+                )}
+              </Box>
             </Box>
           </Box>
         </Portal>
