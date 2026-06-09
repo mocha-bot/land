@@ -3,7 +3,7 @@ import { useState } from 'react';
 import type { Tag } from '@/modules/tag/tagEntity';
 
 import { RoomJoinedCountFilter } from './filters/RoomJoinedCountFilter';
-// import { RoomLanguageFilter } from './filters/RoomLanguageFilter';
+import { RoomLanguageFilter } from './filters/RoomLanguageFilter';
 import { RoomRatingFilter } from './filters/RoomRatingFilter';
 import { RoomTagFilter } from './filters/RoomTagFilter';
 
@@ -44,14 +44,13 @@ export function RoomSearchFilterContainer(props: Props) {
 
   return (
     <>
-      {/* TODO: enable this when the language is ready in BE */}
-      {/* <RoomLanguageFilter
+      <RoomLanguageFilter
         value={filter.language}
         onChange={(value) => handleChangeFilter({ language: value })}
         onReset={() =>
           handleChangeFilter({ language: DEFAULT_FILTER.language })
         }
-      /> */}
+      />
       <RoomRatingFilter
         value={filter.rating}
         onChange={(value) => handleChangeFilter({ rating: value })}

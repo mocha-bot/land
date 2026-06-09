@@ -97,6 +97,10 @@ export function RoomSearchContainer() {
       channel_join_min: filter.channelJoinMin,
       rate: filter.rating,
       tags: filter.tags.map((tag) => tag.name),
+      languages:
+        filter.language && filter.language !== 'all'
+          ? [filter.language]
+          : undefined,
     },
     { enabled: true },
   );
@@ -113,6 +117,10 @@ export function RoomSearchContainer() {
     }
 
     if (filter.tags.length > 0) {
+      count += 1;
+    }
+
+    if (filter.language && filter.language !== 'all') {
       count += 1;
     }
 

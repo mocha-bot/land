@@ -1,13 +1,10 @@
 import { Flex, Text } from '@chakra-ui/react';
+import { useMemo } from 'react';
 
 import { Select } from '@/components/Form/Select';
+import { useGetLanguagesQuery } from '@/modules/language/languageHooks';
 
-// TODO: get the options from the API
-const OPTIONS = [
-  { value: 'all', label: 'All' },
-  { value: 'id', label: 'Indonesia' },
-  { value: 'en', label: 'English' },
-];
+const ALL_OPTION = { value: 'all', label: 'All' };
 
 type Props = {
   value?: string;
@@ -16,6 +13,19 @@ type Props = {
 };
 
 export function RoomLanguageFilter({ onChange, onReset, value }: Props) {
+  const { data } = useGetLanguagesQuery();
+
+  const options = useMemo(
+    () => [
+      ALL_OPTION,
+      ...(data?.data ?? []).map((lang) => ({
+        value: lang.code,
+        label: lang.name,
+      })),
+    ],
+    [data],
+  );
+
   return (
     <Flex flexDir='column' gap={1} w='full'>
       <Flex flexDir='row' justifyContent='space-between'>
@@ -27,8 +37,8 @@ export function RoomLanguageFilter({ onChange, onReset, value }: Props) {
         </Text>
       </Flex>
       <Select
-        defaultValue={OPTIONS[0].value}
-        options={OPTIONS}
+        defaultValue={ALL_OPTION.value}
+        options={options}
         value={value}
         onChange={onChange}
       />

@@ -91,6 +91,7 @@ export const searchRoom = async (
       slug: room.slug,
       description: room.description,
       tags: room.tags,
+      languages: room.languages,
       totalChannel: room.total_channel,
       createdBy: room.created_by,
       createdAt: room.created_at,

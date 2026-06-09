@@ -12,6 +12,7 @@ export const ApiRoomSchema = z.object({
       slug: z.string().default(''),
       description: z.string().default(''),
       tags: z.array(TagSchema).default([]),
+      languages: z.array(z.string()).default([]),
       total_channel: z.number().default(0),
       rate: z.object({
         rating_count: z.number().default(0),
@@ -33,6 +34,7 @@ export type Room = {
   description: string;
   totalChannel: number;
   tags: Tag[];
+  languages: string[];
   createdBy: string;
   createdAt: string;
   rate: {

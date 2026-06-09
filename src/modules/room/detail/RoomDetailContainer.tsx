@@ -24,10 +24,12 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import dayjs from 'dayjs';
+import getConfig from 'next/config';
 import NextLink from 'next/link';
 import React from 'react';
 import {
   FiCalendar as CalendarIcon,
+  FiGlobe as GlobeIcon,
   FiHash as HashtagIcon,
   FiServer as ServerIcon,
   FiUsers as UsersIcon,
@@ -36,6 +38,7 @@ import { IoIosStarOutline as StarIcon } from 'react-icons/io';
 import { LuMoveLeft as BackIcon } from 'react-icons/lu';
 import { MdInfoOutline as InfoIcon } from 'react-icons/md';
 
+import { useGetLanguagesQuery } from '@/modules/language/languageHooks';
 import Button from '@/uikit/Button';
 import { Container } from '@/uikit/Container';
 import { Layout } from '@/uikit/Layout';
@@ -53,6 +56,25 @@ const SERVER_BANNER_URL_DESKTOP =
 const SERVER_BANNER_URL_MOBILE =
   '/assets/images/detail-room-server-banner-mobile.png';
 const SERVER_LOGO_URL = '/assets/images/logo-mocha.png';
+
+const { publicRuntimeConfig } = getConfig();
+
+function SupportLink() {
+  const supportUrl = publicRuntimeConfig?.supportUrl as string | undefined;
+  if (!supportUrl) {
+    return null;
+  }
+  return (
+    <Text fontSize='12px' color='whiteAlpha.700'>
+      Need support?{' '}
+      <NextLink href={supportUrl} target='_blank' rel='noopener noreferrer'>
+        <Text as='span' color='white' textDecoration='underline'>
+          Visit our support
+        </Text>
+      </NextLink>
+    </Text>
+  );
+}
 
 export function RoomDetailContainer(props: Props) {
   const isMobile = useBreakpointValue({ base: true, md: false });
@@ -176,18 +198,8 @@ export function RoomDetailContainer(props: Props) {
                       onClick={handleClickJoinRoom}>
                       Join Room
                     </Button>
-                    {/* TODO: implement report system when the BE is ready */}
-                    {/* <Flex
-                      p={3}
-                      borderRadius='100%'
-                      backgroundColor='background.dark'
-                      minW={12}
-                      minH={12}
-                      justifyContent='center'
-                      alignItems='center'>
-                      <Icon as={AlertIcon} m='auto' fontSize='20px' />
-                    </Flex> */}
                   </Flex>
+                  <SupportLink />
                   <Button
                     w='full'
                     variant='glass'
@@ -295,9 +307,8 @@ export function RoomDetailContainer(props: Props) {
                     onClick={handleClickJoinRoom}>
                     Join Room
                   </Button>
-                  {/* TODO: implement report system when the BE is ready */}
-                  {/* <Flexs */}
                 </Flex>
+                <SupportLink />
                 <Button
                   w='full'
                   variant='glass'
@@ -340,20 +351,28 @@ type DetailInfoProps = {
 };
 
 function DetailInfo(props: DetailInfoProps) {
+  const { data: languagesData } = useGetLanguagesQuery();
+
+  const languageLabel = (() => {
+    const codes = props.room.languages ?? [];
+    if (codes.length === 0) {
+      return '';
+    }
+    const nameByCode = new Map(
+      (languagesData?.data ?? []).map((l) => [l.code, l.name]),
+    );
+    return codes.map((c) => nameByCode.get(c) ?? c.toUpperCase()).join(', ');
+  })();
+
   const detailInfo = [
     {
       icon: CalendarIcon,
       label: 'Created',
       value: dayjs(props.room.createdAt).format('MMM YYYY'),
     },
-    // TODO: show language info when API is ready
-    // {
-    //   icon: GlobeIcon,
-    //   label: 'Language',
-    //   value: `${
-    //     props.room.language.name
-    //   } (${props.room.language.code.toUpperCase()})`,
-    // },
+    ...(languageLabel
+      ? [{ icon: GlobeIcon, label: 'Language', value: languageLabel }]
+      : []),
     {
       icon: StarIcon,
       label: 'Rate',
