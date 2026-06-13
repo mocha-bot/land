@@ -163,6 +163,9 @@ export function StatsBar() {
   const roomStat = data
     ? formatTarget(data.totalRoomCreated)
     : { target: 0, suffix: '+' };
+  const membersStat = data
+    ? formatTarget(data.totalUniqueSenders)
+    : { target: 0, suffix: '+' };
 
   const stats: StatConfig[] = [
     {
@@ -175,6 +178,12 @@ export function StatsBar() {
       numericTarget: data ? roomStat.target : undefined,
       suffix: roomStat.suffix,
       label: 'Rooms created',
+      loading: isLoading,
+    },
+    {
+      numericTarget: data ? membersStat.target : undefined,
+      suffix: membersStat.suffix,
+      label: 'Members chatting',
       loading: isLoading,
     },
     {
