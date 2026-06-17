@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import { buildCanonical, buildLanguageAlternates } from '@/config/seo';
+import { buildCanonical } from '@/config/seo';
 import { searchRoom } from '@/modules/room/roomService';
 
 type StaticEntry = {
@@ -142,24 +142,22 @@ const renderUrl = (
   lastmod?: string,
 ): string => {
   const loc = escapeXml(buildCanonical(path, 'en'));
-  const alternates = buildLanguageAlternates(path)
-    .map(
-      (alt) =>
-        `<xhtml:link rel="alternate" hreflang="${
-          alt.hrefLang
-        }" href="${escapeXml(alt.href)}"/>`,
-    )
-    .join('');
-  const lastmodTag = lastmod ? `<lastmod>${lastmod}</lastmod>` : '';
-  return `<url><loc>${loc}</loc>${alternates}${lastmodTag}<changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`;
+  const lastmodTag = lastmod ? `\n    <lastmod>${lastmod}</lastmod>` : '';
+  return `\n  <url>\n    <loc>${loc}</loc>${lastmodTag}\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`;
 };
+
+const ROOM_FETCH_TIMEOUT_MS = 8000;
 
 const fetchAllRoomSlugs = async (): Promise<string[]> => {
   const slugs: string[] = [];
   let page = 1;
   let lastPage = 1;
+  const deadline = Date.now() + ROOM_FETCH_TIMEOUT_MS;
   try {
     do {
+      if (Date.now() >= deadline) {
+        break;
+      }
       // eslint-disable-next-line no-await-in-loop
       const result = await searchRoom({
         page,
@@ -198,9 +196,9 @@ export default async function handler(
       renderUrl(`/room/${slug}`, 'weekly', '0.6'),
     );
 
-    const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${staticUrls.join(
+    const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${staticUrls.join(
       '',
-    )}${roomUrls.join('')}</urlset>`;
+    )}${roomUrls.join('')}\n</urlset>`;
 
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
     res.setHeader(
@@ -212,10 +210,10 @@ export default async function handler(
     // eslint-disable-next-line no-console
     console.error('[sitemap] fatal error', err);
     // Emit the static fallback so crawlers aren't served a 500.
-    const fallback = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${STATIC_ENTRIES.map(
+    const fallback = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${STATIC_ENTRIES.map(
       (entry) =>
         renderUrl(entry.path, entry.changefreq, entry.priority, entry.lastmod),
-    ).join('')}</urlset>`;
+    ).join('')}\n</urlset>`;
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
     res.status(200).send(fallback);
   }

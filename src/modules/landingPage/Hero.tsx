@@ -15,7 +15,7 @@ import { AnimateOnView } from '@/components/AnimateOnView/AnimateOnView';
 import Button from '@/uikit/Button';
 
 const HeroVisual = dynamic(
-  () => import('./HeroVisual').then((m) => ({ default: m.HeroVisual })),
+  () => import('./HeroVisual').then((m) => m.HeroVisual),
   { ssr: false },
 );
 
