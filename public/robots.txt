@@ -2,5 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /api/
 Allow: /api/sitemap.xml
+Disallow: /404
+Disallow: /500
 
 Sitemap: https://mocha-bot.xyz/api/sitemap.xml

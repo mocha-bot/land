@@ -7,15 +7,121 @@ type StaticEntry = {
   path: string;
   changefreq: string;
   priority: string;
+  lastmod?: string;
 };
 
+const LAST_MODIFIED = '2026-06-18';
+
 const STATIC_ENTRIES: StaticEntry[] = [
-  { path: '/', changefreq: 'weekly', priority: '1.0' },
-  { path: '/pricing', changefreq: 'weekly', priority: '0.7' },
-  { path: '/search', changefreq: 'daily', priority: '0.8' },
-  { path: '/privacy-policy', changefreq: 'yearly', priority: '0.3' },
-  { path: '/terms-of-service', changefreq: 'yearly', priority: '0.3' },
-  { path: '/refund-policy', changefreq: 'yearly', priority: '0.3' },
+  { path: '/', changefreq: 'weekly', priority: '1.0', lastmod: LAST_MODIFIED },
+  {
+    path: '/donut',
+    changefreq: 'weekly',
+    priority: '0.9',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/pricing',
+    changefreq: 'weekly',
+    priority: '0.8',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/search',
+    changefreq: 'daily',
+    priority: '0.8',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/solutions',
+    changefreq: 'monthly',
+    priority: '0.8',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/solutions/gaming',
+    changefreq: 'monthly',
+    priority: '0.7',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/solutions/study-groups',
+    changefreq: 'monthly',
+    priority: '0.7',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/solutions/open-source',
+    changefreq: 'monthly',
+    priority: '0.7',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/solutions/creator-networks',
+    changefreq: 'monthly',
+    priority: '0.7',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/solutions/regional-communities',
+    changefreq: 'monthly',
+    priority: '0.7',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/solutions/events',
+    changefreq: 'monthly',
+    priority: '0.7',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/solutions/developer-communities',
+    changefreq: 'monthly',
+    priority: '0.7',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/solutions/fan-clubs',
+    changefreq: 'monthly',
+    priority: '0.7',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/solutions/dao-web3',
+    changefreq: 'monthly',
+    priority: '0.7',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/solutions/professional-networks',
+    changefreq: 'monthly',
+    priority: '0.7',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/privacy-policy',
+    changefreq: 'yearly',
+    priority: '0.3',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/terms-of-service',
+    changefreq: 'yearly',
+    priority: '0.3',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/refund-policy',
+    changefreq: 'yearly',
+    priority: '0.3',
+    lastmod: LAST_MODIFIED,
+  },
+  {
+    path: '/eula',
+    changefreq: 'yearly',
+    priority: '0.3',
+    lastmod: LAST_MODIFIED,
+  },
 ];
 
 const MAX_SITEMAP_PAGES = 50;
@@ -33,17 +139,19 @@ const renderUrl = (
   path: string,
   changefreq: string,
   priority: string,
+  lastmod?: string,
 ): string => {
   const loc = escapeXml(buildCanonical(path, 'en'));
   const alternates = buildLanguageAlternates(path)
     .map(
       (alt) =>
-        `<xhtml:link rel="alternate" hreflang="${alt.hrefLang}" href="${escapeXml(
-          alt.href,
-        )}"/>`,
+        `<xhtml:link rel="alternate" hreflang="${
+          alt.hrefLang
+        }" href="${escapeXml(alt.href)}"/>`,
     )
     .join('');
-  return `<url><loc>${loc}</loc>${alternates}<changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`;
+  const lastmodTag = lastmod ? `<lastmod>${lastmod}</lastmod>` : '';
+  return `<url><loc>${loc}</loc>${alternates}${lastmodTag}<changefreq>${changefreq}</changefreq><priority>${priority}</priority></url>`;
 };
 
 const fetchAllRoomSlugs = async (): Promise<string[]> => {
@@ -83,14 +191,16 @@ export default async function handler(
     const roomSlugs = await fetchAllRoomSlugs();
 
     const staticUrls = STATIC_ENTRIES.map((entry) =>
-      renderUrl(entry.path, entry.changefreq, entry.priority),
+      renderUrl(entry.path, entry.changefreq, entry.priority, entry.lastmod),
     );
 
     const roomUrls = roomSlugs.map((slug) =>
       renderUrl(`/room/${slug}`, 'weekly', '0.6'),
     );
 
-    const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${staticUrls.join('')}${roomUrls.join('')}</urlset>`;
+    const body = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${staticUrls.join(
+      '',
+    )}${roomUrls.join('')}</urlset>`;
 
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
     res.setHeader(
@@ -103,7 +213,8 @@ export default async function handler(
     console.error('[sitemap] fatal error', err);
     // Emit the static fallback so crawlers aren't served a 500.
     const fallback = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">${STATIC_ENTRIES.map(
-      (entry) => renderUrl(entry.path, entry.changefreq, entry.priority),
+      (entry) =>
+        renderUrl(entry.path, entry.changefreq, entry.priority, entry.lastmod),
     ).join('')}</urlset>`;
     res.setHeader('Content-Type', 'application/xml; charset=utf-8');
     res.status(200).send(fallback);
