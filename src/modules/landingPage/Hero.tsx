@@ -5,16 +5,19 @@ import {
   Image,
   Link,
   Text,
-  useBreakpointValue,
   VStack,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import getConfig from 'next/config';
+import dynamic from 'next/dynamic';
 
 import { AnimateOnView } from '@/components/AnimateOnView/AnimateOnView';
 import Button from '@/uikit/Button';
 
-import { HeroVisual } from './HeroVisual';
+const HeroVisual = dynamic(
+  () => import('./HeroVisual').then((m) => ({ default: m.HeroVisual })),
+  { ssr: false },
+);
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -37,8 +40,6 @@ const socials = [
 ];
 
 export function Hero() {
-  const isMobile = useBreakpointValue({ base: true, md: false });
-
   return (
     <Flex
       w='full'
@@ -60,7 +61,7 @@ export function Hero() {
           spacing={12}
           flex={1}
           as={motion.div}
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 1, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           // @ts-expect-error framer types
           transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98] }}>
@@ -130,28 +131,26 @@ export function Hero() {
               Get Access
             </Button>
           </HStack>
-          {!isMobile && (
-            <HStack gap={8}>
-              {socials.map((social) => (
-                <Link key={`social-${social.name}`} href={social.href}>
-                  <IconButton
-                    isRound
-                    backgroundColor='rgba(255, 255, 255, 0.20)'
-                    aria-label={`${social.name} mocha`}
-                    icon={
-                      <Image
-                        src={social.icon}
-                        width={8}
-                        height={8}
-                        alt={`${social.name} Icon`}
-                      />
-                    }
-                    _hover={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}
-                  />
-                </Link>
-              ))}
-            </HStack>
-          )}
+          <HStack gap={8} display={{ base: 'none', md: 'flex' }}>
+            {socials.map((social) => (
+              <Link key={`social-${social.name}`} href={social.href}>
+                <IconButton
+                  isRound
+                  backgroundColor='rgba(255, 255, 255, 0.20)'
+                  aria-label={`${social.name} mocha`}
+                  icon={
+                    <Image
+                      src={social.icon}
+                      width={8}
+                      height={8}
+                      alt={`${social.name} Icon`}
+                    />
+                  }
+                  _hover={{ backgroundColor: 'rgba(255, 255, 255, 0.4)' }}
+                />
+              </Link>
+            ))}
+          </HStack>
         </HStack>
       </AnimateOnView>
     </Flex>
