@@ -22,6 +22,9 @@ const nextConfig = {
   async headers() {
     return [{ source: '/(.*)', headers: securityHeaders }];
   },
+  async rewrites() {
+    return [{ source: '/sitemap.xml', destination: '/api/sitemap.xml' }];
+  },
   publicRuntimeConfig: {
     showVersion: process.env.SHOW_VERSION === 'TRUE',
     clientVersion: process.env.COMMIT_HASH || 'local-0.0.1',
