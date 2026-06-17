@@ -611,3 +611,5 @@ export function HeroVisual() {
     </Box>
   );
 }
+
+export default HeroVisual;

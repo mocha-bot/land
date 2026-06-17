@@ -10,18 +10,11 @@ import {
 import { motion } from 'framer-motion';
 import getConfig from 'next/config';
 import dynamic from 'next/dynamic';
-import type { ReactElement } from 'react';
 
 import { AnimateOnView } from '@/components/AnimateOnView/AnimateOnView';
 import Button from '@/uikit/Button';
 
-const HeroVisual = dynamic(
-  () =>
-    import('./HeroVisual').then((m): { default: () => ReactElement } => ({
-      default: m.HeroVisual,
-    })),
-  { ssr: false },
-);
+const HeroVisual = dynamic(() => import('./HeroVisual'), { ssr: false });
 
 const { publicRuntimeConfig } = getConfig();
 
