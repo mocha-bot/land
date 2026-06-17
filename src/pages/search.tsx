@@ -25,9 +25,9 @@ export default function Index({ locale }: SearchProps) {
     <>
       <Head>
         {generateNextSeo({
-          title: 'Search Rooms',
+          title: 'Find Discord Rooms - Public Communities on Mocha',
           description:
-            'Discover public Mocha rooms across Discord communities. Filter by tag, language, rating, and activity to find your next favorite server.',
+            'Browse and join public Discord rooms on Mocha. Filter by tag, language, or activity to find servers that match what you are looking for.',
           canonical,
           languageAlternates: buildLanguageAlternates('/search'),
           openGraph: {

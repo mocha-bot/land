@@ -106,9 +106,7 @@ export const howToJsonLd = () => ({
   ],
 });
 
-export const faqJsonLd = (
-  items: { question: string; answer: string }[],
-) => ({
+export const faqJsonLd = (items: { question: string; answer: string }[]) => ({
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
   mainEntity: items.map((item) => ({
@@ -120,3 +118,28 @@ export const faqJsonLd = (
     },
   })),
 });
+
+export const pricingFaqJsonLd = () =>
+  faqJsonLd([
+    {
+      question: 'Is Mocha Bot free?',
+      answer:
+        'Yes. Creating rooms, joining rooms, and cross-server chat are free with no time limit. Paid plans unlock extras like private rooms, invite links, and member matchmaking.',
+    },
+    {
+      question: 'What do paid plans include?',
+      answer:
+        'Paid plans add private rooms with password protection, shareable invite links, unlimited server slots per room, custom welcome messages, and the Donut matchmaking feature. Each add-on can be bought individually for a server or room.',
+    },
+    {
+      question:
+        'Do I need a paid plan to add more than two servers to one room?',
+      answer:
+        'The free plan allows up to two servers per room. A room subscription removes that limit so you can connect as many servers as you want.',
+    },
+    {
+      question: 'Can I change or cancel my plan later?',
+      answer:
+        'Yes. You can upgrade or cancel at any time from the dashboard. If you cancel, your plan stays active until the end of the current billing period.',
+    },
+  ]);

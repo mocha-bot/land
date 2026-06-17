@@ -13,7 +13,13 @@ import {
   StaggerContainer,
   staggerItem,
 } from '@/components/AnimateOnView/AnimateOnView';
-import { buildCanonical, ogLocaleFor } from '@/config/seo';
+import {
+  buildCanonical,
+  buildLanguageAlternates,
+  ogLocaleFor,
+  SITE_URL,
+} from '@/config/seo';
+import { breadcrumbJsonLd, jsonLdScriptProps } from '@/config/structuredData';
 import { DonutMatchCard } from '@/modules/donut/DonutMatchCard';
 import Button from '@/uikit/Button';
 import { Container } from '@/uikit/Container';
@@ -98,16 +104,25 @@ function Donut() {
     <>
       <Head>
         {generateNextSeo({
-          title: 'Donut: Community Matchmaking',
+          title: 'Donut - Automatically Match Discord Members for 1-on-1 Calls',
           description:
-            'Automatically pair your Discord community members for 1-on-1 or small-group interactions. Events, mentorship, icebreakers. Donut handles the pairing.',
+            'Donut pairs your Discord members into small groups for conversations, mentorship, or icebreakers. Set up a wave, register members, and Mocha handles the rest.',
           canonical,
+          languageAlternates: buildLanguageAlternates('/donut'),
           openGraph: {
             type: 'website',
             url: canonical,
             locale: ogLocaleFor(locale),
           },
         })}
+        <script
+          {...jsonLdScriptProps(
+            breadcrumbJsonLd([
+              { name: 'Home', url: `${SITE_URL}/` },
+              { name: 'Donut', url: `${SITE_URL}/donut` },
+            ]),
+          )}
+        />
       </Head>
       <Layout>
         <Container>

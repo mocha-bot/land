@@ -7,7 +7,7 @@ export const SITE_URL = (
 export const SITE_NAME = 'Mocha Bot';
 
 export const SITE_DESCRIPTION =
-  'Mocha is a Discord bot for multi-chat cross-server messaging. Create public or private rooms, connect communities, and send messages to multiple channels at once.';
+  'Mocha is a Discord bot that links separate servers into shared chat rooms. Members from different servers talk in one place, while each server keeps its own channel.';
 
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/images/mocha-banner-og.png`;
 

@@ -12,7 +12,9 @@ import {
   buildLanguageAlternates,
   DEFAULT_OG_IMAGE,
   ogLocaleFor,
+  SITE_URL,
 } from '@/config/seo';
+import { breadcrumbJsonLd, jsonLdScriptProps } from '@/config/structuredData';
 import {
   getSolutionBySlug,
   type Solution,
@@ -28,7 +30,7 @@ type Props = {
 export default function SolutionDetailPage({ solution, locale }: Props) {
   const path = `/solutions/${solution.slug}`;
   const canonical = buildCanonical(path, locale);
-  const title = `${solution.title} — Solutions`;
+  const title = `${solution.title} on Discord - Mocha Bot`;
   const { description } = solution;
 
   return (
@@ -40,7 +42,7 @@ export default function SolutionDetailPage({ solution, locale }: Props) {
           canonical,
           languageAlternates: buildLanguageAlternates(path),
           openGraph: {
-            type: 'article',
+            type: 'website',
             url: canonical,
             locale: ogLocaleFor(locale),
             title,
@@ -55,6 +57,15 @@ export default function SolutionDetailPage({ solution, locale }: Props) {
             ],
           },
         })}
+        <script
+          {...jsonLdScriptProps(
+            breadcrumbJsonLd([
+              { name: 'Home', url: `${SITE_URL}/` },
+              { name: 'Solutions', url: `${SITE_URL}/solutions` },
+              { name: solution.title, url: `${SITE_URL}${path}` },
+            ]),
+          )}
+        />
       </Head>
       <SolutionDetailContainer solution={solution} />
     </>

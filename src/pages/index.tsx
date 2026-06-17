@@ -18,8 +18,8 @@ import {
   softwareApplicationJsonLd,
   webSiteJsonLd,
 } from '@/config/structuredData';
-import { LandingPageContainer } from '@/modules/landingPage/LandingPageContainer';
 import { FAQ_ITEMS } from '@/modules/landingPage/faqData';
+import { LandingPageContainer } from '@/modules/landingPage/LandingPageContainer';
 
 const { publicRuntimeConfig } = getConfig();
 
@@ -34,9 +34,9 @@ function Index({ locale }: IndexProps) {
     <>
       <Head>
         {generateNextSeo({
-          title: 'Multi-chat Discord bot for communities',
+          title: 'Mocha - Discord Bot to Connect Multiple Servers',
           description:
-            'Mocha is a Discord bot that connects communities through cross-server rooms. Create public or private rooms, broadcast to multiple channels, and grow your server.',
+            'Link your Discord servers together so members can chat across communities. Mocha bridges any server with shared rooms, automatic webhooks, and no coding needed.',
           canonical,
           languageAlternates: buildLanguageAlternates('/'),
           openGraph: {

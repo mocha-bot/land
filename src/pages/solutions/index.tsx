@@ -8,16 +8,18 @@ import {
   buildLanguageAlternates,
   DEFAULT_OG_IMAGE,
   ogLocaleFor,
+  SITE_URL,
 } from '@/config/seo';
+import { breadcrumbJsonLd, jsonLdScriptProps } from '@/config/structuredData';
 import { SolutionsContainer } from '@/modules/solutions/SolutionsContainer';
 
 type Props = {
   locale?: string;
 };
 
-const TITLE = 'Solutions';
+const TITLE = 'How Communities Use Mocha Bot';
 const DESCRIPTION =
-  'Discover how Mocha connects Discord communities across gaming, study groups, open source projects, creator networks, and more.';
+  'See how gaming groups, study circles, open source teams, and creator networks use Mocha to bring their Discord servers together.';
 
 export default function SolutionsPage({ locale }: Props) {
   const canonical = buildCanonical('/solutions', locale);
@@ -46,6 +48,14 @@ export default function SolutionsPage({ locale }: Props) {
             ],
           },
         })}
+        <script
+          {...jsonLdScriptProps(
+            breadcrumbJsonLd([
+              { name: 'Home', url: `${SITE_URL}/` },
+              { name: 'Solutions', url: `${SITE_URL}/solutions` },
+            ]),
+          )}
+        />
       </Head>
       <SolutionsContainer />
     </>

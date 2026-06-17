@@ -27,7 +27,17 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
-import { buildCanonical, ogLocaleFor } from '@/config/seo';
+import {
+  buildCanonical,
+  buildLanguageAlternates,
+  ogLocaleFor,
+  SITE_URL,
+} from '@/config/seo';
+import {
+  breadcrumbJsonLd,
+  jsonLdScriptProps,
+  pricingFaqJsonLd,
+} from '@/config/structuredData';
 import {
   useAddonPackages,
   useCurrentUser,
@@ -723,16 +733,26 @@ function Pricing() {
     <>
       <Head>
         {generateNextSeo({
-          title: 'Pricing',
+          title: 'Mocha Bot Pricing - Free Plan Available',
           description:
-            'Simple, transparent pricing for every community. Choose a plan that fits your server.',
+            'Mocha is free to use. Paid plans unlock private rooms, invite links, unlimited server slots, and member matchmaking. See what each plan includes and upgrade anytime.',
           canonical,
+          languageAlternates: buildLanguageAlternates('/pricing'),
           openGraph: {
             type: 'website',
             url: canonical,
             locale: ogLocaleFor(locale),
           },
         })}
+        <script {...jsonLdScriptProps(pricingFaqJsonLd())} />
+        <script
+          {...jsonLdScriptProps(
+            breadcrumbJsonLd([
+              { name: 'Home', url: `${SITE_URL}/` },
+              { name: 'Pricing', url: `${SITE_URL}/pricing` },
+            ]),
+          )}
+        />
       </Head>
       <Layout>
         <Container>
