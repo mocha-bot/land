@@ -1,11 +1,9 @@
 import {
   Box,
-  CloseButton,
   Flex,
   Heading,
   HStack,
   Link,
-  Portal,
   SimpleGrid,
   Skeleton,
   Tab,
@@ -14,10 +12,8 @@ import {
   TabPanels,
   Tabs,
   Text,
-  useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import { WhopCheckoutEmbed } from '@whop/checkout/react';
 import type { GetStaticPropsContext } from 'next';
 import { i18n } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -63,24 +59,6 @@ const cardStyle = {
   border: '1px solid rgba(255, 255, 255, 0.1)',
   borderRadius: 'xl',
   p: 8,
-};
-
-// Slim, theme-matched scrollbar for the checkout modal scroll containers.
-const scrollSx = {
-  scrollbarWidth: 'thin',
-  scrollbarColor: 'rgba(255, 255, 255, 0.18) transparent',
-  '&::-webkit-scrollbar': { width: '8px', height: '8px' },
-  '&::-webkit-scrollbar-track': { background: 'transparent' },
-  '&::-webkit-scrollbar-thumb': {
-    background: 'rgba(255, 255, 255, 0.16)',
-    borderRadius: '9999px',
-    border: '2px solid transparent',
-    backgroundClip: 'padding-box',
-  },
-  '&::-webkit-scrollbar-thumb:hover': {
-    background: 'rgba(255, 255, 255, 0.3)',
-    backgroundClip: 'padding-box',
-  },
 };
 
 function formatPrice(
@@ -151,18 +129,14 @@ function PackageCard({
   // guild/room packages — send user to dash to pick specific entity
   const needsDashRedirect = pkg.binding_type !== 'user' && !isFree;
 
-  // Whop plan to render in the embedded checkout (promo codes are entered inside it).
-  const whopPlanId =
-    pkg.providers?.find((p) => p.provider === 'whop' && p.is_active)
-      ?.provider_plan_id ??
-    pkg.providers?.find((p) => p.provider === 'whop')?.provider_plan_id ??
-    '';
+  const dashTarget = `${dashboardUrl}/subscription?binding_type=${
+    pkg.binding_type
+  }&package_serial=${encodeURIComponent(pkg.serial)}`;
 
-  const checkoutModal = useDisclosure();
-
+  // Purchases only go through the backend checkout or the dashboard: both attach
+  // the binding metadata the payment webhook needs. Never link a raw provider plan.
   const handlePaidClick = async () => {
     if (needsDashRedirect) {
-      const dashTarget = `${dashboardUrl}/subscription?binding_type=${pkg.binding_type}&package_serial=${pkg.serial}`;
       if (!user) {
         // After SSO login, land on dash/subscription with binding + package pre-selected
         window.location.href = `${ssoUrl}?redirect_url=${encodeURIComponent(
@@ -171,14 +145,6 @@ function PackageCard({
       } else {
         window.location.href = dashTarget;
       }
-      return;
-    }
-    // User-binding paid plan with a Whop plan → open the checkout modal directly.
-    // Don't gate on login: the Whop embed collects the email itself (we prefill it
-    // when the account is known), and login detection is unreliable on the public
-    // marketing domain, so an SSO gate here just traps already-logged-in users.
-    if (whopPlanId) {
-      checkoutModal.onOpen();
       return;
     }
     if (!user) {
@@ -194,14 +160,8 @@ function PackageCard({
       const url = await getCheckoutURL(pkg.serial);
       window.open(url, '_blank', 'noopener,noreferrer');
     } catch {
-      // fallback to static provider URL if checkout API fails
-      if (hasProviders) {
-        window.open(
-          pkg.providers[0].checkout_url,
-          '_blank',
-          'noopener,noreferrer',
-        );
-      }
+      // checkout API failed: the dashboard runs the same backend checkout
+      window.location.href = dashTarget;
     }
   };
 
@@ -325,174 +285,6 @@ function PackageCard({
           py={5}>
           {buttonLabel}
         </Button>
-      )}
-
-      {checkoutModal.isOpen && (
-        <Portal>
-          {/* Backdrop — fixed so it covers the viewport regardless of page scroll. */}
-          <Box
-            position='fixed'
-            inset={0}
-            bg='blackAlpha.800'
-            backdropFilter='blur(4px)'
-            zIndex='modal'
-            onClick={checkoutModal.onClose}
-          />
-          {/* Centered, non-scrolling overlay; the panel owns its height and only the
-              right (checkout) column scrolls. */}
-          <Box
-            position='fixed'
-            inset={0}
-            zIndex='modal'
-            display='flex'
-            alignItems='center'
-            justifyContent='center'
-            p={4}
-            onClick={checkoutModal.onClose}>
-            <Box
-              onClick={(e) => e.stopPropagation()}
-              position='relative'
-              bg='gray.900'
-              bgImage='radial-gradient(circle at 12% 0%, rgba(253, 184, 51, 0.14), transparent 55%), radial-gradient(circle at 88% 100%, rgba(2, 173, 255, 0.14), transparent 55%)'
-              borderRadius='xl'
-              borderWidth='1px'
-              borderColor='whiteAlpha.200'
-              w='full'
-              maxW='4xl'
-              maxH='90vh'
-              display='flex'
-              flexDirection={{ base: 'column', md: 'row' }}
-              overflowY={{ base: 'auto', md: 'hidden' }}
-              sx={scrollSx}>
-              <CloseButton
-                position='absolute'
-                right={3}
-                top={3}
-                zIndex={1}
-                size='md'
-                borderRadius='full'
-                color='whiteAlpha.700'
-                transition='all 0.2s'
-                _hover={{
-                  color: 'white',
-                  bg: 'whiteAlpha.200',
-                  transform: 'rotate(90deg)',
-                }}
-                onClick={checkoutModal.onClose}
-              />
-              {/* Left — detail in our app (static) */}
-              <Box
-                w={{ base: 'full', md: '50%' }}
-                p={8}
-                overflowY={{ base: 'visible', md: 'auto' }}
-                sx={scrollSx}>
-                <VStack alignItems='flex-start' spacing={4}>
-                  <DestinationBadge bindingType={pkg.binding_type} />
-                  <Heading as='h3' size='md' color='white'>
-                    {pkg.name}
-                  </Heading>
-                  <Text color='white' fontSize='2xl' fontWeight='bold'>
-                    {formatPrice(
-                      renewalCents,
-                      pkg.price_currency,
-                      pkg.billing_interval,
-                    )}
-                  </Text>
-                  {hasDifferentInitial && (
-                    <Text color='whiteAlpha.600' fontSize='sm'>
-                      First payment:{' '}
-                      {formatPrice(
-                        pkg.price_cents,
-                        pkg.price_currency,
-                        'one_time',
-                      ).replace(' one-time', '')}
-                    </Text>
-                  )}
-                  {pkg.description && (
-                    <Box
-                      color='whiteAlpha.700'
-                      fontSize='sm'
-                      fontWeight='light'
-                      sx={{
-                        p: { mb: 2, _last: { mb: 0 } },
-                        h2: {
-                          fontWeight: 'semibold',
-                          color: 'white',
-                          fontSize: 'md',
-                          mt: 3,
-                          mb: 1,
-                        },
-                        h3: {
-                          fontWeight: 'semibold',
-                          color: 'white',
-                          fontSize: 'sm',
-                          mt: 2,
-                          mb: 1,
-                        },
-                        ul: { listStyleType: 'disc', pl: 5, mb: 2 },
-                        ol: { listStyleType: 'decimal', pl: 5, mb: 2 },
-                        li: { mb: 1 },
-                        strong: { color: 'white', fontWeight: 'semibold' },
-                        em: { fontStyle: 'italic' },
-                      }}
-                      dangerouslySetInnerHTML={{ __html: pkg.description }}
-                    />
-                  )}
-                  {pkg.features.length > 0 && (
-                    <VStack alignItems='flex-start' spacing={2}>
-                      {pkg.features.map((feature) => (
-                        <HStack
-                          key={feature}
-                          spacing={2}
-                          alignItems='flex-start'>
-                          <Text color='yellow.300' fontSize='sm' flexShrink={0}>
-                            ✓
-                          </Text>
-                          <Text color='whiteAlpha.900' fontSize='sm'>
-                            {feature}
-                          </Text>
-                        </HStack>
-                      ))}
-                    </VStack>
-                  )}
-                  <Text
-                    color='whiteAlpha.500'
-                    fontSize='xs'
-                    pt={2}
-                    borderTopWidth='1px'
-                    borderColor='whiteAlpha.200'
-                    w='full'>
-                    Billing for:{' '}
-                    {DESTINATION_LABELS[pkg.binding_type]?.label ??
-                      pkg.binding_type}
-                  </Text>
-                </VStack>
-              </Box>
-
-              {/* Right — Whop checkout (scrollable) */}
-              <Box
-                w={{ base: 'full', md: '50%' }}
-                p={8}
-                pb={12}
-                overflowY={{ base: 'visible', md: 'auto' }}
-                borderTopWidth={{ base: '1px', md: 0 }}
-                borderLeftWidth={{ base: 0, md: '1px' }}
-                borderColor='whiteAlpha.200'
-                sx={scrollSx}>
-                {whopPlanId && (
-                  <WhopCheckoutEmbed
-                    planId={whopPlanId}
-                    theme='dark'
-                    prefill={user?.email ? { email: user.email } : undefined}
-                    onComplete={() => {
-                      window.location.href = `${dashboardUrl}/subscription`;
-                    }}
-                  />
-                )}
-              </Box>
-            </Box>
-          </Box>
-        </Portal>
       )}
     </Box>
   );

@@ -59,7 +59,9 @@ export const getCheckoutURL = async (
 
 const ProviderPlanSchema = z.object({
   provider: z.string(),
-  checkout_url: z.string(),
+  provider_plan_id: z.string().default(''),
+  checkout_url: z.string().default(''),
+  is_active: z.boolean().default(true),
 });
 
 const PackageSchema = z.object({
@@ -73,6 +75,7 @@ const PackageSchema = z.object({
   billing_interval: z.string().default(''),
   features: z.array(z.string()).default([]),
   sort_order: z.number().default(0),
+  is_active: z.boolean().default(true),
   providers: z
     .array(ProviderPlanSchema)
     .nullish()
